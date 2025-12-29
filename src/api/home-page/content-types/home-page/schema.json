@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page",
+    "description": "Content for the main landing page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.hero-slider",
+        "sections.features-grid",
+        "sections.learning-formats",
+        "sections.microsoft-spotlight",
+        "sections.explore-careers",
+        "sections.achieve-goals",
+        "sections.practice-exams",
+        "sections.learn-next",
+        "sections.institutional-programs",
+        "sections.ai-journey",
+        "sections.categories",
+        "sections.k12-materials"
+      ]
+    }
+  }
+}

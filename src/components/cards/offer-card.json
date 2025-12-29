@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_cards_offer_cards",
+  "info": {
+    "displayName": "Offer Card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "link": { "type": "string" }
+  }
+}
+
+
+

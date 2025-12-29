@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_features_grids",
+  "info": {
+    "displayName": "Features Grid",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "cards.offer-card" }
+  }
+}
+

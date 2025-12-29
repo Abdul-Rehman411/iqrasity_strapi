@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_cards_career_cards",
+  "info": {
+    "displayName": "Career Card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "link": { "type": "string" }
+  }
+}
+
+
+

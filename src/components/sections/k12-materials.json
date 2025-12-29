@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_k12_materials",
+  "info": {
+    "displayName": "K-12 Materials",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "button": { "type": "component", "repeatable": false, "component": "elements.button" }
+  }
+}

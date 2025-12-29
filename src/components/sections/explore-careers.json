@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_explore_careers",
+  "info": {
+    "displayName": "Explore Careers",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "cta_link": { "type": "component", "repeatable": false, "component": "elements.button" },
+    "items": { "type": "component", "repeatable": true, "component": "cards.career-card" }
+  }
+}
+

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_practice_exams",
+  "info": {
+    "displayName": "Practice Exams",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "highlight": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "button": { "type": "component", "repeatable": false, "component": "elements.button" }
+  }
+}

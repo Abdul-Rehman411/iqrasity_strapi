@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_sections_achieve_goals",
+  "info": {
+    "displayName": "Achieve Goals",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "items": { "type": "component", "repeatable": true, "component": "cards.goal-card" }
+  }
+}
+

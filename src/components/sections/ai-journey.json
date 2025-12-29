@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_ai_journeys",
+  "info": {
+    "displayName": "AI Journey",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "button": { "type": "component", "repeatable": false, "component": "elements.button" }
+  }
+}

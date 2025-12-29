@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_microsoft_spotlights",
+  "info": {
+    "displayName": "Microsoft Spotlight",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "programs": { "type": "component", "repeatable": true, "component": "cards.program-link" }
+  }
+}
+

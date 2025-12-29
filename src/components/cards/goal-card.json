@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_cards_goal_cards",
+  "info": {
+    "displayName": "Goal Card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "link": { "type": "string" }
+  }
+}
+
+
+

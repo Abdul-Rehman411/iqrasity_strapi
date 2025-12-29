@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_cards_hero_slides",
+  "info": {
+    "displayName": "Hero Slide",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "required": false, "allowedTypes": [ "images" ] },
+    "layout": {
+      "type": "enumeration",
+      "enum": ["odoo_standard", "odoo_three_col", "odoo_promo_reverse", "custom_modern_split", "odoo_centered_minimal", "custom_cinematic", "odoo_split_blue_dark"],
+      "default": "odoo_standard"
+    },
+    "buttons": { "type": "component", "repeatable": true, "component": "elements.button" },
+    "features": { "type": "component", "repeatable": true, "component": "elements.list-item" }
+  }
+}
+
+
+

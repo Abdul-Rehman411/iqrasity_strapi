@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_cards_course_previews",
+  "info": {
+    "displayName": "Course Preview",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "button": { "type": "component", "repeatable": false, "component": "elements.button" }
+  }
+}
+
+
+

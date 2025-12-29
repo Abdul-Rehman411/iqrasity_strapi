@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_learn_next",
+  "info": {
+    "displayName": "Learn Next",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "items": { "type": "component", "repeatable": true, "component": "cards.course-preview" }
+  }
+}
+

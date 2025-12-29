@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_cards_format_cards",
+  "info": {
+    "displayName": "Format Card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
+    "features": { "type": "component", "repeatable": true, "component": "elements.list-item" },
+    "button": { "type": "component", "repeatable": false, "component": "elements.button" }
+  }
+}
+
+
+

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sections_learning_formats",
+  "info": {
+    "displayName": "Learning Formats",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "cards.format-card" }
+  }
+}
+
