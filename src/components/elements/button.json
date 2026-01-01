@@ -8,20 +8,20 @@
   "attributes": {
     "label": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "url": {
       "type": "string"
     },
     "variant": {
       "type": "enumeration",
+      "default": "primary_pill",
       "enum": [
         "primary_pill",
         "secondary",
         "outline",
         "ghost"
-      ],
-      "default": "primary_pill"
+      ]
     }
   }
 }

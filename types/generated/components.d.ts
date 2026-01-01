@@ -117,7 +117,7 @@ export interface ElementsButton extends Struct.ComponentSchema {
     displayName: 'Button';
   };
   attributes: {
-    label: Schema.Attribute.String & Schema.Attribute.Required;
+    label: Schema.Attribute.String;
     url: Schema.Attribute.String;
     variant: Schema.Attribute.Enumeration<
       ['primary_pill', 'secondary', 'outline', 'ghost']
@@ -169,6 +169,20 @@ export interface SectionsCategories extends Struct.ComponentSchema {
     displayName: 'Categories';
   };
   attributes: {
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsEnterpriseSolutions extends Struct.ComponentSchema {
+  collectionName: 'components_sections_enterprise_solutions';
+  info: {
+    description: '';
+    displayName: 'Enterprise Solutions';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'elements.button', false>;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String;
   };
 }
@@ -309,6 +323,7 @@ declare module '@strapi/strapi' {
       'sections.achieve-goals': SectionsAchieveGoals;
       'sections.ai-journey': SectionsAiJourney;
       'sections.categories': SectionsCategories;
+      'sections.enterprise-solutions': SectionsEnterpriseSolutions;
       'sections.explore-careers': SectionsExploreCareers;
       'sections.features-grid': SectionsFeaturesGrid;
       'sections.hero-slider': SectionsHeroSlider;

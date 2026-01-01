@@ -450,6 +450,12 @@ export interface ApiBrandBrand extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
       Schema.Attribute.Private;
     logo_blue: Schema.Attribute.Media<'images'>;
+    logo_loader_blue: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    logo_loader_white: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     logo_white: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -484,6 +490,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'sections.ai-journey',
         'sections.categories',
         'sections.k12-materials',
+        'sections.enterprise-solutions',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -495,34 +502,6 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
       'api::home-page.home-page'
     > &
       Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiLogoLogo extends Struct.SingleTypeSchema {
-  collectionName: 'logos';
-  info: {
-    description: 'Site branding logos';
-    displayName: 'Logo';
-    pluralName: 'logos';
-    singularName: 'logo';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    alt_text: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Iqrasity'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::logo.logo'> &
-      Schema.Attribute.Private;
-    logo_blue: Schema.Attribute.Media<'images'>;
-    logo_white: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1042,7 +1021,6 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::brand.brand': ApiBrandBrand;
       'api::home-page.home-page': ApiHomePageHomePage;
-      'api::logo.logo': ApiLogoLogo;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
