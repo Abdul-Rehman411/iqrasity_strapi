@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_sections_advantage_grids",
+  "info": {
+    "displayName": "Advantage Grid",
+    "icon": "check-circle",
+    "description": "Iqrasity Advantage Section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Iqrasity Advantage"
+    },
+    "description": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cards.offer-card"
+    }
+  }
+}

@@ -91,7 +91,10 @@ export interface CardsOfferCard extends Struct.ComponentSchema {
     displayName: 'Offer Card';
   };
   attributes: {
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
     image: Schema.Attribute.Media<'images'>;
     link: Schema.Attribute.String;
     title: Schema.Attribute.String;
@@ -107,6 +110,39 @@ export interface CardsProgramLink extends Struct.ComponentSchema {
   attributes: {
     label: Schema.Attribute.String;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface CardsStatCard extends Struct.ComponentSchema {
+  collectionName: 'components_cards_stat_cards';
+  info: {
+    description: 'A statistic card with icon, value, and label';
+    displayName: 'Stat Card';
+    icon: 'chart-pie';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Active Users'>;
+    value: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'100+'>;
+  };
+}
+
+export interface CardsTeamMember extends Struct.ComponentSchema {
+  collectionName: 'components_cards_team_members';
+  info: {
+    description: 'Team member card with name, role, and image';
+    displayName: 'Team Member';
+    icon: 'user';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    role: Schema.Attribute.String;
   };
 }
 
@@ -126,6 +162,21 @@ export interface ElementsButton extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsLinkChip extends Struct.ComponentSchema {
+  collectionName: 'components_elements_link_chips';
+  info: {
+    description: 'A scrollable keyword chip with a link';
+    displayName: 'Link Chip';
+    icon: 'link';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+    variant: Schema.Attribute.Enumeration<['default', 'gradient', 'outline']> &
+      Schema.Attribute.DefaultTo<'default'>;
+  };
+}
+
 export interface ElementsListItem extends Struct.ComponentSchema {
   collectionName: 'components_elements_list_items';
   info: {
@@ -137,6 +188,22 @@ export interface ElementsListItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsMetaTag extends Struct.ComponentSchema {
+  collectionName: 'components_elements_meta_tags';
+  info: {
+    description: 'Ordered tag for course card';
+    displayName: 'Meta Tag';
+    icon: 'tag';
+  };
+  attributes: {
+    text: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<
+      ['level', 'duration', 'certificate', 'other']
+    > &
+      Schema.Attribute.DefaultTo<'other'>;
+  };
+}
+
 export interface SectionsAchieveGoals extends Struct.ComponentSchema {
   collectionName: 'components_sections_achieve_goals';
   info: {
@@ -145,6 +212,22 @@ export interface SectionsAchieveGoals extends Struct.ComponentSchema {
   };
   attributes: {
     items: Schema.Attribute.Component<'cards.goal-card', true>;
+  };
+}
+
+export interface SectionsAdvantageGrid extends Struct.ComponentSchema {
+  collectionName: 'components_sections_advantage_grids';
+  info: {
+    description: 'Iqrasity Advantage Section';
+    displayName: 'Advantage Grid';
+    icon: 'check-circle';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    items: Schema.Attribute.Component<'cards.offer-card', true>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Iqrasity Advantage'>;
   };
 }
 
@@ -254,6 +337,20 @@ export interface SectionsK12Materials extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsKeywordScroll extends Struct.ComponentSchema {
+  collectionName: 'components_sections_keyword_scrolls';
+  info: {
+    description: 'Infinite scrolling rows of keywords';
+    displayName: 'Keyword Scroll';
+    icon: 'align-justify';
+  };
+  attributes: {
+    row_one: Schema.Attribute.Component<'elements.link-chip', true>;
+    row_two: Schema.Attribute.Component<'elements.link-chip', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsLearnNext extends Struct.ComponentSchema {
   collectionName: 'components_sections_learn_next';
   info: {
@@ -293,6 +390,48 @@ export interface SectionsMicrosoftSpotlight extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsNewsBanner extends Struct.ComponentSchema {
+  collectionName: 'components_sections_news_banners';
+  info: {
+    description: '75% Banner + 25% News Feed';
+    displayName: 'News Banner';
+    icon: 'newspaper';
+  };
+  attributes: {
+    banner_description: Schema.Attribute.Text;
+    banner_image: Schema.Attribute.Media<'images'>;
+    banner_title: Schema.Attribute.String & Schema.Attribute.Required;
+    buttons: Schema.Attribute.Component<'elements.button', true>;
+    manual_articles: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article.article'
+    >;
+    news_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::article-category.article-category'
+    >;
+    news_mode: Schema.Attribute.Enumeration<['latest', 'manual', 'category']> &
+      Schema.Attribute.DefaultTo<'latest'>;
+    news_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Latest News'>;
+  };
+}
+
+export interface SectionsPartnersMarquee extends Struct.ComponentSchema {
+  collectionName: 'components_sections_partners_marquees';
+  info: {
+    description: 'Infinite scroll of partner logos';
+    displayName: 'Partners Marquee';
+    icon: 'infinity';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    partners: Schema.Attribute.Relation<'oneToMany', 'api::partner.partner'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Our Valued Partners'>;
+  };
+}
+
 export interface SectionsPracticeExams extends Struct.ComponentSchema {
   collectionName: 'components_sections_practice_exams';
   info: {
@@ -308,6 +447,26 @@ export interface SectionsPracticeExams extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsStatsGrid extends Struct.ComponentSchema {
+  collectionName: 'components_sections_stats_grids';
+  info: {
+    description: 'Grid of statistic cards';
+    displayName: 'Stats Grid';
+    icon: 'border-all';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'cards.stat-card', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+        },
+        number
+      >;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Our Credentials'>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -318,9 +477,14 @@ declare module '@strapi/strapi' {
       'cards.hero-slide': CardsHeroSlide;
       'cards.offer-card': CardsOfferCard;
       'cards.program-link': CardsProgramLink;
+      'cards.stat-card': CardsStatCard;
+      'cards.team-member': CardsTeamMember;
       'elements.button': ElementsButton;
+      'elements.link-chip': ElementsLinkChip;
       'elements.list-item': ElementsListItem;
+      'elements.meta-tag': ElementsMetaTag;
       'sections.achieve-goals': SectionsAchieveGoals;
+      'sections.advantage-grid': SectionsAdvantageGrid;
       'sections.ai-journey': SectionsAiJourney;
       'sections.categories': SectionsCategories;
       'sections.enterprise-solutions': SectionsEnterpriseSolutions;
@@ -329,10 +493,14 @@ declare module '@strapi/strapi' {
       'sections.hero-slider': SectionsHeroSlider;
       'sections.institutional-programs': SectionsInstitutionalPrograms;
       'sections.k12-materials': SectionsK12Materials;
+      'sections.keyword-scroll': SectionsKeywordScroll;
       'sections.learn-next': SectionsLearnNext;
       'sections.learning-formats': SectionsLearningFormats;
       'sections.microsoft-spotlight': SectionsMicrosoftSpotlight;
+      'sections.news-banner': SectionsNewsBanner;
+      'sections.partners-marquee': SectionsPartnersMarquee;
       'sections.practice-exams': SectionsPracticeExams;
+      'sections.stats-grid': SectionsStatsGrid;
     }
   }
 }

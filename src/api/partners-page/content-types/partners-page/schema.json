@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "partners_pages",
+  "info": {
+    "singularName": "partners-page",
+    "pluralName": "partners-pages",
+    "displayName": "Partners Page",
+    "description": "Content for the /partners page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Our Valued Partners in Excellence"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

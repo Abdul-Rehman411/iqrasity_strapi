@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_elements_meta_tags",
+  "info": {
+    "displayName": "Meta Tag",
+    "icon": "tag",
+    "description": "Ordered tag for course card"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "level",
+        "duration",
+        "certificate",
+        "other"
+      ],
+      "default": "other"
+    }
+  }
+}

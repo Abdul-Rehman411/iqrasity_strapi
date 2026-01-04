@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_partners_marquees",
+  "info": {
+    "displayName": "Partners Marquee",
+    "icon": "infinity",
+    "description": "Infinite scroll of partner logos"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Our Valued Partners"
+    },
+    "description": {
+      "type": "text"
+    },
+    "partners": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::partner.partner"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_stats_grids",
+  "info": {
+    "displayName": "Stats Grid",
+    "icon": "border-all",
+    "description": "Grid of statistic cards"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Our Credentials"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cards.stat-card",
+      "max": 4
+    }
+  }
+}

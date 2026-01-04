@@ -1,0 +1,61 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page",
+    "description": "Content for the About Us page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero_title": {
+      "type": "string"
+    },
+    "hero_description": {
+      "type": "text"
+    },
+    "inventa_title": {
+      "type": "string"
+    },
+    "inventa_subtitle": {
+      "type": "string"
+    },
+    "inventa_description": {
+      "type": "blocks"
+    },
+    "inventa_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "team_title": {
+      "type": "string"
+    },
+    "team_description": {
+      "type": "text"
+    },
+    "team_members": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cards.team-member"
+    },
+    "stat_learners": {
+      "type": "string"
+    },
+    "stat_courses": {
+      "type": "string"
+    },
+    "stat_instructors": {
+      "type": "string"
+    },
+    "stat_rating": {
+      "type": "string"
+    }
+  }
+}

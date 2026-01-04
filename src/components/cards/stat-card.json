@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_cards_stat_cards",
+  "info": {
+    "displayName": "Stat Card",
+    "icon": "chart-pie",
+    "description": "A statistic card with icon, value, and label"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true,
+      "default": "100+"
+    },
+    "label": {
+      "type": "string",
+      "required": true,
+      "default": "Active Users"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

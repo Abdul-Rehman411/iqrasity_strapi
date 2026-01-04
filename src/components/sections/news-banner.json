@@ -1,0 +1,54 @@
+{
+  "collectionName": "components_sections_news_banners",
+  "info": {
+    "displayName": "News Banner",
+    "icon": "newspaper",
+    "description": "75% Banner + 25% News Feed"
+  },
+  "options": {},
+  "attributes": {
+    "banner_title": {
+      "type": "string",
+      "required": true
+    },
+    "banner_description": {
+      "type": "text"
+    },
+    "banner_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.button"
+    },
+    "news_title": {
+      "type": "string",
+      "default": "Latest News"
+    },
+    "news_mode": {
+      "type": "enumeration",
+      "enum": [
+        "latest",
+        "manual",
+        "category"
+      ],
+      "default": "latest"
+    },
+    "manual_articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article"
+    },
+    "news_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::article-category.article-category"
+    }
+  }
+}

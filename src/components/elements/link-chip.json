@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_elements_link_chips",
+  "info": {
+    "displayName": "Link Chip",
+    "icon": "link",
+    "description": "A scrollable keyword chip with a link"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "gradient",
+        "outline"
+      ],
+      "default": "default"
+    }
+  }
+}

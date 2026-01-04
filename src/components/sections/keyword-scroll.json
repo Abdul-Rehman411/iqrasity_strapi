@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_sections_keyword_scrolls",
+  "info": {
+    "displayName": "Keyword Scroll",
+    "icon": "align-justify",
+    "description": "Infinite scrolling rows of keywords"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "row_one": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.link-chip"
+    },
+    "row_two": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.link-chip"
+    }
+  }
+}

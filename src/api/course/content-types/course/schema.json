@@ -1,0 +1,85 @@
+{
+  "kind": "collectionType",
+  "collectionName": "courses",
+  "info": {
+    "singularName": "course",
+    "pluralName": "courses",
+    "displayName": "Course",
+    "description": "LMS Course Catalog"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "moodle_course_id": {
+      "type": "integer",
+      "unique": true,
+      "required": false
+    },
+    "cover_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "org_logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "org_name": {
+      "type": "string",
+      "default": "Iqrasity"
+    },
+    "short_description": {
+      "type": "text",
+      "maxLength": 300,
+      "required": true
+    },
+    "rating": {
+      "type": "decimal",
+      "default": 4.5
+    },
+    "review_count": {
+      "type": "string",
+      "default": "(125)"
+    },
+    "enrolled_count": {
+      "type": "string",
+      "default": "1.2k"
+    },
+    "price": {
+      "type": "decimal",
+      "default": 0
+    },
+    "original_price": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course-category.course-category",
+      "inversedBy": "courses"
+    },
+    "card_tags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.meta-tag"
+    }
+  }
+}
