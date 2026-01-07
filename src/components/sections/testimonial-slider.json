@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_testimonial_sliders",
+  "info": {
+    "displayName": "Testimonial Slider",
+    "icon": "star",
+    "description": "Carousel of testimonials"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "What our students say"
+    },
+    "description": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cards.testimonial"
+    }
+  }
+}

@@ -26,14 +26,12 @@
         "sections.institutional-programs",
         "sections.ai-journey",
         "sections.categories",
-        "sections.k12-materials",
-        "sections.k12-materials",
-        "sections.enterprise-solutions",
         "sections.enterprise-solutions",
         "sections.keyword-scroll",
         "sections.news-banner",
         "sections.advantage-grid",
         "sections.partners-marquee",
+        "sections.testimonial-slider",
         "sections.stats-grid"
       ]
     }

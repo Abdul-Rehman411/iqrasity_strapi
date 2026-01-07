@@ -6,9 +6,16 @@
   },
   "options": {},
   "attributes": {
-    "title": { "type": "string" },
-    "description": { "type": "text" },
-    "items": { "type": "component", "repeatable": true, "component": "cards.course-preview" }
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "component": "cards.course-preview",
+      "repeatable": true
+    }
   }
 }
-

@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "course_categories",
+  "collectionName": "organizations",
   "info": {
-    "singularName": "course-category",
-    "pluralName": "course-categories",
-    "displayName": "Course Category",
-    "description": "Categories for courses"
+    "singularName": "organization",
+    "pluralName": "organizations",
+    "displayName": "Organization",
+    "description": "Course Providers and Partners"
   },
   "options": {
     "draftAndPublish": true
@@ -21,15 +21,11 @@
       "targetField": "name",
       "required": true
     },
-    "moodle_id": {
-      "type": "integer",
-      "unique": true
-    },
-    "icon": {
+    "logo": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images", "files"],
-      "required": false
+      "required": false,
+      "allowedTypes": ["images"]
     },
     "description": {
       "type": "text"
@@ -38,7 +34,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::course.course",
-      "mappedBy": "category"
+      "mappedBy": "organization"
     }
   }
 }

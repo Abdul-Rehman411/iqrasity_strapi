@@ -23,24 +23,22 @@
     },
     "moodle_course_id": {
       "type": "integer",
-      "unique": true,
-      "required": false
+      "required": true,
+      "unique": true
     },
     "cover_image": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
-    "org_logo": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": ["images"]
-    },
-    "org_name": {
-      "type": "string",
-      "default": "Iqrasity"
+    "organization": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::organization.organization",
+      "inversedBy": "courses"
     },
     "short_description": {
       "type": "text",
@@ -49,7 +47,9 @@
     },
     "rating": {
       "type": "decimal",
-      "default": 4.5
+      "default": 4.5,
+      "min": 0,
+      "max": 5
     },
     "review_count": {
       "type": "string",
@@ -70,16 +70,10 @@
       "type": "string",
       "default": "USD"
     },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::course-category.course-category",
-      "inversedBy": "courses"
-    },
     "card_tags": {
       "type": "component",
-      "repeatable": true,
-      "component": "elements.meta-tag"
+      "component": "elements.meta-tag",
+      "repeatable": true
     }
   }
 }

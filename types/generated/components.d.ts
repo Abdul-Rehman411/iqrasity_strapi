@@ -21,9 +21,7 @@ export interface CardsCoursePreview extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'elements.button', false>;
-    description: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-    title: Schema.Attribute.String;
+    courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
   };
 }
 
@@ -142,6 +140,30 @@ export interface CardsTeamMember extends Struct.ComponentSchema {
   attributes: {
     image: Schema.Attribute.Media<'images'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    role: Schema.Attribute.String;
+  };
+}
+
+export interface CardsTestimonial extends Struct.ComponentSchema {
+  collectionName: 'components_cards_testimonials';
+  info: {
+    description: 'User testimonial card';
+    displayName: 'Testimonial';
+    icon: 'quote-right';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    rating: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
     role: Schema.Attribute.String;
   };
 }
@@ -323,20 +345,6 @@ export interface SectionsInstitutionalPrograms extends Struct.ComponentSchema {
   };
 }
 
-export interface SectionsK12Materials extends Struct.ComponentSchema {
-  collectionName: 'components_sections_k12_materials';
-  info: {
-    description: '';
-    displayName: 'K-12 Materials';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'elements.button', false>;
-    description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<'images'>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface SectionsKeywordScroll extends Struct.ComponentSchema {
   collectionName: 'components_sections_keyword_scrolls';
   info: {
@@ -467,6 +475,21 @@ export interface SectionsStatsGrid extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsTestimonialSlider extends Struct.ComponentSchema {
+  collectionName: 'components_sections_testimonial_sliders';
+  info: {
+    description: 'Carousel of testimonials';
+    displayName: 'Testimonial Slider';
+    icon: 'star';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    items: Schema.Attribute.Component<'cards.testimonial', true>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'What our students say'>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -479,6 +502,7 @@ declare module '@strapi/strapi' {
       'cards.program-link': CardsProgramLink;
       'cards.stat-card': CardsStatCard;
       'cards.team-member': CardsTeamMember;
+      'cards.testimonial': CardsTestimonial;
       'elements.button': ElementsButton;
       'elements.link-chip': ElementsLinkChip;
       'elements.list-item': ElementsListItem;
@@ -492,7 +516,6 @@ declare module '@strapi/strapi' {
       'sections.features-grid': SectionsFeaturesGrid;
       'sections.hero-slider': SectionsHeroSlider;
       'sections.institutional-programs': SectionsInstitutionalPrograms;
-      'sections.k12-materials': SectionsK12Materials;
       'sections.keyword-scroll': SectionsKeywordScroll;
       'sections.learn-next': SectionsLearnNext;
       'sections.learning-formats': SectionsLearningFormats;
@@ -501,6 +524,7 @@ declare module '@strapi/strapi' {
       'sections.partners-marquee': SectionsPartnersMarquee;
       'sections.practice-exams': SectionsPracticeExams;
       'sections.stats-grid': SectionsStatsGrid;
+      'sections.testimonial-slider': SectionsTestimonialSlider;
     }
   }
 }

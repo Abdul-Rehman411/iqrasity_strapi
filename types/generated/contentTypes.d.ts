@@ -619,41 +619,6 @@ export interface ApiBrandBrand extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiCourseCategoryCourseCategory
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'course_categories';
-  info: {
-    description: 'Categories for courses';
-    displayName: 'Course Category';
-    pluralName: 'course-categories';
-    singularName: 'course-category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    icon: Schema.Attribute.Media<'images' | 'files'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::course-category.course-category'
-    > &
-      Schema.Attribute.Private;
-    moodle_id: Schema.Attribute.Integer & Schema.Attribute.Unique;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   collectionName: 'courses';
   info: {
@@ -667,10 +632,6 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
   attributes: {
     card_tags: Schema.Attribute.Component<'elements.meta-tag', true>;
-    category: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::course-category.course-category'
-    >;
     cover_image: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -684,13 +645,25 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'api::course.course'
     > &
       Schema.Attribute.Private;
-    moodle_course_id: Schema.Attribute.Integer & Schema.Attribute.Unique;
-    org_logo: Schema.Attribute.Media<'images'>;
-    org_name: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Iqrasity'>;
+    moodle_course_id: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    organization: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::organization.organization'
+    >;
     original_price: Schema.Attribute.Decimal;
     price: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
-    rating: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<4.5>;
+    rating: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<4.5>;
     review_count: Schema.Attribute.String & Schema.Attribute.DefaultTo<'(125)'>;
     short_description: Schema.Attribute.Text &
       Schema.Attribute.Required &
@@ -730,14 +703,12 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'sections.institutional-programs',
         'sections.ai-journey',
         'sections.categories',
-        'sections.k12-materials',
-        'sections.k12-materials',
-        'sections.enterprise-solutions',
         'sections.enterprise-solutions',
         'sections.keyword-scroll',
         'sections.news-banner',
         'sections.advantage-grid',
         'sections.partners-marquee',
+        'sections.testimonial-slider',
         'sections.stats-grid',
       ]
     >;
@@ -783,6 +754,40 @@ export interface ApiLegalPageLegalPage extends Struct.CollectionTypeSchema {
     seo_description: Schema.Attribute.Text;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOrganizationOrganization
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'organizations';
+  info: {
+    description: 'Course Providers and Partners';
+    displayName: 'Organization';
+    pluralName: 'organizations';
+    singularName: 'organization';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::organization.organization'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1367,10 +1372,10 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::authentication-helper.authentication-helper': ApiAuthenticationHelperAuthenticationHelper;
       'api::brand.brand': ApiBrandBrand;
-      'api::course-category.course-category': ApiCourseCategoryCourseCategory;
       'api::course.course': ApiCourseCourse;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::legal-page.legal-page': ApiLegalPageLegalPage;
+      'api::organization.organization': ApiOrganizationOrganization;
       'api::partner.partner': ApiPartnerPartner;
       'api::partners-page.partners-page': ApiPartnersPagePartnersPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
