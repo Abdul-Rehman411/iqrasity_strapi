@@ -10,11 +10,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::course.course"
-    },
-    "button": {
-      "type": "component",
-      "component": "elements.button",
-      "repeatable": false
     }
   }
 }

@@ -20,7 +20,6 @@ export interface CardsCoursePreview extends Struct.ComponentSchema {
     displayName: 'Course Preview';
   };
   attributes: {
-    button: Schema.Attribute.Component<'elements.button', false>;
     courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
   };
 }
