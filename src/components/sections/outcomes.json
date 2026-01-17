@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_outcomes",
+  "info": {
+    "displayName": "Outcomes",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.list-item"
+    }
+  },
+  "config": {}
+}

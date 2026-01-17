@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_team_grids",
+  "info": {
+    "displayName": "Team Grid",
+    "description": "Grid of team members"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "members": {
+      "type": "component",
+      "repeatable": true,
+      "component": "cards.person"
+    }
+  }
+}

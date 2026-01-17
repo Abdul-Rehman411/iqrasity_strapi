@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_steps",
+  "info": {
+    "displayName": "Steps",
+    "description": "Step-by-step process flow"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature"
+    }
+  }
+}

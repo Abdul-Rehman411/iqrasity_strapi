@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_reviews_lists",
+  "info": {
+    "displayName": "Reviews List",
+    "icon": "star",
+    "description": "List of student reviews"
+  },
+  "options": {},
+  "attributes": {
+    "reviews": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.student-review"
+    }
+  }
+}

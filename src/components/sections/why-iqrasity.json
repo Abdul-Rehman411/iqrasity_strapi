@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_why_iqrasities",
+  "info": {
+    "displayName": "Why Iqrasity",
+    "icon": "crown",
+    "description": "List of benefits"
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.benefit-card"
+    }
+  }
+}

@@ -98,6 +98,21 @@ export interface CardsOfferCard extends Struct.ComponentSchema {
   };
 }
 
+export interface CardsPerson extends Struct.ComponentSchema {
+  collectionName: 'components_cards_people';
+  info: {
+    description: 'Team member or alumni profile';
+    displayName: 'Person';
+  };
+  attributes: {
+    bio: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    role: Schema.Attribute.String;
+    social_links: Schema.Attribute.Component<'elements.button', true>;
+  };
+}
+
 export interface CardsProgramLink extends Struct.ComponentSchema {
   collectionName: 'components_cards_program_links';
   info: {
@@ -167,6 +182,19 @@ export interface CardsTestimonial extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsBenefitCard extends Struct.ComponentSchema {
+  collectionName: 'components_elements_benefit_cards';
+  info: {
+    description: 'Card with Icon, Title and Description';
+    displayName: 'Benefit Card';
+    icon: 'check';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ElementsButton extends Struct.ComponentSchema {
   collectionName: 'components_elements_buttons';
   info: {
@@ -180,6 +208,34 @@ export interface ElementsButton extends Struct.ComponentSchema {
       ['primary_pill', 'secondary', 'outline', 'ghost']
     > &
       Schema.Attribute.DefaultTo<'primary_pill'>;
+  };
+}
+
+export interface ElementsFeature extends Struct.ComponentSchema {
+  collectionName: 'components_elements_features';
+  info: {
+    description: 'Simple feature item with title and description';
+    displayName: 'Feature';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    link: Schema.Attribute.Component<'elements.button', false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsIconTextItem extends Struct.ComponentSchema {
+  collectionName: 'components_elements_icon_text_items';
+  info: {
+    description: 'Simple icon and text pair';
+    displayName: 'Icon Text Item';
+    icon: 'star';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images'>;
+    text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -201,11 +257,12 @@ export interface ElementsLinkChip extends Struct.ComponentSchema {
 export interface ElementsListItem extends Struct.ComponentSchema {
   collectionName: 'components_elements_list_items';
   info: {
-    description: '';
+    description: 'Simple text item for lists';
     displayName: 'List Item';
+    icon: 'list';
   };
   attributes: {
-    text: Schema.Attribute.String;
+    text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -222,6 +279,60 @@ export interface ElementsMetaTag extends Struct.ComponentSchema {
       ['level', 'duration', 'certificate', 'other']
     > &
       Schema.Attribute.DefaultTo<'other'>;
+  };
+}
+
+export interface ElementsQaPair extends Struct.ComponentSchema {
+  collectionName: 'components_elements_qa_pairs';
+  info: {
+    description: 'Question and Answer';
+    displayName: 'QA Pair';
+    icon: 'question';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsStudentReview extends Struct.ComponentSchema {
+  collectionName: 'components_elements_student_reviews';
+  info: {
+    description: 'Review with user details and time ago';
+    displayName: 'Student Review';
+    icon: 'user';
+  };
+  attributes: {
+    avatar: Schema.Attribute.Media<'images'>;
+    comment: Schema.Attribute.Text & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    rating: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 1;
+        },
+        number
+      >;
+    time_ago_unit: Schema.Attribute.Enumeration<
+      ['Days', 'Weeks', 'Months', 'Years']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Days'>;
+    time_ago_val: Schema.Attribute.Integer & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsVideoItem extends Struct.ComponentSchema {
+  collectionName: 'components_elements_video_items';
+  info: {
+    description: 'Video Title and URL';
+    displayName: 'Video Item';
+    icon: 'play';
+  };
+  attributes: {
+    Video_link: Schema.Attribute.String;
   };
 }
 
@@ -277,6 +388,22 @@ export interface SectionsCategories extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsContactForm extends Struct.ComponentSchema {
+  collectionName: 'components_sections_contact_forms';
+  info: {
+    description: 'Contact form block';
+    displayName: 'Contact Form';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    email_placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'your@email.com'>;
+    submit_label: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Send Message'>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsEnterpriseSolutions extends Struct.ComponentSchema {
   collectionName: 'components_sections_enterprise_solutions';
   info: {
@@ -304,6 +431,18 @@ export interface SectionsExploreCareers extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsFaqSection extends Struct.ComponentSchema {
+  collectionName: 'components_sections_faq_sections';
+  info: {
+    description: 'List of FAQs';
+    displayName: 'FAQ Section';
+    icon: 'question';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'elements.qa-pair', true>;
+  };
+}
+
 export interface SectionsFeaturesGrid extends Struct.ComponentSchema {
   collectionName: 'components_sections_features_grids';
   info: {
@@ -313,6 +452,18 @@ export interface SectionsFeaturesGrid extends Struct.ComponentSchema {
   attributes: {
     items: Schema.Attribute.Component<'cards.offer-card', true>;
     subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsGalleryGrid extends Struct.ComponentSchema {
+  collectionName: 'components_sections_gallery_grids';
+  info: {
+    description: 'Grid of images';
+    displayName: 'Gallery Grid';
+  };
+  attributes: {
+    images: Schema.Attribute.Media<'images' | 'videos', true>;
     title: Schema.Attribute.String;
   };
 }
@@ -341,6 +492,19 @@ export interface SectionsInstitutionalPrograms extends Struct.ComponentSchema {
     right_button: Schema.Attribute.Component<'elements.button', false>;
     right_items: Schema.Attribute.Component<'elements.list-item', true>;
     right_title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsInstructor extends Struct.ComponentSchema {
+  collectionName: 'components_sections_instructors';
+  info: {
+    displayName: 'Instructor';
+  };
+  attributes: {
+    instructor_courses_count: Schema.Attribute.String;
+    instructor_rating: Schema.Attribute.String;
+    instructor_review_count: Schema.Attribute.String;
+    instructor_students_count: Schema.Attribute.String;
   };
 }
 
@@ -379,6 +543,18 @@ export interface SectionsLearningFormats extends Struct.ComponentSchema {
   };
   attributes: {
     items: Schema.Attribute.Component<'cards.format-card', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsMediaList extends Struct.ComponentSchema {
+  collectionName: 'components_sections_media_lists';
+  info: {
+    description: 'List of press releases or media items';
+    displayName: 'Media List';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'elements.feature', true>;
     title: Schema.Attribute.String;
   };
 }
@@ -424,6 +600,33 @@ export interface SectionsNewsBanner extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsOutcomes extends Struct.ComponentSchema {
+  collectionName: 'components_sections_outcomes';
+  info: {
+    displayName: 'Outcomes';
+    icon: 'check';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'elements.list-item', true>;
+  };
+}
+
+export interface SectionsOverview extends Struct.ComponentSchema {
+  collectionName: 'components_sections_overviews';
+  info: {
+    description: 'What you learn, prerequisites, etc.';
+    displayName: 'Overview Section';
+    icon: 'layout';
+  };
+  attributes: {
+    prerequisites: Schema.Attribute.Component<'elements.list-item', true>;
+    promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
+    skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
+    what_you_learn: Schema.Attribute.Component<'elements.icon-text-item', true>;
+    why_iqrasity: Schema.Attribute.Component<'sections.why-iqrasity', false>;
+  };
+}
+
 export interface SectionsPartnersMarquee extends Struct.ComponentSchema {
   collectionName: 'components_sections_partners_marquees';
   info: {
@@ -454,6 +657,45 @@ export interface SectionsPracticeExams extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsPromoBanner extends Struct.ComponentSchema {
+  collectionName: 'components_sections_promo_banners';
+  info: {
+    description: 'Visual banner with text';
+    displayName: 'Promo Banner';
+    icon: 'picture';
+  };
+  attributes: {
+    background_image: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SectionsReviewsList extends Struct.ComponentSchema {
+  collectionName: 'components_sections_reviews_lists';
+  info: {
+    description: 'List of student reviews';
+    displayName: 'Reviews List';
+    icon: 'star';
+  };
+  attributes: {
+    reviews: Schema.Attribute.Component<'elements.student-review', true>;
+  };
+}
+
+export interface SectionsRichText extends Struct.ComponentSchema {
+  collectionName: 'components_sections_rich_texts';
+  info: {
+    description: 'Simple rich text block';
+    displayName: 'Rich Text';
+  };
+  attributes: {
+    content: Schema.Attribute.Blocks;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsStatsGrid extends Struct.ComponentSchema {
   collectionName: 'components_sections_stats_grids';
   info: {
@@ -474,6 +716,32 @@ export interface SectionsStatsGrid extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsSteps extends Struct.ComponentSchema {
+  collectionName: 'components_sections_steps';
+  info: {
+    description: 'Step-by-step process flow';
+    displayName: 'Steps';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    items: Schema.Attribute.Component<'elements.feature', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsTeamGrid extends Struct.ComponentSchema {
+  collectionName: 'components_sections_team_grids';
+  info: {
+    description: 'Grid of team members';
+    displayName: 'Team Grid';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    members: Schema.Attribute.Component<'cards.person', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsTestimonialSlider extends Struct.ComponentSchema {
   collectionName: 'components_sections_testimonial_sliders';
   info: {
@@ -489,6 +757,18 @@ export interface SectionsTestimonialSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsWhyIqrasity extends Struct.ComponentSchema {
+  collectionName: 'components_sections_why_iqrasities';
+  info: {
+    description: 'List of benefits';
+    displayName: 'Why Iqrasity';
+    icon: 'crown';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'elements.benefit-card', true>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -498,32 +778,52 @@ declare module '@strapi/strapi' {
       'cards.goal-card': CardsGoalCard;
       'cards.hero-slide': CardsHeroSlide;
       'cards.offer-card': CardsOfferCard;
+      'cards.person': CardsPerson;
       'cards.program-link': CardsProgramLink;
       'cards.stat-card': CardsStatCard;
       'cards.team-member': CardsTeamMember;
       'cards.testimonial': CardsTestimonial;
+      'elements.benefit-card': ElementsBenefitCard;
       'elements.button': ElementsButton;
+      'elements.feature': ElementsFeature;
+      'elements.icon-text-item': ElementsIconTextItem;
       'elements.link-chip': ElementsLinkChip;
       'elements.list-item': ElementsListItem;
       'elements.meta-tag': ElementsMetaTag;
+      'elements.qa-pair': ElementsQaPair;
+      'elements.student-review': ElementsStudentReview;
+      'elements.video-item': ElementsVideoItem;
       'sections.achieve-goals': SectionsAchieveGoals;
       'sections.advantage-grid': SectionsAdvantageGrid;
       'sections.ai-journey': SectionsAiJourney;
       'sections.categories': SectionsCategories;
+      'sections.contact-form': SectionsContactForm;
       'sections.enterprise-solutions': SectionsEnterpriseSolutions;
       'sections.explore-careers': SectionsExploreCareers;
+      'sections.faq-section': SectionsFaqSection;
       'sections.features-grid': SectionsFeaturesGrid;
+      'sections.gallery-grid': SectionsGalleryGrid;
       'sections.hero-slider': SectionsHeroSlider;
       'sections.institutional-programs': SectionsInstitutionalPrograms;
+      'sections.instructor': SectionsInstructor;
       'sections.keyword-scroll': SectionsKeywordScroll;
       'sections.learn-next': SectionsLearnNext;
       'sections.learning-formats': SectionsLearningFormats;
+      'sections.media-list': SectionsMediaList;
       'sections.microsoft-spotlight': SectionsMicrosoftSpotlight;
       'sections.news-banner': SectionsNewsBanner;
+      'sections.outcomes': SectionsOutcomes;
+      'sections.overview': SectionsOverview;
       'sections.partners-marquee': SectionsPartnersMarquee;
       'sections.practice-exams': SectionsPracticeExams;
+      'sections.promo-banner': SectionsPromoBanner;
+      'sections.reviews-list': SectionsReviewsList;
+      'sections.rich-text': SectionsRichText;
       'sections.stats-grid': SectionsStatsGrid;
+      'sections.steps': SectionsSteps;
+      'sections.team-grid': SectionsTeamGrid;
       'sections.testimonial-slider': SectionsTestimonialSlider;
+      'sections.why-iqrasity': SectionsWhyIqrasity;
     }
   }
 }

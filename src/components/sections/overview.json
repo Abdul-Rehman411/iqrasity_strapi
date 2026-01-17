@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_sections_overviews",
+  "info": {
+    "displayName": "Overview Section",
+    "icon": "layout",
+    "description": "What you learn, prerequisites, etc."
+  },
+  "options": {},
+  "attributes": {
+    "what_you_learn": {
+      "type": "component",
+      "component": "elements.icon-text-item",
+      "repeatable": true
+    },
+    "skills": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::skill.skill"
+    },
+    "prerequisites": {
+      "type": "component",
+      "component": "elements.list-item",
+      "repeatable": true
+    },
+    "why_iqrasity": {
+      "type": "component",
+      "component": "sections.why-iqrasity",
+      "repeatable": false
+    },
+    "promo_banner": {
+      "type": "component",
+      "component": "sections.promo-banner",
+      "repeatable": false
+    }
+  }
+}

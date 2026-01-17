@@ -26,6 +26,12 @@
       "required": true,
       "unique": true
     },
+    "course_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course-category.course-category",
+      "inversedBy": "courses"
+    },
     "cover_image": {
       "type": "media",
       "multiple": false,
@@ -34,16 +40,32 @@
         "images"
       ]
     },
-    "organization": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::organization.organization",
-      "inversedBy": "courses"
-    },
     "short_description": {
       "type": "text",
       "maxLength": 300,
       "required": true
+    },
+    "languages": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::language.language"
+    },
+    "intro_videos_links": {
+      "type": "component",
+      "component": "elements.video-item",
+      "repeatable": true
+    },
+    "duration_weeks": {
+      "type": "integer"
+    },
+    "total_duration_hours": {
+      "type": "integer"
+    },
+    "total_duration_minutes": {
+      "type": "integer"
+    },
+    "assignments_count_override": {
+      "type": "integer"
     },
     "rating": {
       "type": "decimal",
@@ -66,6 +88,9 @@
     "original_price": {
       "type": "decimal"
     },
+    "discount_deadline_days": {
+      "type": "integer"
+    },
     "currency": {
       "type": "string",
       "default": "USD"
@@ -74,6 +99,16 @@
       "type": "component",
       "component": "elements.meta-tag",
       "repeatable": true
+    },
+    "course_layout": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.overview",
+        "sections.outcomes",
+        "sections.instructor",
+        "sections.reviews-list",
+        "sections.faq-section"
+      ]
     }
   }
 }

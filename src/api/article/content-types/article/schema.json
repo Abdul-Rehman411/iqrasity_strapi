@@ -12,14 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "cover_image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "title": {
       "type": "string",
       "required": true
@@ -34,9 +26,19 @@
       "maxLength": 300,
       "required": true
     },
-    "content": {
-      "type": "blocks",
-      "required": true
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    },
+    "cover_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "category": {
       "type": "relation",
@@ -44,11 +46,9 @@
       "target": "api::article-category.article-category",
       "inversedBy": "articles"
     },
-    "seo_title": {
-      "type": "string"
-    },
-    "seo_description": {
-      "type": "text"
+    "content": {
+      "type": "blocks",
+      "required": true
     },
     "read_time": {
       "type": "integer",

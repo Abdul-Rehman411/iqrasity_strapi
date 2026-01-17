@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_elements_icon_text_items",
+  "info": {
+    "displayName": "Icon Text Item",
+    "icon": "star",
+    "description": "Simple icon and text pair"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "text": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

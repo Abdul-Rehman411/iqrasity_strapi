@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_sections_instructors",
+  "info": {
+    "displayName": "Instructor"
+  },
+  "options": {},
+  "attributes": {
+    "instructor_rating": {
+      "type": "string"
+    },
+    "instructor_review_count": {
+      "type": "string"
+    },
+    "instructor_students_count": {
+      "type": "string"
+    },
+    "instructor_courses_count": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

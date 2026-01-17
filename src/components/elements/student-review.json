@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_elements_student_reviews",
+  "info": {
+    "displayName": "Student Review",
+    "icon": "user",
+    "description": "Review with user details and time ago"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "rating": {
+      "type": "decimal",
+      "min": 1,
+      "max": 5,
+      "required": true
+    },
+    "comment": {
+      "type": "text",
+      "required": true
+    },
+    "time_ago_val": {
+      "type": "integer",
+      "required": true
+    },
+    "time_ago_unit": {
+      "type": "enumeration",
+      "enum": ["Days", "Weeks", "Months", "Years"],
+      "default": "Days",
+      "required": true
+    }
+  }
+}

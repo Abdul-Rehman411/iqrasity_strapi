@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_gallery_grids",
+  "info": {
+    "displayName": "Gallery Grid",
+    "description": "Grid of images"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images", "videos"]
+    }
+  }
+}

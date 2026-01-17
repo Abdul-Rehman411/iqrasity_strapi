@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_elements_video_items",
+  "info": {
+    "displayName": "Video Item",
+    "icon": "play",
+    "description": "Video Title and URL"
+  },
+  "options": {},
+  "attributes": {
+    "Video_link": {
+      "type": "string"
+    }
+  }
+}

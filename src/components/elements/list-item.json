@@ -2,15 +2,14 @@
   "collectionName": "components_elements_list_items",
   "info": {
     "displayName": "List Item",
-    "description": ""
+    "icon": "list",
+    "description": "Simple text item for lists"
   },
   "options": {},
   "attributes": {
     "text": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }
-
-
-

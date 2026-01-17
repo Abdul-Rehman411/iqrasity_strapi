@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_sections_contact_forms",
+  "info": {
+    "displayName": "Contact Form",
+    "description": "Contact form block"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "email_placeholder": {
+      "type": "string",
+      "default": "your@email.com"
+    },
+    "submit_label": {
+      "type": "string",
+      "default": "Send Message"
+    }
+  }
+}
