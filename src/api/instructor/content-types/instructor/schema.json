@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "instructors",
+  "info": {
+    "singularName": "instructor",
+    "pluralName": "instructors",
+    "displayName": "Instructor",
+    "description": "Centralized instructor profiles linked to courses and Moodle"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "role": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "rating": {
+      "type": "string"
+    },
+    "review_count": {
+      "type": "string"
+    },
+    "students_count": {
+      "type": "string"
+    },
+    "courses_count": {
+      "type": "string"
+    },
+    "moodle_user_id": {
+      "type": "integer"
+    }
+  }
+}

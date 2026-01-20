@@ -16,6 +16,11 @@
     },
     "instructor_courses_count": {
       "type": "string"
+    },
+    "instructor_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::instructor.instructor"
     }
   },
   "config": {}

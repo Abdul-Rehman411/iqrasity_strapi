@@ -9,11 +9,7 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": false
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "Name": {
       "type": "string",
@@ -32,6 +28,21 @@
         "videos",
         "audios"
       ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "linkedin_url": {
+      "type": "string",
+      "default": "#"
+    },
+    "twitter_url": {
+      "type": "string",
+      "default": "#"
+    },
+    "Order": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

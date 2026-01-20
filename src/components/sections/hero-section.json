@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_elements_features",
+  "collectionName": "components_sections_hero_sections",
   "info": {
-    "displayName": "Feature",
-    "description": "Simple feature item with title and description"
+    "displayName": "Hero Section",
+    "description": "Reusable hero section for pages"
   },
   "options": {},
   "attributes": {
@@ -13,7 +13,7 @@
     "description": {
       "type": "text"
     },
-    "icons": {
+    "background_image": {
       "type": "media",
       "multiple": false,
       "required": false,

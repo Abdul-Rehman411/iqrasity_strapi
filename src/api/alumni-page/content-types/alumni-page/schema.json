@@ -1,0 +1,50 @@
+{
+  "kind": "singleType",
+  "collectionName": "alumni_pages",
+  "info": {
+    "singularName": "alumni-page",
+    "pluralName": "alumni-pages",
+    "displayName": "Alumni Page",
+    "description": "Iqrasity Alumni Page content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero": {
+      "type": "component",
+      "component": "sections.hero-section",
+      "repeatable": false,
+      "required": true
+    },
+    "community_title": {
+      "type": "string",
+      "default": "iqrasity Alumni Community"
+    },
+    "community_description": {
+      "type": "text",
+      "required": true
+    },
+    "community_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "community_cta_text": {
+      "type": "string",
+      "default": "Join Now"
+    },
+    "community_cta_link": {
+      "type": "string",
+      "default": "#"
+    },
+    "content": {
+      "type": "blocks",
+      "required": false
+    }
+  }
+}

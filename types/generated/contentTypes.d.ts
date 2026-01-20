@@ -430,6 +430,92 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAboutPageAboutPage extends Struct.SingleTypeSchema {
+  collectionName: 'about_pages';
+  info: {
+    description: 'About Us page content';
+    displayName: 'About Page';
+    pluralName: 'about-pages';
+    singularName: 'about-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    hero: Schema.Attribute.Component<'sections.hero-section', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::about-page.about-page'
+    > &
+      Schema.Attribute.Private;
+    mission_description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    mission_image: Schema.Attribute.Media<'images'>;
+    mission_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'About us'>;
+    publishedAt: Schema.Attribute.DateTime;
+    team_description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Highly qualified and experienced faculty.'>;
+    team_members: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::team-member.team-member'
+    >;
+    team_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Our Team'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    values: Schema.Attribute.Component<'elements.feature', true>;
+    values_description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'The principles that guide every decision we make.'>;
+    values_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Our Core Values'>;
+  };
+}
+
+export interface ApiAlumniPageAlumniPage extends Struct.SingleTypeSchema {
+  collectionName: 'alumni_pages';
+  info: {
+    description: 'Iqrasity Alumni Page content';
+    displayName: 'Alumni Page';
+    pluralName: 'alumni-pages';
+    singularName: 'alumni-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    community_cta_link: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'#'>;
+    community_cta_text: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Join Now'>;
+    community_description: Schema.Attribute.Text & Schema.Attribute.Required;
+    community_image: Schema.Attribute.Media<'images'>;
+    community_title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'iqrasity Alumni Community'>;
+    content: Schema.Attribute.Blocks;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    hero: Schema.Attribute.Component<'sections.hero-section', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::alumni-page.alumni-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiArticleCategoryArticleCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'article_categories';
@@ -549,6 +635,51 @@ export interface ApiBrandBrand extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
+  collectionName: 'contact_pages';
+  info: {
+    displayName: 'Contact Page';
+    pluralName: 'contact-pages';
+    singularName: 'contact-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    contact_title: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email_address: Schema.Attribute.String;
+    email_icon: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    email_title: Schema.Attribute.String;
+    hero: Schema.Attribute.Component<'sections.hero-section', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-page.contact-page'
+    > &
+      Schema.Attribute.Private;
+    location_address: Schema.Attribute.String;
+    location_icon: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    location_title: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whatsapp_icon: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    whatsapp_number: Schema.Attribute.String;
+    whatsapp_title: Schema.Attribute.String;
+  };
+}
+
 export interface ApiCourseCategoryCourseCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'course_categories';
@@ -608,6 +739,10 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   attributes: {
     assignments_count_override: Schema.Attribute.Integer;
     card_tags: Schema.Attribute.Component<'elements.meta-tag', true>;
+    certificate_type: Schema.Attribute.Enumeration<
+      ['completion', 'achievement', 'professional', 'none']
+    > &
+      Schema.Attribute.DefaultTo<'professional'>;
     course_category: Schema.Attribute.Relation<
       'manyToOne',
       'api::course-category.course-category'
@@ -627,6 +762,8 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'USD'>;
     discount_deadline_days: Schema.Attribute.Integer;
+    duration: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'3-6 Months'>;
     duration_weeks: Schema.Attribute.Integer;
     enrolled_count: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'1.2k'>;
@@ -635,6 +772,10 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::language.language'
     >;
+    level: Schema.Attribute.Enumeration<
+      ['beginner', 'intermediate', 'advanced']
+    > &
+      Schema.Attribute.DefaultTo<'beginner'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -645,6 +786,8 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     original_price: Schema.Attribute.Decimal;
+    pace: Schema.Attribute.Enumeration<['self_paced', 'instructor_led']> &
+      Schema.Attribute.DefaultTo<'self_paced'>;
     price: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
     rating: Schema.Attribute.Decimal &
@@ -716,6 +859,43 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInstructorInstructor extends Struct.CollectionTypeSchema {
+  collectionName: 'instructors';
+  info: {
+    description: 'Centralized instructor profiles linked to courses and Moodle';
+    displayName: 'Instructor';
+    pluralName: 'instructors';
+    singularName: 'instructor';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    avatar: Schema.Attribute.Media<'images'>;
+    bio: Schema.Attribute.RichText;
+    courses_count: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::instructor.instructor'
+    > &
+      Schema.Attribute.Private;
+    moodle_user_id: Schema.Attribute.Integer;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.String;
+    review_count: Schema.Attribute.String;
+    role: Schema.Attribute.String;
+    students_count: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -855,17 +1035,14 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
-  pluginOptions: {
-    i18n: {
-      localized: false;
-    };
-  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.String;
     Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
+    linkedin_url: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -873,8 +1050,10 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     Name: Schema.Attribute.String & Schema.Attribute.Required;
+    Order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
     Role: Schema.Attribute.String;
+    twitter_url: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1391,12 +1570,16 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::about-page.about-page': ApiAboutPageAboutPage;
+      'api::alumni-page.alumni-page': ApiAlumniPageAlumniPage;
       'api::article-category.article-category': ApiArticleCategoryArticleCategory;
       'api::article.article': ApiArticleArticle;
       'api::brand.brand': ApiBrandBrand;
+      'api::contact-page.contact-page': ApiContactPageContactPage;
       'api::course-category.course-category': ApiCourseCategoryCourseCategory;
       'api::course.course': ApiCourseCourse;
       'api::home-page.home-page': ApiHomePageHomePage;
+      'api::instructor.instructor': ApiInstructorInstructor;
       'api::language.language': ApiLanguageLanguage;
       'api::legal-page.legal-page': ApiLegalPageLegalPage;
       'api::partner.partner': ApiPartnerPartner;

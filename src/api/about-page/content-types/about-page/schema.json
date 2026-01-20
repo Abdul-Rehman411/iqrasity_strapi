@@ -1,0 +1,64 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page",
+    "description": "About Us page content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero": {
+      "type": "component",
+      "component": "sections.hero-section",
+      "repeatable": false,
+      "required": true
+    },
+    "mission_title": {
+      "type": "string",
+      "default": "About us"
+    },
+    "mission_description": {
+      "type": "richtext",
+      "required": true
+    },
+    "mission_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "values_title": {
+      "type": "string",
+      "default": "Our Core Values"
+    },
+    "values_description": {
+      "type": "text",
+      "default": "The principles that guide every decision we make."
+    },
+    "values": {
+      "type": "component",
+      "component": "elements.feature",
+      "repeatable": true
+    },
+    "team_title": {
+      "type": "string",
+      "default": "Our Team"
+    },
+    "team_description": {
+      "type": "text",
+      "default": "Highly qualified and experienced faculty."
+    },
+    "team_members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-member.team-member"
+    }
+  }
+}

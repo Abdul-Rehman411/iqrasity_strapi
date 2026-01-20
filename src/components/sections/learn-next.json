@@ -12,10 +12,40 @@
     "description": {
       "type": "text"
     },
-    "items": {
-      "type": "component",
-      "component": "cards.course-preview",
-      "repeatable": true
+    "list_custom_course": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "courses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course.course",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "list_custom_course"
+            },
+            true
+          ]
+        }
+      }
+    },
+    "course_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course-category.course-category",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "list_custom_course"
+            },
+            true
+          ]
+        }
+      }
     }
   }
 }

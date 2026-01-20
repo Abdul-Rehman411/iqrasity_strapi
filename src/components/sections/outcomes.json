@@ -10,6 +10,13 @@
       "type": "component",
       "repeatable": true,
       "component": "elements.list-item"
+    },
+    "outcome_icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   },
   "config": {}

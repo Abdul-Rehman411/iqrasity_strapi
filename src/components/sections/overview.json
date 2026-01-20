@@ -12,6 +12,13 @@
       "component": "elements.icon-text-item",
       "repeatable": true
     },
+    "what_you_learn_icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "skills": {
       "type": "relation",
       "relation": "oneToMany",

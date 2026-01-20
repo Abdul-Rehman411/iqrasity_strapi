@@ -1,0 +1,72 @@
+{
+  "kind": "singleType",
+  "collectionName": "contact_pages",
+  "info": {
+    "singularName": "contact-page",
+    "pluralName": "contact-pages",
+    "displayName": "Contact Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero": {
+      "type": "component",
+      "component": "sections.hero-section",
+      "repeatable": false,
+      "required": true
+    },
+    "contact_title": {
+      "type": "string"
+    },
+    "location_icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "location_title": {
+      "type": "string"
+    },
+    "location_address": {
+      "type": "string"
+    },
+    "email_icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "email_title": {
+      "type": "string"
+    },
+    "email_address": {
+      "type": "string"
+    },
+    "whatsapp_icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "whatsapp_title": {
+      "type": "string"
+    },
+    "whatsapp_number": {
+      "type": "string"
+    }
+  }
+}

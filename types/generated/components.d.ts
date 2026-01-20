@@ -31,10 +31,10 @@ export interface CardsFormatCard extends Struct.ComponentSchema {
     displayName: 'Format Card';
   };
   attributes: {
-    button: Schema.Attribute.Component<'elements.button', false>;
     description: Schema.Attribute.Text;
     features: Schema.Attribute.Component<'elements.list-item', true>;
     image: Schema.Attribute.Media<'images'>;
+    link: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
@@ -219,9 +219,7 @@ export interface ElementsFeature extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
-    icon: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-    link: Schema.Attribute.Component<'elements.button', false>;
+    icons: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -262,6 +260,7 @@ export interface ElementsListItem extends Struct.ComponentSchema {
     icon: 'list';
   };
   attributes: {
+    link: Schema.Attribute.String;
     text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -468,6 +467,19 @@ export interface SectionsGalleryGrid extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_sections_hero_sections';
+  info: {
+    description: 'Reusable hero section for pages';
+    displayName: 'Hero Section';
+  };
+  attributes: {
+    background_image: Schema.Attribute.Media<'images'>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SectionsHeroSlider extends Struct.ComponentSchema {
   collectionName: 'components_sections_hero_sliders';
   info: {
@@ -489,9 +501,11 @@ export interface SectionsInstitutionalPrograms extends Struct.ComponentSchema {
     left_button: Schema.Attribute.Component<'elements.button', false>;
     left_items: Schema.Attribute.Component<'elements.list-item', true>;
     left_title: Schema.Attribute.String;
+    left_title_link: Schema.Attribute.String;
     right_button: Schema.Attribute.Component<'elements.button', false>;
     right_items: Schema.Attribute.Component<'elements.list-item', true>;
     right_title: Schema.Attribute.String;
+    right_title_link: Schema.Attribute.String;
   };
 }
 
@@ -502,6 +516,10 @@ export interface SectionsInstructor extends Struct.ComponentSchema {
   };
   attributes: {
     instructor_courses_count: Schema.Attribute.String;
+    instructor_profile: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::instructor.instructor'
+    >;
     instructor_rating: Schema.Attribute.String;
     instructor_review_count: Schema.Attribute.String;
     instructor_students_count: Schema.Attribute.String;
@@ -529,8 +547,15 @@ export interface SectionsLearnNext extends Struct.ComponentSchema {
     displayName: 'Learn Next';
   };
   attributes: {
+    course_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::course-category.course-category'
+    >;
+    courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
     description: Schema.Attribute.Text;
-    items: Schema.Attribute.Component<'cards.course-preview', true>;
+    list_custom_course: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
     title: Schema.Attribute.String;
   };
 }
@@ -569,6 +594,7 @@ export interface SectionsMicrosoftSpotlight extends Struct.ComponentSchema {
     image: Schema.Attribute.Media<'images'>;
     programs: Schema.Attribute.Component<'cards.program-link', true>;
     subtitle: Schema.Attribute.String;
+    subtitle_link: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
@@ -608,6 +634,7 @@ export interface SectionsOutcomes extends Struct.ComponentSchema {
   };
   attributes: {
     items: Schema.Attribute.Component<'elements.list-item', true>;
+    outcome_icon: Schema.Attribute.Media<'images'>;
   };
 }
 
@@ -623,6 +650,7 @@ export interface SectionsOverview extends Struct.ComponentSchema {
     promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
     what_you_learn: Schema.Attribute.Component<'elements.icon-text-item', true>;
+    what_you_learn_icon: Schema.Attribute.Media<'images'>;
     why_iqrasity: Schema.Attribute.Component<'sections.why-iqrasity', false>;
   };
 }
@@ -803,6 +831,7 @@ declare module '@strapi/strapi' {
       'sections.faq-section': SectionsFaqSection;
       'sections.features-grid': SectionsFeaturesGrid;
       'sections.gallery-grid': SectionsGalleryGrid;
+      'sections.hero-section': SectionsHeroSection;
       'sections.hero-slider': SectionsHeroSlider;
       'sections.institutional-programs': SectionsInstitutionalPrograms;
       'sections.instructor': SectionsInstructor;

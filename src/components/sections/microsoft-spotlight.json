@@ -6,10 +6,26 @@
   },
   "options": {},
   "attributes": {
-    "title": { "type": "string" },
-    "subtitle": { "type": "string" },
-    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
-    "programs": { "type": "component", "repeatable": true, "component": "cards.program-link" }
+    "title": {
+      "type": "string"
+    },
+    "subtitle_link": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "programs": {
+      "type": "component",
+      "component": "cards.program-link",
+      "repeatable": true
+    }
   }
 }
-

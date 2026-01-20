@@ -6,12 +6,37 @@
   },
   "options": {},
   "attributes": {
-    "left_title": { "type": "string" },
-    "left_items": { "type": "component", "repeatable": true, "component": "elements.list-item" },
-    "left_button": { "type": "component", "repeatable": false, "component": "elements.button" },
-    "right_title": { "type": "string" },
-    "right_items": { "type": "component", "repeatable": true, "component": "elements.list-item" },
-    "right_button": { "type": "component", "repeatable": false, "component": "elements.button" }
+    "left_title": {
+      "type": "string"
+    },
+    "left_title_link": {
+      "type": "string"
+    },
+    "left_items": {
+      "type": "component",
+      "component": "elements.list-item",
+      "repeatable": true
+    },
+    "left_button": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": false
+    },
+    "right_title": {
+      "type": "string"
+    },
+    "right_title_link": {
+      "type": "string"
+    },
+    "right_items": {
+      "type": "component",
+      "component": "elements.list-item",
+      "repeatable": true
+    },
+    "right_button": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": false
+    }
   }
 }
-

@@ -12,6 +12,37 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "pace": {
+      "type": "enumeration",
+      "enum": [
+        "self_paced",
+        "instructor_led"
+      ],
+      "default": "self_paced"
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ],
+      "default": "beginner"
+    },
+    "certificate_type": {
+      "type": "enumeration",
+      "enum": [
+        "completion",
+        "achievement",
+        "professional",
+        "none"
+      ],
+      "default": "professional"
+    },
+    "duration": {
+      "type": "string",
+      "default": "3-6 Months"
+    },
     "title": {
       "type": "string",
       "required": true
