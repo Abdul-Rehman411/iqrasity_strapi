@@ -14,30 +14,30 @@
   "attributes": {
     "pace": {
       "type": "enumeration",
+      "default": "self_paced",
       "enum": [
         "self_paced",
         "instructor_led"
-      ],
-      "default": "self_paced"
+      ]
     },
     "level": {
       "type": "enumeration",
+      "default": "beginner",
       "enum": [
         "beginner",
         "intermediate",
         "advanced"
-      ],
-      "default": "beginner"
+      ]
     },
     "certificate_type": {
       "type": "enumeration",
+      "default": "professional",
       "enum": [
         "completion",
         "achievement",
         "professional",
         "none"
-      ],
-      "default": "professional"
+      ]
     },
     "duration": {
       "type": "string",
@@ -125,11 +125,6 @@
     "currency": {
       "type": "string",
       "default": "USD"
-    },
-    "card_tags": {
-      "type": "component",
-      "component": "elements.meta-tag",
-      "repeatable": true
     },
     "course_layout": {
       "type": "dynamiczone",
