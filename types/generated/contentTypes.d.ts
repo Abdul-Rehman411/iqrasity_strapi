@@ -738,7 +738,6 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
   attributes: {
     assignments_count_override: Schema.Attribute.Integer;
-    card_tags: Schema.Attribute.Component<'elements.meta-tag', true>;
     certificate_type: Schema.Attribute.Enumeration<
       ['completion', 'achievement', 'professional', 'none']
     > &
