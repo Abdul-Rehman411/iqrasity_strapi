@@ -8,6 +8,16 @@ const MOODLE_TOKEN = 'bfa54fc57e132203b185b9783a958076';
 module.exports = ({ strapi }) => {
   let isSyncing = false;
   let autoSyncTimer = null;
+  let lastSyncTime = 0;
+
+  const log = (msg, type = 'info') => strapi.log[type](`[MoodleSync] ${msg}`);
+  
+  const formatInterval = (ms) => {
+    if (ms >= 86400000) return `${ms / 86400000}h`;
+    if (ms >= 3600000) return `${ms / 3600000}h`;
+    if (ms >= 60000) return `${ms / 60000}m`;
+    return `${ms / 1000}s`;
+  };
 
   const syncService = {
     async initAutoSync() {
@@ -21,15 +31,40 @@ module.exports = ({ strapi }) => {
       if (autoSyncTimer) clearInterval(autoSyncTimer);
       
       const intervalMs = Math.max(10000, interval); // Min 10s
-      strapi.log.info(`MoodleSync: Auto-sync started with interval ${intervalMs}ms`);
+      log(`Auto-sync scheduled (Interval: ${intervalMs}ms)`);
 
       autoSyncTimer = setInterval(async () => {
+         // SAFETY DOUBLE-CHECK: Fetch settings again to ensure we are still enabled
+         // This prevents "Zombie" syncs if the timer wasn't cleared properly
+         const currentSettings = await syncService.getSettings();
+         if (!currentSettings.enabled) {
+             log('Auto-sync disabled. Stopping timer.', 'warn');
+             clearInterval(autoSyncTimer);
+             autoSyncTimer = null;
+             return;
+         }
+
+         // RATE LIMITING
+         const now = Date.now();
+         if (now - lastSyncTime < 15000) {
+             log('Skipping sync: Rate limit cooldown (15s).', 'warn');
+             return;
+         }
+
          try {
-            strapi.log.info('MoodleSync: Automated Sync Triggered');
+            log('Automated Sync Triggered', 'info');
+            // Check if already syncing
+            if (isSyncing) {
+                log('Skipping sync: Another sync process is active.', 'warn');
+                return;
+            }
+
             await syncService.syncCategories();
             await syncService.syncCourses({ isManual: false });
+            lastSyncTime = Date.now();
+            log('Automated Sync Completed Successfully.');
          } catch (err) {
-            strapi.log.error(`MoodleSync Auto Error: ${err.message}`);
+            log(`Auto Sync Error: ${err.message}`, 'error');
          }
       }, intervalMs);
     },
@@ -38,7 +73,7 @@ module.exports = ({ strapi }) => {
       if (autoSyncTimer) {
         clearInterval(autoSyncTimer);
         autoSyncTimer = null;
-        strapi.log.info('MoodleSync: Auto-sync stopped');
+        log('Auto-sync stopped (Timer Cleared).');
       }
     },
 
@@ -56,6 +91,9 @@ module.exports = ({ strapi }) => {
     },
 
     async updateSettings(newSettings) {
+      // Debug: Log what we received
+      log(`Settings update received: ${JSON.stringify(newSettings)}`, 'debug');
+      
       const pluginStore = strapi.store({
         environment: '',
         type: 'plugin',
@@ -67,6 +105,19 @@ module.exports = ({ strapi }) => {
       const settings = { ...prevSettings, ...newSettings };
       
       await pluginStore.set({ value: settings });
+
+      // Log all setting changes
+      if (newSettings.hasOwnProperty('enabled')) {
+        if (settings.enabled) {
+          log('✓ Auto-sync ENABLED by user', 'info');
+        } else {
+          log('✗ Auto-sync DISABLED by user', 'warn');
+        }
+      }
+      
+      if (newSettings.hasOwnProperty('interval') && newSettings.interval !== prevSettings.interval) {
+        log(`⏱ Sync interval changed: ${formatInterval(prevSettings.interval)} → ${formatInterval(settings.interval)}`, 'info');
+      }
 
       // Apply changes immediately
       if (settings.enabled) {

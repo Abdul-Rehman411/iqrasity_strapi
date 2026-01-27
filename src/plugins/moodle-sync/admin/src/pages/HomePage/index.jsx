@@ -57,9 +57,14 @@ const HomePage = () => {
   useEffect(() => {
     fetchStats();
     fetchSettings();
-    const interval = setInterval(fetchStats, 10000); // Poll every 10s for stats
-    return () => clearInterval(interval);
   }, []);
+
+  // Poll stats dynamic to sync interval
+  useEffect(() => {
+    const pollInterval = Math.max(10000, settings.interval);
+    const interval = setInterval(fetchStats, pollInterval);
+    return () => clearInterval(interval);
+  }, [settings.interval]);
 
   const handleSync = async () => {
     if (loading) return; 
@@ -87,8 +92,8 @@ const HomePage = () => {
     setSettings(newSettings); // Optimistic UI update
 
     try {
-      await put('/moodle-sync/settings', newSettings);
-      // Wait a bit to show it saved? Not really needed if optimistic.
+      // Only send the changed property to avoid false logs
+      await put('/moodle-sync/settings', { [key]: value });
     } catch (err) {
       console.error('Failed to save settings', err);
       // Revert on error
@@ -164,8 +169,7 @@ const HomePage = () => {
                     <Box paddingTop={2}>
                       <Switch 
                         label="Enable Automatic Synchronization" 
-                        visibleLabels 
-                        checked={settings.enabled} 
+                        selected={settings.enabled} 
                         onChange={() => handleSettingsChange('enabled', !settings.enabled)}
                       />
                     </Box>
