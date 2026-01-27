@@ -719,6 +719,8 @@ export interface ApiCourseCategoryCourseCategory
       'oneToMany',
       'api::course-category.course-category'
     >;
+    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    thumbnail_video_link: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -804,6 +806,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 300;
       }>;
+    shortname: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     total_duration_hours: Schema.Attribute.Integer;
@@ -846,6 +849,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'sections.partners-marquee',
         'sections.testimonial-slider',
         'sections.stats-grid',
+        'sections.faq-section',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

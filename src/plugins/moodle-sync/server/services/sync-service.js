@@ -1,0 +1,349 @@
+'use strict';
+
+const CUSTOM_API_URL = 'https://iqrasity.org/iq_api.php';
+const CUSTOM_API_TOKEN = 'iqSyncSec2026Next';
+const MOODLE_URL = 'https://iqrasity.org';
+const MOODLE_TOKEN = 'bfa54fc57e132203b185b9783a958076';
+
+module.exports = ({ strapi }) => {
+  let isSyncing = false;
+  let autoSyncTimer = null;
+
+  const syncService = {
+    async initAutoSync() {
+      const settings = await syncService.getSettings();
+      if (settings.enabled) {
+        syncService.startAutoSync(settings.interval);
+      }
+    },
+
+    startAutoSync(interval) {
+      if (autoSyncTimer) clearInterval(autoSyncTimer);
+      
+      const intervalMs = Math.max(10000, interval); // Min 10s
+      strapi.log.info(`MoodleSync: Auto-sync started with interval ${intervalMs}ms`);
+
+      autoSyncTimer = setInterval(async () => {
+         try {
+            strapi.log.info('MoodleSync: Automated Sync Triggered');
+            await syncService.syncCategories();
+            await syncService.syncCourses({ isManual: false });
+         } catch (err) {
+            strapi.log.error(`MoodleSync Auto Error: ${err.message}`);
+         }
+      }, intervalMs);
+    },
+
+    stopAutoSync() {
+      if (autoSyncTimer) {
+        clearInterval(autoSyncTimer);
+        autoSyncTimer = null;
+        strapi.log.info('MoodleSync: Auto-sync stopped');
+      }
+    },
+
+    async getSettings() {
+      const pluginStore = strapi.store({
+        environment: '',
+        type: 'plugin',
+        name: 'moodle-sync',
+        key: 'settings',
+      });
+
+      const settings = await pluginStore.get();
+      // Default settings
+      return settings || { enabled: true, interval: 30000 };
+    },
+
+    async updateSettings(newSettings) {
+      const pluginStore = strapi.store({
+        environment: '',
+        type: 'plugin',
+        name: 'moodle-sync',
+        key: 'settings',
+      });
+
+      const prevSettings = await syncService.getSettings();
+      const settings = { ...prevSettings, ...newSettings };
+      
+      await pluginStore.set({ value: settings });
+
+      // Apply changes immediately
+      if (settings.enabled) {
+        // Restart with new interval
+        syncService.startAutoSync(settings.interval);
+      } else {
+        syncService.stopAutoSync();
+      }
+
+      return settings;
+    },
+
+    async syncAll() {
+      if (isSyncing) {
+        throw new Error('A synchronization process is already running.');
+      }
+      
+      try {
+        isSyncing = true;
+        const categoriesResult = await syncService.syncCategories();
+        // Manual sync triggers full update including enrolled_count
+        const coursesResult = await syncService.syncCourses({ isManual: true });
+        
+        return {
+          categories: categoriesResult,
+          courses: coursesResult
+        };
+      } finally {
+        isSyncing = false;
+      }
+    },
+
+    async syncCategories() {
+      strapi.log.info('MoodleSync: Starting Categories Synchronization');
+      
+      try {
+        // 1. Fetch from Moodle
+        const params = new URLSearchParams({
+          wstoken: MOODLE_TOKEN,
+          wsfunction: 'core_course_get_categories',
+          moodlewsrestformat: 'json'
+        });
+
+        const response = await fetch(`${MOODLE_URL}/webservice/rest/server.php?${params}`);
+        const categories = await response.json();
+
+        if (categories.exception) {
+          throw new Error(`Moodle API Error: ${categories.message}`);
+        }
+
+        const visibleCategories = categories.filter(c => c.visible === 1);
+        strapi.log.info(`MoodleSync: Found ${visibleCategories.length} visible categories.`);
+
+        // 2. Fetch Existing from Strapi
+        // In Strapi 5, to find all documents including drafts, we might need no extra params
+        const strapiCategories = await strapi.documents('api::course-category.course-category').findMany({
+          fields: ['moodle_id', 'name'],
+        });
+        
+        strapi.log.info(`MoodleSync: Fetched ${strapiCategories.length} existing categories.`);
+
+        const strapiMap = new Map();
+        strapiCategories.forEach(c => {
+          if (c.moodle_id) strapiMap.set(String(c.moodle_id), c);
+        });
+
+        const processedMoodleIds = new Set();
+        let created = 0, updated = 0;
+
+        // 3. Sync Loop
+        for (const cat of visibleCategories) {
+          const mId = String(cat.id);
+          processedMoodleIds.add(mId);
+          const existing = strapiMap.get(mId);
+
+          const name = syncService.decodeHtml(cat.name);
+          const description = syncService.convertToBlocks(cat.description);
+
+          if (!existing) {
+            // CREATE
+            await strapi.documents('api::course-category.course-category').create({
+              data: {
+                name,
+                moodle_id: cat.id,
+                description,
+                slug: syncService.slugify(name),
+              },
+              status: 'published' // Create and Publish
+            });
+            created++;
+          } else {
+            // UDPATE existing category with new data from Moodle
+            await strapi.documents('api::course-category.course-category').update({
+              documentId: existing.documentId,
+              data: {
+                name,
+                description,
+                slug: syncService.slugify(name),
+              }
+            });
+
+            // Ensure it is published
+            await strapi.documents('api::course-category.course-category').publish({
+              documentId: existing.documentId,
+            });
+            updated++;
+          }
+        }
+
+        // 4. Handle Orphans (Unpublish items no longer in Moodle)
+        let unpublished = 0;
+        for (const [mId, sCat] of strapiMap) {
+          if (!processedMoodleIds.has(mId)) {
+            await strapi.documents('api::course-category.course-category').unpublish({
+              documentId: sCat.documentId,
+            });
+            unpublished++;
+          }
+        }
+
+        return { created, updated, unpublished };
+
+      } catch (error) {
+        strapi.log.error(`MoodleSync Categories Error: ${error.message}`);
+        throw error;
+      }
+    },
+
+    async syncCourses({ isManual = false } = {}) {
+      strapi.log.info(`MoodleSync: Starting Courses Synchronization (Manual: ${isManual})`);
+
+      try {
+        // 1. Fetch from Moodle
+        const response = await fetch(`${CUSTOM_API_URL}?action=courses`, {
+          headers: { 'X-IQ-TOKEN': CUSTOM_API_TOKEN }
+        });
+        const json = await response.json();
+        
+        if (json.status !== 'success') throw new Error(json.message);
+        const moodleCourses = json.data || [];
+        strapi.log.info(`MoodleSync: Found ${moodleCourses.length} courses from Moodle.`);
+
+        // 2. Fetch Data dependencies
+        const strapiCourses = await strapi.documents('api::course.course').findMany({
+          fields: ['moodle_course_id', 'title'],
+        });
+
+        const categories = await strapi.documents('api::course-category.course-category').findMany({
+          fields: ['moodle_id']
+        });
+        const catMap = new Map();
+        categories.forEach(c => catMap.set(parseInt(c.moodle_id), c.documentId));
+
+        const EnglishLang = await strapi.documents('api::language.language').findFirst({
+          filters: { name: 'English' }
+        });
+
+        const strapiMap = new Map();
+        strapiCourses.forEach(c => {
+          if (c.moodle_course_id) strapiMap.set(parseInt(c.moodle_course_id), c);
+        });
+
+        let created = 0, updated = 0, skipped = 0;
+        const seenMoodleIds = new Set();
+
+        // 3. Sync Loop
+        for (const mCourse of moodleCourses) {
+          const mId = parseInt(mCourse.id);
+          seenMoodleIds.add(mId);
+          const existing = strapiMap.get(mId);
+
+          const title = syncService.decodeHtml(mCourse.fullname);
+          const catDocId = catMap.get(parseInt(mCourse.category_id));
+
+          if (!catDocId) {
+            strapi.log.warn(`MoodleSync: Skipping ${title} - Category ${mCourse.category_id} not found.`);
+            skipped++;
+            continue;
+          }
+
+          const price = mCourse.price === 'FREE' ? 0 : parseFloat(mCourse.price) || 0;
+          const short_description = (mCourse.summary || `Learn ${title}`).substring(0, 300);
+
+          const payload = {
+            title,
+            shortname: mCourse.shortname,
+            moodle_course_id: mId,
+            course_category: catDocId,
+            short_description,
+            enrolled_count: String(mCourse.enrolled_students || 0),
+            price,
+            currency: mCourse.currency_symbol || '$',
+            total_duration_hours: parseInt(mCourse.duration_hours) || null,
+            level: (mCourse.level || 'beginner').toLowerCase(),
+            languages: EnglishLang ? [EnglishLang.documentId] : [],
+          };
+
+          if (!existing) {
+            payload.slug = `${mId}-${syncService.slugify(title)}`;
+            await strapi.documents('api::course.course').create({ 
+              data: payload,
+              status: 'published'
+            });
+            created++;
+          } else {
+            // UPDATE existing course with new data
+            
+            // User Request: Only sync enrolled_count on manual run
+            if (!isManual && payload.enrolled_count) {
+               delete payload.enrolled_count;
+            }
+
+            payload.slug = `${mId}-${syncService.slugify(title)}`; // Ensure slug is also synced if title changed
+            
+            await strapi.documents('api::course.course').update({
+              documentId: existing.documentId,
+              data: payload
+            });
+
+            // Always ensure it's published.
+            await strapi.documents('api::course.course').publish({
+              documentId: existing.documentId,
+            });
+            updated++;
+          }
+        }
+
+        // 4. Orphans
+        let unpublished = 0;
+        for (const [mId, sCourse] of strapiMap) {
+          if (!seenMoodleIds.has(mId)) {
+            await strapi.documents('api::course.course').unpublish({
+              documentId: sCourse.documentId,
+            });
+            unpublished++;
+          }
+        }
+
+        return { created, updated, unpublished, skipped };
+
+      } catch (error) {
+        strapi.log.error(`MoodleSync Courses Error: ${error.message}`);
+        throw error;
+      }
+    },
+
+    decodeHtml(html) {
+      if (!html) return '';
+      return html.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"").replace(/&#039;/g, "'");
+    },
+
+    slugify(text) {
+      return text.toString().toLowerCase().trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-');
+    },
+
+    convertToBlocks(text) {
+      if (!text) return [];
+      const plainText = text.replace(/<[^>]*>/g, '').trim();
+      if (!plainText) return [];
+      return [{ type: 'paragraph', children: [{ type: 'text', text: plainText }] }];
+    },
+
+    async getStats() {
+      const courses = await strapi.documents('api::course.course').count();
+      const categories = await strapi.documents('api::course-category.course-category').count();
+      // Assuming cron job runs every 30s, we just return current time as last sync or fetch from a persistent store if implemented.
+      // For now, let's return just counts.
+      return {
+        courses,
+        categories,
+        lastSync: new Date().toISOString() 
+      };
+    }
+  };
+
+  return syncService;
+};

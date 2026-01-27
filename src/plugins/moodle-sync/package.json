@@ -1,0 +1,13 @@
+{
+    "name": "moodle-sync",
+    "version": "1.0.0",
+    "description": "Sync courses and categories from Moodle to Strapi",
+    "strapi": {
+        "name": "moodle-sync",
+        "description": "Sync courses and categories from Moodle to Strapi",
+        "kind": "plugin",
+        "displayName": "Moodle Sync"
+    },
+    "dependencies": {},
+    "devDependencies": {}
+}

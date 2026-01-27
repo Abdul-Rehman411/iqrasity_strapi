@@ -56,6 +56,19 @@
       "relation": "oneToMany",
       "target": "api::course-category.course-category",
       "mappedBy": "parent_category"
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "thumbnail_video_link": {
+      "type": "string"
     }
   }
 }

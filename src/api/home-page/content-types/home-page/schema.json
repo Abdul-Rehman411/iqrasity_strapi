@@ -32,7 +32,8 @@
         "sections.advantage-grid",
         "sections.partners-marquee",
         "sections.testimonial-slider",
-        "sections.stats-grid"
+        "sections.stats-grid",
+        "sections.faq-section"
       ]
     }
   }

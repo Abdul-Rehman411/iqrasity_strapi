@@ -12,6 +12,70 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "shortname": {
+      "type": "string"
+    },
+    "short_description": {
+      "type": "text",
+      "maxLength": 300,
+      "required": true
+    },
+    "moodle_course_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "course_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course-category.course-category",
+      "inversedBy": "courses"
+    },
+    "cover_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "intro_videos_links": {
+      "type": "component",
+      "component": "elements.video-item",
+      "repeatable": true
+    },
+    "languages": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::language.language"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "price": {
+      "type": "decimal",
+      "default": 0
+    },
+    "original_price": {
+      "type": "decimal"
+    },
+    "discount_deadline_days": {
+      "type": "integer"
+    },
+    "duration": {
+      "type": "string",
+      "default": "3-6 Months"
+    },
     "pace": {
       "type": "enumeration",
       "default": "self_paced",
@@ -39,65 +103,6 @@
         "none"
       ]
     },
-    "duration": {
-      "type": "string",
-      "default": "3-6 Months"
-    },
-    "title": {
-      "type": "string",
-      "required": true
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "title",
-      "required": true
-    },
-    "moodle_course_id": {
-      "type": "integer",
-      "required": true,
-      "unique": true
-    },
-    "course_category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::course-category.course-category",
-      "inversedBy": "courses"
-    },
-    "cover_image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "short_description": {
-      "type": "text",
-      "maxLength": 300,
-      "required": true
-    },
-    "languages": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::language.language"
-    },
-    "intro_videos_links": {
-      "type": "component",
-      "component": "elements.video-item",
-      "repeatable": true
-    },
-    "duration_weeks": {
-      "type": "integer"
-    },
-    "total_duration_hours": {
-      "type": "integer"
-    },
-    "total_duration_minutes": {
-      "type": "integer"
-    },
-    "assignments_count_override": {
-      "type": "integer"
-    },
     "rating": {
       "type": "decimal",
       "default": 4.5,
@@ -112,19 +117,17 @@
       "type": "string",
       "default": "1.2k"
     },
-    "price": {
-      "type": "decimal",
-      "default": 0
-    },
-    "original_price": {
-      "type": "decimal"
-    },
-    "discount_deadline_days": {
+    "duration_weeks": {
       "type": "integer"
     },
-    "currency": {
-      "type": "string",
-      "default": "USD"
+    "total_duration_hours": {
+      "type": "integer"
+    },
+    "total_duration_minutes": {
+      "type": "integer"
+    },
+    "assignments_count_override": {
+      "type": "integer"
     },
     "course_layout": {
       "type": "dynamiczone",
