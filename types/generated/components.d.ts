@@ -331,7 +331,7 @@ export interface ElementsVideoItem extends Struct.ComponentSchema {
     icon: 'play';
   };
   attributes: {
-    Video_link: Schema.Attribute.String;
+    Video_link: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
   };
 }
 

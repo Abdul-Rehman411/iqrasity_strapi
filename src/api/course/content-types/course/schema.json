@@ -51,7 +51,8 @@
     "intro_videos_links": {
       "type": "component",
       "component": "elements.video-item",
-      "repeatable": true
+      "repeatable": true,
+      "required": false
     },
     "languages": {
       "type": "relation",
