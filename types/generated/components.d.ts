@@ -520,7 +520,11 @@ export interface SectionsInstructor extends Struct.ComponentSchema {
       'oneToOne',
       'api::instructor.instructor'
     >;
-    instructor_rating: Schema.Attribute.String;
+    instructor_rating: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 5;
+        minLength: 1;
+      }>;
     instructor_review_count: Schema.Attribute.String;
     instructor_students_count: Schema.Attribute.String;
   };

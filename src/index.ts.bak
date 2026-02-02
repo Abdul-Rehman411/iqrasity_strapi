@@ -65,7 +65,7 @@ export default {
 
           const stats = fs.statSync(realPath);
           
-          return await strapi.plugin('upload').service('upload').upload({
+          return await strapi.plugins.upload.services.upload.upload({
               data: {
                   fileInfo: { name: fileName },
               },

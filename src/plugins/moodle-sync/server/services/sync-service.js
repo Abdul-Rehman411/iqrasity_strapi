@@ -172,9 +172,8 @@ module.exports = ({ strapi }) => {
         strapi.log.info(`MoodleSync: Found ${visibleCategories.length} visible categories.`);
 
         // 2. Fetch Existing from Strapi
-        // In Strapi 5, to find all documents including drafts, we might need no extra params
         const strapiCategories = await strapi.documents('api::course-category.course-category').findMany({
-          fields: ['moodle_id', 'name'],
+          fields: ['moodle_id', 'name', 'description', 'slug'],
         });
         
         strapi.log.info(`MoodleSync: Fetched ${strapiCategories.length} existing categories.`);
@@ -205,25 +204,31 @@ module.exports = ({ strapi }) => {
                 description,
                 slug: syncService.slugify(name),
               },
-              status: 'published' // Create and Publish
+              status: 'published'
             });
             created++;
           } else {
-            // UDPATE existing category with new data from Moodle
-            await strapi.documents('api::course-category.course-category').update({
-              documentId: existing.documentId,
-              data: {
-                name,
-                description,
-                slug: syncService.slugify(name),
-              }
-            });
+            // CHANGE DETECTION
+            const hasChanged = existing.name !== name || 
+                               JSON.stringify(existing.description) !== JSON.stringify(description) ||
+                               existing.slug !== syncService.slugify(name);
 
-            // Ensure it is published
-            await strapi.documents('api::course-category.course-category').publish({
-              documentId: existing.documentId,
-            });
-            updated++;
+            if (hasChanged) {
+              await strapi.documents('api::course-category.course-category').update({
+                documentId: existing.documentId,
+                data: {
+                  name,
+                  description,
+                  slug: syncService.slugify(name),
+                }
+              });
+              
+              // Ensure it is published if we updated it
+              await strapi.documents('api::course-category.course-category').publish({
+                documentId: existing.documentId,
+              });
+              updated++;
+            }
           }
         }
 
@@ -262,9 +267,21 @@ module.exports = ({ strapi }) => {
 
         // 2. Fetch Data dependencies
         const strapiCourses = await strapi.documents('api::course.course').findMany({
-          fields: ['moodle_course_id', 'title'],
+          fields: [
+            'moodle_course_id', 
+            'title', 
+            'shortname', 
+            'short_description', 
+            'price', 
+            'currency', 
+            'total_duration_hours', 
+            'level', 
+            'slug',
+            'enrolled_count'
+          ],
+          populate: ['languages', 'course_category']
         });
-
+        
         const categories = await strapi.documents('api::course-category.course-category').findMany({
           fields: ['moodle_id']
         });
@@ -323,25 +340,60 @@ module.exports = ({ strapi }) => {
             });
             created++;
           } else {
-            // UPDATE existing course with new data
+            // CHANGE DETECTION & SAFE MERGE
             
-            // User Request: Only sync enrolled_count on manual run
+            // 1. Language Safety: Only add English if NO languages exist
+            const hasLanguages = existing.languages && existing.languages.length > 0;
+            if (hasLanguages) {
+               delete payload.languages;
+            }
+
+            // 2. Manual Update Overrides
             if (!isManual && payload.enrolled_count) {
                delete payload.enrolled_count;
             }
 
-            payload.slug = `${mId}-${syncService.slugify(title)}`; // Ensure slug is also synced if title changed
-            
-            await strapi.documents('api::course.course').update({
-              documentId: existing.documentId,
-              data: payload
-            });
+            // 3. Category Safety: Only update if changed
+            const existingCatId = existing.course_category?.documentId;
+            if (existingCatId === catDocId) {
+               delete payload.course_category;
+            }
 
-            // Always ensure it's published.
-            await strapi.documents('api::course.course').publish({
-              documentId: existing.documentId,
-            });
-            updated++;
+            // 4. Comparison
+            payload.slug = `${mId}-${syncService.slugify(title)}`;
+            
+            const fieldsToCompare = [
+              'title', 'shortname', 'short_description', 'price', 
+              'currency', 'total_duration_hours', 'level', 'slug', 'enrolled_count'
+            ];
+
+            let hasChanged = false;
+            for (const field of fieldsToCompare) {
+               if (payload.hasOwnProperty(field)) {
+                  // Shallow comparison is sufficient for these primitive fields
+                  if (String(payload[field]) !== String(existing[field] || '')) {
+                     hasChanged = true;
+                     break;
+                  }
+               }
+            }
+
+            // Also check relations if they were not deleted from payload
+            if (payload.course_category || payload.languages) {
+               hasChanged = true;
+            }
+
+            if (hasChanged) {
+              await strapi.documents('api::course.course').update({
+                documentId: existing.documentId,
+                data: payload
+              });
+
+              await strapi.documents('api::course.course').publish({
+                documentId: existing.documentId,
+              });
+              updated++;
+            }
           }
         }
 
