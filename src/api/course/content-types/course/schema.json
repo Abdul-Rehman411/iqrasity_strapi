@@ -112,7 +112,7 @@
     },
     "review_count": {
       "type": "string",
-      "default": "(125)"
+      "default": "125"
     },
     "enrolled_count": {
       "type": "string",
@@ -139,6 +139,11 @@
         "sections.reviews-list",
         "sections.faq-section"
       ]
+    },
+    "related_courses": {
+      "type": "component",
+      "component": "sections.learn-next",
+      "repeatable": true
     }
   }
 }

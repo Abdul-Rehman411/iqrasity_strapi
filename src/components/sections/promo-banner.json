@@ -10,8 +10,10 @@
     "background_image": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images"],
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "heading": {
       "type": "string",
@@ -19,6 +21,9 @@
     },
     "description": {
       "type": "text"
+    },
+    "link": {
+      "type": "string"
     }
   }
 }

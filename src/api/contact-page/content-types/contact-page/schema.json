@@ -20,6 +20,9 @@
     "contact_title": {
       "type": "string"
     },
+    "contact_description": {
+      "type": "string"
+    },
     "location_icon": {
       "type": "media",
       "multiple": false,

@@ -551,8 +551,8 @@ export interface SectionsLearnNext extends Struct.ComponentSchema {
     displayName: 'Learn Next';
   };
   attributes: {
-    course_category: Schema.Attribute.Relation<
-      'oneToOne',
+    course_categories: Schema.Attribute.Relation<
+      'oneToMany',
       'api::course-category.course-category'
     >;
     courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
@@ -701,6 +701,7 @@ export interface SectionsPromoBanner extends Struct.ComponentSchema {
       Schema.Attribute.Required;
     description: Schema.Attribute.Text;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
+    link: Schema.Attribute.String;
   };
 }
 

@@ -32,9 +32,9 @@
         }
       }
     },
-    "course_category": {
+    "course_categories": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::course-category.course-category",
       "conditions": {
         "visible": {

@@ -646,6 +646,7 @@ export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    contact_description: Schema.Attribute.String;
     contact_title: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -800,7 +801,8 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<4.5>;
-    review_count: Schema.Attribute.String & Schema.Attribute.DefaultTo<'(125)'>;
+    related_courses: Schema.Attribute.Component<'sections.learn-next', true>;
+    review_count: Schema.Attribute.String & Schema.Attribute.DefaultTo<'125'>;
     short_description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
