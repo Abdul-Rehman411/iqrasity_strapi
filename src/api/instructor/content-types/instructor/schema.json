@@ -30,7 +30,9 @@
       ]
     },
     "rating": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 5
     },
     "review_count": {
       "type": "string"

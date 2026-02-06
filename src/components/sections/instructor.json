@@ -5,20 +5,6 @@
   },
   "options": {},
   "attributes": {
-    "instructor_rating": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 5
-    },
-    "instructor_review_count": {
-      "type": "string"
-    },
-    "instructor_students_count": {
-      "type": "string"
-    },
-    "instructor_courses_count": {
-      "type": "string"
-    },
     "instructor_profile": {
       "type": "relation",
       "relation": "oneToOne",
