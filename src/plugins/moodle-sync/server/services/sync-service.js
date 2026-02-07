@@ -87,7 +87,7 @@ module.exports = ({ strapi }) => {
 
       const settings = await pluginStore.get();
       // Default settings
-      return settings || { enabled: true, interval: 30000 };
+      return settings || { enabled: false, interval: 30000 };
     },
 
     async updateSettings(newSettings) {

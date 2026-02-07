@@ -31,7 +31,7 @@ const HomePage = () => {
   const [stats, setStats] = useState({ courses: 0, categories: 0, lastSync: 'Never' });
   
   // Settings State
-  const [settings, setSettings] = useState({ enabled: true, interval: 30000 });
+  const [settings, setSettings] = useState({ enabled: false, interval: 30000 });
   const [savingSettings, setSavingSettings] = useState(false);
 
   const { post, get, put } = useFetchClient();
