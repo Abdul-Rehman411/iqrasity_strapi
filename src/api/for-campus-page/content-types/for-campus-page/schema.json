@@ -1,0 +1,77 @@
+{
+    "kind": "singleType",
+    "collectionName": "for_campus_pages",
+    "info": {
+        "singularName": "for-campus-page",
+        "pluralName": "for-campus-pages",
+        "displayName": "For Campus Page",
+        "description": "Content for the For Campus page"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "hero": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.hero-section"
+        },
+        "intro_title": {
+            "type": "string"
+        },
+        "intro_description": {
+            "type": "text"
+        },
+        "intro_image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "intro_button_text": {
+            "type": "string"
+        },
+        "intro_button_link": {
+            "type": "string"
+        },
+        "objectives_title": {
+            "type": "string"
+        },
+        "objectives_description": {
+            "type": "text"
+        },
+        "objectives_items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "elements.feature"
+        },
+        "why_choose_title": {
+            "type": "string"
+        },
+        "why_choose_description": {
+            "type": "text"
+        },
+        "why_choose_items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "elements.list-item"
+        },
+        "why_choose_image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "why_choose_button_text": {
+            "type": "string"
+        },
+        "why_choose_button_link": {
+            "type": "string"
+        }
+    }
+}

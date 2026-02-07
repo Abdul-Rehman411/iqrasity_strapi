@@ -443,9 +443,17 @@ module.exports = ({ strapi }) => {
       return {
         courses,
         categories,
-        lastSync: new Date().toISOString() 
+        lastSync: lastSyncTime ? new Date(lastSyncTime).toISOString() : 'Never'
       };
     }
+  };
+
+  // Hook into syncAll to update time
+  const originalSyncAll = syncService.syncAll;
+  syncService.syncAll = async function() {
+      const result = await originalSyncAll.apply(this);
+      lastSyncTime = Date.now();
+      return result;
   };
 
   return syncService;

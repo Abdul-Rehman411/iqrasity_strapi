@@ -1,0 +1,76 @@
+{
+    "kind": "singleType",
+    "collectionName": "associates_pages",
+    "info": {
+        "singularName": "associates-page",
+        "pluralName": "associates-pages",
+        "displayName": "Associates Page",
+        "description": "Content for the Associates page"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "hero": {
+            "type": "component",
+            "repeatable": false,
+            "component": "sections.hero-section"
+        },
+        "intro_title": {
+            "type": "string"
+        },
+        "intro_description": {
+            "type": "text"
+        },
+        "benefits": {
+            "type": "component",
+            "repeatable": true,
+            "component": "elements.feature"
+        },
+        "steps_title": {
+            "type": "string"
+        },
+        "steps_items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "elements.list-item"
+        },
+        "steps_image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "dashboard_guide_title": {
+            "type": "string"
+        },
+        "dashboard_guide_items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "elements.list-item"
+        },
+        "dashboard_guide_image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "cta_title": {
+            "type": "string"
+        },
+        "cta_description": {
+            "type": "text"
+        },
+        "cta_button_text": {
+            "type": "string"
+        },
+        "cta_button_link": {
+            "type": "string"
+        }
+    }
+}

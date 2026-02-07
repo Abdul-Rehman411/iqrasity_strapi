@@ -13,12 +13,18 @@
     "description": {
       "type": "text"
     },
-    "icons": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
+    "iconLabel": {
+      "type": "string",
+      "enum": [
+        "Network",
+        "TrendingUp",
+        "BookOpen",
+        "Users",
+        "UserPlus",
+        "CheckCircle2",
+        "DollarSign",
+        "LayoutDashboard",
+        "Globe"
       ]
     }
   }

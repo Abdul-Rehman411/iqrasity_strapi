@@ -219,7 +219,7 @@ export interface ElementsFeature extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
-    icons: Schema.Attribute.Media<'images'>;
+    iconLabel: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -262,6 +262,20 @@ export interface ElementsListItem extends Struct.ComponentSchema {
   attributes: {
     link: Schema.Attribute.String;
     text: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsMediaEvent extends Struct.ComponentSchema {
+  collectionName: 'components_elements_media_events';
+  info: {
+    description: 'Event with images for the Media page';
+    displayName: 'Media Event';
+  };
+  attributes: {
+    date_text: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    images: Schema.Attribute.Media<'images', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -814,6 +828,7 @@ declare module '@strapi/strapi' {
       'elements.icon-text-item': ElementsIconTextItem;
       'elements.link-chip': ElementsLinkChip;
       'elements.list-item': ElementsListItem;
+      'elements.media-event': ElementsMediaEvent;
       'elements.meta-tag': ElementsMetaTag;
       'elements.qa-pair': ElementsQaPair;
       'elements.student-review': ElementsStudentReview;

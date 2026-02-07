@@ -601,6 +601,103 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAssociatesPageAssociatesPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'associates_pages';
+  info: {
+    description: 'Content for the Associates page';
+    displayName: 'Associates Page';
+    pluralName: 'associates-pages';
+    singularName: 'associates-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    benefits: Schema.Attribute.Component<'elements.feature', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta_button_link: Schema.Attribute.String;
+    cta_button_text: Schema.Attribute.String;
+    cta_description: Schema.Attribute.Text;
+    cta_title: Schema.Attribute.String;
+    dashboard_guide_image: Schema.Attribute.Media<'images'>;
+    dashboard_guide_items: Schema.Attribute.Component<
+      'elements.list-item',
+      true
+    >;
+    dashboard_guide_title: Schema.Attribute.String;
+    hero: Schema.Attribute.Component<'sections.hero-section', false>;
+    intro_description: Schema.Attribute.Text;
+    intro_title: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::associates-page.associates-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    steps_image: Schema.Attribute.Media<'images'>;
+    steps_items: Schema.Attribute.Component<'elements.list-item', true>;
+    steps_title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiBecomeInstructorPageBecomeInstructorPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'become_instructor_pages';
+  info: {
+    description: 'Content for the Become an Instructor page';
+    displayName: 'Become Instructor Page';
+    pluralName: 'become-instructor-pages';
+    singularName: 'become-instructor-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    create_course_button_link: Schema.Attribute.String;
+    create_course_button_text: Schema.Attribute.String;
+    create_course_description: Schema.Attribute.Text;
+    create_course_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    create_course_title: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta_button_link: Schema.Attribute.String;
+    cta_button_text: Schema.Attribute.String;
+    cta_description: Schema.Attribute.Text;
+    cta_image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    cta_title: Schema.Attribute.String;
+    hero: Schema.Attribute.Component<'sections.hero-section', false>;
+    how_it_works_items: Schema.Attribute.Component<'elements.feature', true>;
+    how_it_works_title: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::become-instructor-page.become-instructor-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    success_stories: Schema.Attribute.Component<
+      'sections.testimonial-slider',
+      false
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    why_teach_description: Schema.Attribute.Text;
+    why_teach_items: Schema.Attribute.Component<'elements.feature', true>;
+    why_teach_title: Schema.Attribute.String;
+  };
+}
+
 export interface ApiBrandBrand extends Struct.SingleTypeSchema {
   collectionName: 'brands';
   info: {
@@ -819,6 +916,79 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiForCampusPageForCampusPage extends Struct.SingleTypeSchema {
+  collectionName: 'for_campus_pages';
+  info: {
+    description: 'Content for the For Campus page';
+    displayName: 'For Campus Page';
+    pluralName: 'for-campus-pages';
+    singularName: 'for-campus-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    hero: Schema.Attribute.Component<'sections.hero-section', false>;
+    intro_button_link: Schema.Attribute.String;
+    intro_button_text: Schema.Attribute.String;
+    intro_description: Schema.Attribute.Text;
+    intro_image: Schema.Attribute.Media<'images'>;
+    intro_title: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::for-campus-page.for-campus-page'
+    > &
+      Schema.Attribute.Private;
+    objectives_description: Schema.Attribute.Text;
+    objectives_items: Schema.Attribute.Component<'elements.feature', true>;
+    objectives_title: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    why_choose_button_link: Schema.Attribute.String;
+    why_choose_button_text: Schema.Attribute.String;
+    why_choose_description: Schema.Attribute.Text;
+    why_choose_image: Schema.Attribute.Media<'images'>;
+    why_choose_items: Schema.Attribute.Component<'elements.list-item', true>;
+    why_choose_title: Schema.Attribute.String;
+  };
+}
+
+export interface ApiGalleryPageGalleryPage extends Struct.SingleTypeSchema {
+  collectionName: 'gallery_pages';
+  info: {
+    description: 'Content for the Gallery page';
+    displayName: 'Gallery Page';
+    pluralName: 'gallery-pages';
+    singularName: 'gallery-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    events: Schema.Attribute.Component<'elements.media-event', true>;
+    hero: Schema.Attribute.Component<'sections.hero-section', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::gallery-page.gallery-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
   collectionName: 'home_pages';
   info: {
@@ -969,6 +1139,36 @@ export interface ApiLegalPageLegalPage extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMediaPageMediaPage extends Struct.SingleTypeSchema {
+  collectionName: 'media_pages';
+  info: {
+    description: 'Content for the Media page';
+    displayName: 'Media Page';
+    pluralName: 'media-pages';
+    singularName: 'media-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    events: Schema.Attribute.Component<'elements.media-event', true>;
+    hero: Schema.Attribute.Component<'sections.hero-section', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::media-page.media-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1583,14 +1783,19 @@ declare module '@strapi/strapi' {
       'api::alumni-page.alumni-page': ApiAlumniPageAlumniPage;
       'api::article-category.article-category': ApiArticleCategoryArticleCategory;
       'api::article.article': ApiArticleArticle;
+      'api::associates-page.associates-page': ApiAssociatesPageAssociatesPage;
+      'api::become-instructor-page.become-instructor-page': ApiBecomeInstructorPageBecomeInstructorPage;
       'api::brand.brand': ApiBrandBrand;
       'api::contact-page.contact-page': ApiContactPageContactPage;
       'api::course-category.course-category': ApiCourseCategoryCourseCategory;
       'api::course.course': ApiCourseCourse;
+      'api::for-campus-page.for-campus-page': ApiForCampusPageForCampusPage;
+      'api::gallery-page.gallery-page': ApiGalleryPageGalleryPage;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::instructor.instructor': ApiInstructorInstructor;
       'api::language.language': ApiLanguageLanguage;
       'api::legal-page.legal-page': ApiLegalPageLegalPage;
+      'api::media-page.media-page': ApiMediaPageMediaPage;
       'api::partner.partner': ApiPartnerPartner;
       'api::skill.skill': ApiSkillSkill;
       'api::team-member.team-member': ApiTeamMemberTeamMember;

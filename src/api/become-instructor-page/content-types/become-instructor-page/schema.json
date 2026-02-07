@@ -1,0 +1,90 @@
+{
+  "kind": "singleType",
+  "collectionName": "become_instructor_pages",
+  "info": {
+    "singularName": "become-instructor-page",
+    "pluralName": "become-instructor-pages",
+    "displayName": "Become Instructor Page",
+    "description": "Content for the Become an Instructor page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero": {
+      "type": "component",
+      "component": "sections.hero-section",
+      "repeatable": false
+    },
+    "how_it_works_title": {
+      "type": "string"
+    },
+    "how_it_works_items": {
+      "type": "component",
+      "component": "elements.feature",
+      "repeatable": true
+    },
+    "why_teach_title": {
+      "type": "string"
+    },
+    "why_teach_description": {
+      "type": "text"
+    },
+    "why_teach_items": {
+      "type": "component",
+      "component": "elements.feature",
+      "repeatable": true
+    },
+    "success_stories": {
+      "type": "component",
+      "component": "sections.testimonial-slider",
+      "repeatable": false
+    },
+    "create_course_title": {
+      "type": "string"
+    },
+    "create_course_description": {
+      "type": "text"
+    },
+    "create_course_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "create_course_button_text": {
+      "type": "string"
+    },
+    "create_course_button_link": {
+      "type": "string"
+    },
+    "cta_title": {
+      "type": "string"
+    },
+    "cta_description": {
+      "type": "text"
+    },
+    "cta_button_text": {
+      "type": "string"
+    },
+    "cta_button_link": {
+      "type": "string"
+    },
+    "cta_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
