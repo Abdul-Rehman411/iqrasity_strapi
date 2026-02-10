@@ -43,8 +43,7 @@
       "default": "#"
     },
     "content": {
-      "type": "blocks",
-      "required": false
+      "type": "richtext"
     }
   }
 }

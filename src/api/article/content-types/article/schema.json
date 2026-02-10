@@ -46,14 +46,17 @@
       "target": "api::article-category.article-category",
       "inversedBy": "articles"
     },
-    "content": {
-      "type": "blocks",
-      "required": true
-    },
     "read_time": {
       "type": "integer",
       "default": 5,
       "min": 1
+    },
+    "content": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     }
   }
 }

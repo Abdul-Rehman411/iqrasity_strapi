@@ -497,7 +497,7 @@ export interface ApiAlumniPageAlumniPage extends Struct.SingleTypeSchema {
     community_image: Schema.Attribute.Media<'images'>;
     community_title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'iqrasity Alumni Community'>;
-    content: Schema.Attribute.Blocks;
+    content: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -566,7 +566,13 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::article-category.article-category'
     >;
-    content: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     cover_image: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -884,6 +890,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     moodle_course_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    org_logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     original_price: Schema.Attribute.Decimal;
     pace: Schema.Attribute.Enumeration<['self_paced', 'instructor_led']> &
       Schema.Attribute.DefaultTo<'self_paced'>;
@@ -910,6 +917,39 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     title: Schema.Attribute.String & Schema.Attribute.Required;
     total_duration_hours: Schema.Attribute.Integer;
     total_duration_minutes: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFaqPageFaqPage extends Struct.SingleTypeSchema {
+  collectionName: 'faq_pages';
+  info: {
+    description: 'Content for the main FAQ page';
+    displayName: 'FAQ Page';
+    pluralName: 'faq-pages';
+    singularName: 'faq-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    faqs: Schema.Attribute.Component<'sections.faq-section', false>;
+    hero: Schema.Attribute.Component<'sections.hero-section', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::faq-page.faq-page'
+    > &
+      Schema.Attribute.Private;
+    metaDescription: Schema.Attribute.Text;
+    metaTitle: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1139,6 +1179,70 @@ export interface ApiLegalPageLegalPage extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMarketingPopupMarketingPopup
+  extends Struct.SingleTypeSchema {
+  collectionName: 'marketing_popups';
+  info: {
+    description: 'Manage global marketing popups';
+    displayName: 'Marketing Popup';
+    pluralName: 'marketing-popups';
+    singularName: 'marketing-popup';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    background_color: Schema.Attribute.Enumeration<
+      ['white', 'black', 'primary', 'accent']
+    > &
+      Schema.Attribute.DefaultTo<'white'>;
+    content: Schema.Attribute.RichText;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta_link: Schema.Attribute.String;
+    cta_text: Schema.Attribute.String;
+    delay_seconds: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    end_date: Schema.Attribute.DateTime;
+    frequency: Schema.Attribute.Enumeration<
+      ['every-time', 'once-session', 'once-ever']
+    > &
+      Schema.Attribute.DefaultTo<'once-session'>;
+    image: Schema.Attribute.Media<'images'>;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::marketing-popup.marketing-popup'
+    > &
+      Schema.Attribute.Private;
+    position: Schema.Attribute.Enumeration<
+      ['center', 'bottom-right', 'top-bar']
+    > &
+      Schema.Attribute.DefaultTo<'center'>;
+    publishedAt: Schema.Attribute.DateTime;
+    scroll_percent: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<50>;
+    show_on_pages: Schema.Attribute.Text & Schema.Attribute.DefaultTo<'*'>;
+    start_date: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    trigger_type: Schema.Attribute.Enumeration<
+      ['on-load', 'exit-intent', 'scroll', 'timer']
+    > &
+      Schema.Attribute.DefaultTo<'on-load'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1789,12 +1893,14 @@ declare module '@strapi/strapi' {
       'api::contact-page.contact-page': ApiContactPageContactPage;
       'api::course-category.course-category': ApiCourseCategoryCourseCategory;
       'api::course.course': ApiCourseCourse;
+      'api::faq-page.faq-page': ApiFaqPageFaqPage;
       'api::for-campus-page.for-campus-page': ApiForCampusPageForCampusPage;
       'api::gallery-page.gallery-page': ApiGalleryPageGalleryPage;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::instructor.instructor': ApiInstructorInstructor;
       'api::language.language': ApiLanguageLanguage;
       'api::legal-page.legal-page': ApiLegalPageLegalPage;
+      'api::marketing-popup.marketing-popup': ApiMarketingPopupMarketingPopup;
       'api::media-page.media-page': ApiMediaPageMediaPage;
       'api::partner.partner': ApiPartnerPartner;
       'api::skill.skill': ApiSkillSkill;

@@ -40,6 +40,16 @@
       "target": "api::course-category.course-category",
       "inversedBy": "courses"
     },
+    "org_logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
     "cover_image": {
       "type": "media",
       "multiple": false,
