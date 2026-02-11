@@ -140,6 +140,21 @@
     "assignments_count_override": {
       "type": "integer"
     },
+    "Live_Session": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.live-session",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "pace"
+            },
+            "instructor_led"
+          ]
+        }
+      }
+    },
     "course_layout": {
       "type": "dynamiczone",
       "components": [

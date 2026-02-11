@@ -1,0 +1,19 @@
+{
+    "collectionName": "components_elements_daily_schedules",
+    "info": {
+        "displayName": "Daily Schedule",
+        "description": "For courses running every day",
+        "icon": "calendar"
+    },
+    "options": {},
+    "attributes": {
+        "start_time": {
+            "type": "time",
+            "required": true
+        },
+        "end_time": {
+            "type": "time",
+            "required": true
+        }
+    }
+}

@@ -211,6 +211,19 @@ export interface ElementsButton extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsDailySchedule extends Struct.ComponentSchema {
+  collectionName: 'components_elements_daily_schedules';
+  info: {
+    description: 'For courses running every day';
+    displayName: 'Daily Schedule';
+    icon: 'calendar';
+  };
+  attributes: {
+    end_time: Schema.Attribute.Time & Schema.Attribute.Required;
+    start_time: Schema.Attribute.Time & Schema.Attribute.Required;
+  };
+}
+
 export interface ElementsFeature extends Struct.ComponentSchema {
   collectionName: 'components_elements_features';
   info: {
@@ -305,6 +318,68 @@ export interface ElementsQaPair extends Struct.ComponentSchema {
   attributes: {
     answer: Schema.Attribute.RichText & Schema.Attribute.Required;
     question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsRangeSchedule extends Struct.ComponentSchema {
+  collectionName: 'components_elements_range_schedules';
+  info: {
+    description: 'For courses running from one day to another (e.g., Mon-Fri)';
+    displayName: 'Range Schedule';
+    icon: 'calendar-range';
+  };
+  attributes: {
+    end_day: Schema.Attribute.Enumeration<
+      [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ]
+    > &
+      Schema.Attribute.Required;
+    end_time: Schema.Attribute.Time & Schema.Attribute.Required;
+    start_day: Schema.Attribute.Enumeration<
+      [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ]
+    > &
+      Schema.Attribute.Required;
+    start_time: Schema.Attribute.Time & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsSelectiveDaysSchedule extends Struct.ComponentSchema {
+  collectionName: 'components_elements_selective_days_schedules';
+  info: {
+    description: 'Individual day schedule for selective days';
+    displayName: 'Selective Days Schedule Item';
+    icon: 'calendar-days';
+  };
+  attributes: {
+    day: Schema.Attribute.Enumeration<
+      [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ]
+    > &
+      Schema.Attribute.Required;
+    end_time: Schema.Attribute.Time & Schema.Attribute.Required;
+    start_time: Schema.Attribute.Time & Schema.Attribute.Required;
   };
 }
 
@@ -582,6 +657,48 @@ export interface SectionsLearningFormats extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsLiveSession extends Struct.ComponentSchema {
+  collectionName: 'components_sections_live_sessions';
+  info: {
+    displayName: 'Live Session Section';
+    icon: 'play';
+  };
+  attributes: {
+    button_1_label: Schema.Attribute.String;
+    button_1_url: Schema.Attribute.String;
+    button_2_label: Schema.Attribute.String;
+    button_2_url: Schema.Attribute.String;
+    daily_schedule: Schema.Attribute.Component<
+      'elements.daily-schedule',
+      false
+    >;
+    end_date: Schema.Attribute.Date & Schema.Attribute.Private;
+    is_visible: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    note: Schema.Attribute.Text;
+    range_schedule: Schema.Attribute.Component<
+      'elements.range-schedule',
+      false
+    >;
+    schedule_type: Schema.Attribute.Enumeration<
+      ['Daily', 'Selective Days', 'Range']
+    > &
+      Schema.Attribute.Required;
+    selective_days_schedule: Schema.Attribute.Component<
+      'elements.selective-days-schedule',
+      true
+    >;
+    start_date: Schema.Attribute.Date & Schema.Attribute.Required;
+    thumbnail: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    timezone: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Pakistan Standard Time (PKT)'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Interactive Live Session'>;
+    video_url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'https://video.iqrasity.org/embed/a5b25ae6-41ae-4c5a-a126-caaef3f0bf48 '>;
+  };
+}
+
 export interface SectionsMediaList extends Struct.ComponentSchema {
   collectionName: 'components_sections_media_lists';
   info: {
@@ -824,6 +941,7 @@ declare module '@strapi/strapi' {
       'cards.testimonial': CardsTestimonial;
       'elements.benefit-card': ElementsBenefitCard;
       'elements.button': ElementsButton;
+      'elements.daily-schedule': ElementsDailySchedule;
       'elements.feature': ElementsFeature;
       'elements.icon-text-item': ElementsIconTextItem;
       'elements.link-chip': ElementsLinkChip;
@@ -831,6 +949,8 @@ declare module '@strapi/strapi' {
       'elements.media-event': ElementsMediaEvent;
       'elements.meta-tag': ElementsMetaTag;
       'elements.qa-pair': ElementsQaPair;
+      'elements.range-schedule': ElementsRangeSchedule;
+      'elements.selective-days-schedule': ElementsSelectiveDaysSchedule;
       'elements.student-review': ElementsStudentReview;
       'elements.video-item': ElementsVideoItem;
       'sections.achieve-goals': SectionsAchieveGoals;
@@ -850,6 +970,7 @@ declare module '@strapi/strapi' {
       'sections.keyword-scroll': SectionsKeywordScroll;
       'sections.learn-next': SectionsLearnNext;
       'sections.learning-formats': SectionsLearningFormats;
+      'sections.live-session': SectionsLiveSession;
       'sections.media-list': SectionsMediaList;
       'sections.microsoft-spotlight': SectionsMicrosoftSpotlight;
       'sections.news-banner': SectionsNewsBanner;

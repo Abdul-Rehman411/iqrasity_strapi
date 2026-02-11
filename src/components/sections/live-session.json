@@ -1,0 +1,112 @@
+{
+  "collectionName": "components_sections_live_sessions",
+  "info": {
+    "displayName": "Live Session Section",
+    "icon": "play"
+  },
+  "options": {},
+  "attributes": {
+    "is_visible": {
+      "type": "boolean",
+      "default": false
+    },
+    "title": {
+      "type": "string",
+      "default": "Interactive Live Session"
+    },
+    "schedule_type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Daily",
+        "Selective Days",
+        "Range"
+      ]
+    },
+    "daily_schedule": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "schedule_type"
+            },
+            "Daily"
+          ]
+        }
+      },
+      "component": "elements.daily-schedule",
+      "repeatable": false
+    },
+    "selective_days_schedule": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "schedule_type"
+            },
+            "Selective Days"
+          ]
+        }
+      },
+      "component": "elements.selective-days-schedule",
+      "repeatable": true
+    },
+    "range_schedule": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "schedule_type"
+            },
+            "Range"
+          ]
+        }
+      },
+      "component": "elements.range-schedule",
+      "repeatable": false
+    },
+    "video_url": {
+      "type": "string",
+      "default": "https://video.iqrasity.org/embed/a5b25ae6-41ae-4c5a-a126-caaef3f0bf48 ",
+      "required": true
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "start_date": {
+      "type": "date",
+      "required": true
+    },
+    "end_date": {
+      "type": "date",
+      "private": true
+    },
+    "timezone": {
+      "type": "string",
+      "default": "Pakistan Standard Time (PKT)"
+    },
+    "button_1_label": {
+      "type": "string"
+    },
+    "button_1_url": {
+      "type": "string"
+    },
+    "button_2_label": {
+      "type": "string"
+    },
+    "button_2_url": {
+      "type": "string"
+    },
+    "note": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+    "collectionName": "components_elements_range_schedules",
+    "info": {
+        "displayName": "Range Schedule",
+        "description": "For courses running from one day to another (e.g., Mon-Fri)",
+        "icon": "calendar-range"
+    },
+    "options": {},
+    "attributes": {
+        "start_day": {
+            "type": "enumeration",
+            "enum": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "required": true
+        },
+        "end_day": {
+            "type": "enumeration",
+            "enum": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "required": true
+        },
+        "start_time": {
+            "type": "time",
+            "required": true
+        },
+        "end_time": {
+            "type": "time",
+            "required": true
+        }
+    }
+}

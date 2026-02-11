@@ -881,6 +881,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       ['beginner', 'intermediate', 'advanced']
     > &
       Schema.Attribute.DefaultTo<'beginner'>;
+    Live_Session: Schema.Attribute.Component<'sections.live-session', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

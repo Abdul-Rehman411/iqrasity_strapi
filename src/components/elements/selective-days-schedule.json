@@ -1,0 +1,32 @@
+{
+    "collectionName": "components_elements_selective_days_schedules",
+    "info": {
+        "displayName": "Selective Days Schedule Item",
+        "description": "Individual day schedule for selective days",
+        "icon": "calendar-days"
+    },
+    "options": {},
+    "attributes": {
+        "day": {
+            "type": "enumeration",
+            "enum": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "required": true
+        },
+        "start_time": {
+            "type": "time",
+            "required": true
+        },
+        "end_time": {
+            "type": "time",
+            "required": true
+        }
+    }
+}
