@@ -432,7 +432,9 @@ export interface ElementsVideoItem extends Struct.ComponentSchema {
     icon: 'play';
   };
   attributes: {
+    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     Video_link: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
+    video_title: Schema.Attribute.String;
   };
 }
 
@@ -789,6 +791,7 @@ export interface SectionsOverview extends Struct.ComponentSchema {
     icon: 'layout';
   };
   attributes: {
+    course_skills: Schema.Attribute.Text;
     prerequisites: Schema.Attribute.Component<'elements.list-item', true>;
     promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;

@@ -859,7 +859,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     certificate_type: Schema.Attribute.Enumeration<
       ['completion', 'achievement', 'professional', 'none']
     > &
-      Schema.Attribute.DefaultTo<'professional'>;
+      Schema.Attribute.DefaultTo<'completion'>;
     course_category: Schema.Attribute.Relation<
       'manyToOne',
       'api::course-category.course-category'
@@ -1349,7 +1349,6 @@ export interface ApiSkillSkill extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

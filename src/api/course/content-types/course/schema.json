@@ -106,7 +106,7 @@
     },
     "certificate_type": {
       "type": "enumeration",
-      "default": "professional",
+      "default": "completion",
       "enum": [
         "completion",
         "achievement",

@@ -24,6 +24,9 @@
       "relation": "oneToMany",
       "target": "api::skill.skill"
     },
+    "course_skills": {
+      "type": "text"
+    },
     "prerequisites": {
       "type": "component",
       "component": "elements.list-item",

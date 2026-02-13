@@ -10,6 +10,19 @@
     "Video_link": {
       "type": "string",
       "default": "#"
+    },
+    "video_title": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }
