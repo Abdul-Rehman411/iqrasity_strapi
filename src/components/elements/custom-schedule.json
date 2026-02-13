@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_elements_custom_schedules",
+  "info": {
+    "displayName": "custom_schedule"
+  },
+  "options": {},
+  "attributes": {
+    "custom_schedule_text": {
+      "type": "string"
+    },
+    "start_time": {
+      "type": "time"
+    },
+    "end_time": {
+      "type": "time"
+    }
+  },
+  "config": {}
+}

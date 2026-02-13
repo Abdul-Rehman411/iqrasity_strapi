@@ -20,7 +20,8 @@
       "enum": [
         "Daily",
         "Selective Days",
-        "Range"
+        "Range",
+        "Custom"
       ]
     },
     "daily_schedule": {
@@ -67,6 +68,21 @@
       },
       "component": "elements.range-schedule",
       "repeatable": false
+    },
+    "custom_schedule": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "schedule_type"
+            },
+            "Custom"
+          ]
+        }
+      },
+      "component": "elements.custom-schedule",
+      "repeatable": true
     },
     "video_url": {
       "type": "string",

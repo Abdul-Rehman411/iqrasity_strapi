@@ -801,7 +801,13 @@ export interface ApiCourseCategoryCourseCategory
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Blocks;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     is_organization: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -897,6 +903,11 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     moodle_course_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    offered_or_sponsored: Schema.Attribute.Enumeration<
+      ['None', 'Offered By', 'Sponsored By']
+    > &
+      Schema.Attribute.DefaultTo<'None'>;
+    offered_or_sponsored_by: Schema.Attribute.String;
     org_logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     original_price: Schema.Attribute.Decimal;
     pace: Schema.Attribute.Enumeration<['self_paced', 'instructor_led']> &

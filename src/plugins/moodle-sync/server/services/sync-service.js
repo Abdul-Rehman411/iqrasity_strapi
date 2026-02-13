@@ -193,7 +193,7 @@ module.exports = ({ strapi }) => {
           const existing = strapiMap.get(mId);
 
           const name = syncService.decodeHtml(cat.name);
-          const description = syncService.convertToBlocks(cat.description);
+          const description = cat.description || '';
 
           if (!existing) {
             // CREATE
@@ -209,26 +209,8 @@ module.exports = ({ strapi }) => {
             created++;
           } else {
             // CHANGE DETECTION
-            const hasChanged = existing.name !== name || 
-                               JSON.stringify(existing.description) !== JSON.stringify(description) ||
-                               existing.slug !== syncService.slugify(name);
-
-            if (hasChanged) {
-              await strapi.documents('api::course-category.course-category').update({
-                documentId: existing.documentId,
-                data: {
-                  name,
-                  description,
-                  slug: syncService.slugify(name),
-                }
-              });
-              
-              // Ensure it is published if we updated it
-              await strapi.documents('api::course-category.course-category').publish({
-                documentId: existing.documentId,
-              });
-              updated++;
-            }
+            // SAFETY: User request - Do NOT overwrite existing details.
+            // We skip the update logic intentionally.
           }
         }
 
@@ -357,6 +339,14 @@ module.exports = ({ strapi }) => {
             const existingCatId = existing.course_category?.documentId;
             if (existingCatId === catDocId) {
                delete payload.course_category;
+            }
+
+            // 4. CONTENT PROTECTION (User Request)
+            // If course exists, do NOT overwrite these fields:
+            if (existing) {
+                delete payload.short_description;
+                delete payload.level;
+                delete payload.total_duration_hours;
             }
 
             // 4. Comparison

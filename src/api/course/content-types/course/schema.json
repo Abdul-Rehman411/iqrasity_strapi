@@ -177,6 +177,28 @@
       "type": "component",
       "component": "sections.learn-next",
       "repeatable": true
+    },
+    "offered_or_sponsored": {
+      "type": "enumeration",
+      "default": "None",
+      "enum": [
+        "None",
+        "Offered By",
+        "Sponsored By"
+      ]
+    },
+    "offered_or_sponsored_by": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "offered_or_sponsored"
+            },
+            "None"
+          ]
+        }
+      }
     }
   }
 }

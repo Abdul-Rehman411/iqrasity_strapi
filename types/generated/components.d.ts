@@ -211,6 +211,18 @@ export interface ElementsButton extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsCustomSchedule extends Struct.ComponentSchema {
+  collectionName: 'components_elements_custom_schedules';
+  info: {
+    displayName: 'custom_schedule';
+  };
+  attributes: {
+    custom_schedule_text: Schema.Attribute.String;
+    end_time: Schema.Attribute.Time;
+    start_time: Schema.Attribute.Time;
+  };
+}
+
 export interface ElementsDailySchedule extends Struct.ComponentSchema {
   collectionName: 'components_elements_daily_schedules';
   info: {
@@ -668,6 +680,10 @@ export interface SectionsLiveSession extends Struct.ComponentSchema {
     button_1_url: Schema.Attribute.String;
     button_2_label: Schema.Attribute.String;
     button_2_url: Schema.Attribute.String;
+    custom_schedule: Schema.Attribute.Component<
+      'elements.custom-schedule',
+      true
+    >;
     daily_schedule: Schema.Attribute.Component<
       'elements.daily-schedule',
       false
@@ -680,7 +696,7 @@ export interface SectionsLiveSession extends Struct.ComponentSchema {
       false
     >;
     schedule_type: Schema.Attribute.Enumeration<
-      ['Daily', 'Selective Days', 'Range']
+      ['Daily', 'Selective Days', 'Range', 'Custom']
     > &
       Schema.Attribute.Required;
     selective_days_schedule: Schema.Attribute.Component<
@@ -941,6 +957,7 @@ declare module '@strapi/strapi' {
       'cards.testimonial': CardsTestimonial;
       'elements.benefit-card': ElementsBenefitCard;
       'elements.button': ElementsButton;
+      'elements.custom-schedule': ElementsCustomSchedule;
       'elements.daily-schedule': ElementsDailySchedule;
       'elements.feature': ElementsFeature;
       'elements.icon-text-item': ElementsIconTextItem;

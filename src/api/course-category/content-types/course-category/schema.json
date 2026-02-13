@@ -25,9 +25,6 @@
       "type": "integer",
       "unique": true
     },
-    "description": {
-      "type": "blocks"
-    },
     "logo": {
       "type": "media",
       "multiple": false,
@@ -38,6 +35,13 @@
     "is_organization": {
       "type": "boolean",
       "default": false
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "courses": {
       "type": "relation",
