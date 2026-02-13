@@ -844,6 +844,12 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
   attributes: {
     assignments_count_override: Schema.Attribute.Integer;
+    certificate_currency: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 3;
+        minLength: 1;
+      }>;
+    certificate_price: Schema.Attribute.String;
     certificate_type: Schema.Attribute.Enumeration<
       ['completion', 'achievement', 'professional', 'none']
     > &

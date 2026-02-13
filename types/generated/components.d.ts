@@ -287,7 +287,7 @@ export interface ElementsMediaEvent extends Struct.ComponentSchema {
   attributes: {
     date_text: Schema.Attribute.String;
     description: Schema.Attribute.Text;
-    images: Schema.Attribute.Media<'images', true>;
+    images: Schema.Attribute.Media<'images' | 'videos', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -687,7 +687,7 @@ export interface SectionsLiveSession extends Struct.ComponentSchema {
       'elements.selective-days-schedule',
       true
     >;
-    start_date: Schema.Attribute.Date & Schema.Attribute.Required;
+    start_date: Schema.Attribute.Date;
     thumbnail: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     timezone: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Pakistan Standard Time (PKT)'>;

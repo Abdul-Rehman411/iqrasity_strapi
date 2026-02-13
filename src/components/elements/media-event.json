@@ -1,28 +1,29 @@
 {
-    "collectionName": "components_elements_media_events",
-    "info": {
-        "displayName": "Media Event",
-        "description": "Event with images for the Media page"
+  "collectionName": "components_elements_media_events",
+  "info": {
+    "displayName": "Media Event",
+    "description": "Event with images for the Media page"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "options": {},
-    "attributes": {
-        "title": {
-            "type": "string",
-            "required": true
-        },
-        "description": {
-            "type": "text"
-        },
-        "date_text": {
-            "type": "string"
-        },
-        "images": {
-            "type": "media",
-            "multiple": true,
-            "required": false,
-            "allowedTypes": [
-                "images"
-            ]
-        }
+    "description": {
+      "type": "text"
+    },
+    "date_text": {
+      "type": "string"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
     }
+  }
 }

@@ -114,6 +114,14 @@
         "none"
       ]
     },
+    "certificate_currency": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 3
+    },
+    "certificate_price": {
+      "type": "string"
+    },
     "rating": {
       "type": "decimal",
       "default": 4.5,
@@ -142,8 +150,6 @@
     },
     "Live_Session": {
       "type": "component",
-      "repeatable": false,
-      "component": "sections.live-session",
       "conditions": {
         "visible": {
           "==": [
@@ -153,7 +159,9 @@
             "instructor_led"
           ]
         }
-      }
+      },
+      "component": "sections.live-session",
+      "repeatable": false
     },
     "course_layout": {
       "type": "dynamiczone",
