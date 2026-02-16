@@ -458,6 +458,7 @@ export interface ApiAboutPageAboutPage extends Struct.SingleTypeSchema {
     mission_title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'About us'>;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     team_description: Schema.Attribute.Text &
       Schema.Attribute.DefaultTo<'Highly qualified and experienced faculty.'>;
     team_members: Schema.Attribute.Relation<
@@ -510,6 +511,7 @@ export interface ApiAlumniPageAlumniPage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -644,6 +646,7 @@ export interface ApiAssociatesPageAssociatesPage
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     steps_image: Schema.Attribute.Media<'images'>;
     steps_items: Schema.Attribute.Component<'elements.list-item', true>;
     steps_title: Schema.Attribute.String;
@@ -691,6 +694,7 @@ export interface ApiBecomeInstructorPageBecomeInstructorPage
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     success_stories: Schema.Attribute.Component<
       'sections.testimonial-slider',
       false
@@ -773,6 +777,7 @@ export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
     >;
     location_title: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -824,6 +829,7 @@ export interface ApiCourseCategoryCourseCategory
       'api::course-category.course-category'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     sub_categories: Schema.Attribute.Relation<
       'oneToMany',
@@ -925,6 +931,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<4.5>;
     related_courses: Schema.Attribute.Component<'sections.learn-next', true>;
     review_count: Schema.Attribute.String & Schema.Attribute.DefaultTo<'125'>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     short_description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -968,6 +975,7 @@ export interface ApiFaqPageFaqPage extends Struct.SingleTypeSchema {
     metaDescription: Schema.Attribute.Text;
     metaTitle: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1005,6 +1013,7 @@ export interface ApiForCampusPageForCampusPage extends Struct.SingleTypeSchema {
     objectives_items: Schema.Attribute.Component<'elements.feature', true>;
     objectives_title: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1041,6 +1050,7 @@ export interface ApiGalleryPageGalleryPage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1092,6 +1102,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1291,6 +1302,7 @@ export interface ApiMediaPageMediaPage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

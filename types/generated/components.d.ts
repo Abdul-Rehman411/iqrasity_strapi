@@ -944,6 +944,28 @@ export interface SectionsWhyIqrasity extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSeo extends Struct.ComponentSchema {
+  collectionName: 'components_shared_seos';
+  info: {
+    description: '';
+    displayName: 'seo';
+    icon: 'search';
+  };
+  attributes: {
+    keywords: Schema.Attribute.Text;
+    metaDescription: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 160;
+        minLength: 50;
+      }>;
+    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    preventIndexing: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    shareImage: Schema.Attribute.Media<'images'>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -1006,6 +1028,7 @@ declare module '@strapi/strapi' {
       'sections.team-grid': SectionsTeamGrid;
       'sections.testimonial-slider': SectionsTestimonialSlider;
       'sections.why-iqrasity': SectionsWhyIqrasity;
+      'shared.seo': SharedSeo;
     }
   }
 }

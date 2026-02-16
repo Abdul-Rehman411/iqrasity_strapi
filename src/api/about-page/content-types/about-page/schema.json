@@ -59,6 +59,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::team-member.team-member"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }
