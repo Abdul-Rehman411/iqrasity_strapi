@@ -60,7 +60,7 @@ module.exports = ({ strapi }) => {
             }
 
             await syncService.syncCategories();
-            await syncService.syncCourses({ isManual: false });
+            await syncService.syncCourses();
             lastSyncTime = Date.now();
             log('Automated Sync Completed Successfully.');
          } catch (err) {
@@ -138,8 +138,7 @@ module.exports = ({ strapi }) => {
       try {
         isSyncing = true;
         const categoriesResult = await syncService.syncCategories();
-        // Manual sync triggers full update including enrolled_count
-        const coursesResult = await syncService.syncCourses({ isManual: true });
+        const coursesResult = await syncService.syncCourses();
         
         return {
           categories: categoriesResult,
@@ -233,8 +232,8 @@ module.exports = ({ strapi }) => {
       }
     },
 
-    async syncCourses({ isManual = false } = {}) {
-      strapi.log.info(`MoodleSync: Starting Courses Synchronization (Manual: ${isManual})`);
+    async syncCourses() {
+      strapi.log.info('MoodleSync: Starting Courses Synchronization');
 
       try {
         // 1. Fetch from Moodle
@@ -253,13 +252,8 @@ module.exports = ({ strapi }) => {
             'moodle_course_id', 
             'title', 
             'shortname', 
-            'short_description', 
             'price', 
-            'currency', 
-            'total_duration_hours', 
-            'level', 
-            'slug',
-            'enrolled_count'
+            'slug'
           ],
           populate: ['languages', 'course_category']
         });
@@ -300,90 +294,68 @@ module.exports = ({ strapi }) => {
           const price = mCourse.price === 'FREE' ? 0 : parseFloat(mCourse.price) || 0;
           const short_description = (mCourse.summary || `Learn ${title}`).substring(0, 300);
 
-          const payload = {
-            title,
-            shortname: mCourse.shortname,
-            moodle_course_id: mId,
-            course_category: catDocId,
-            short_description,
-            enrolled_count: String(mCourse.enrolled_students || 0),
-            price,
-            currency: mCourse.currency_symbol || '$',
-            total_duration_hours: parseInt(mCourse.duration_hours) || null,
-            level: (mCourse.level || 'beginner').toLowerCase(),
-            languages: EnglishLang ? [EnglishLang.documentId] : [],
-          };
-
           if (!existing) {
-            payload.slug = `${mId}-${syncService.slugify(title)}`;
+            // ── CREATE: Full payload for new courses ──
+            const createPayload = {
+              title,
+              shortname: mCourse.shortname,
+              moodle_course_id: mId,
+              course_category: catDocId,
+              short_description,
+              enrolled_count: String(mCourse.enrolled_students || 0),
+              price,
+              currency: mCourse.currency_symbol || '$',
+              total_duration_hours: parseInt(mCourse.duration_hours) || null,
+              level: (mCourse.level || 'beginner').toLowerCase(),
+              languages: EnglishLang ? [EnglishLang.documentId] : [],
+              slug: `${mId}-${syncService.slugify(title)}`,
+            };
+
             await strapi.documents('api::course.course').create({ 
-              data: payload,
+              data: createPayload,
               status: 'published'
             });
             created++;
           } else {
-            // CHANGE DETECTION & SAFE MERGE
-            
-            // 1. Language Safety: Only add English if NO languages exist
-            const hasLanguages = existing.languages && existing.languages.length > 0;
-            if (hasLanguages) {
-               delete payload.languages;
-            }
+            // ── UPDATE: Granular field-level change detection ──
+            // NEVER touch: currency, enrolled_count, short_description, level, total_duration_hours
+            const changedFields = {};
 
-            // 2. Manual Update Overrides
-            if (!isManual && payload.enrolled_count) {
-               delete payload.enrolled_count;
-            }
+            // Compare primitive fields
+            if (title !== existing.title) changedFields.title = title;
+            if (mCourse.shortname !== existing.shortname) changedFields.shortname = mCourse.shortname;
+            if (price !== existing.price) changedFields.price = price;
 
-            // 3. Category Safety: Only update if changed
+            const newSlug = `${mId}-${syncService.slugify(title)}`;
+            if (newSlug !== existing.slug) changedFields.slug = newSlug;
+
+            // Category: only if changed
             const existingCatId = existing.course_category?.documentId;
-            if (existingCatId === catDocId) {
-               delete payload.course_category;
+            if (catDocId !== existingCatId) changedFields.course_category = catDocId;
+
+            // Languages: only add English if NO languages exist
+            const hasLanguages = existing.languages && existing.languages.length > 0;
+            if (!hasLanguages && EnglishLang) {
+              changedFields.languages = [EnglishLang.documentId];
             }
 
-            // 4. CONTENT PROTECTION (User Request)
-            // If course exists, do NOT overwrite these fields:
-            if (existing) {
-                delete payload.short_description;
-                delete payload.level;
-                delete payload.total_duration_hours;
+            // Skip update if nothing changed
+            if (Object.keys(changedFields).length === 0) {
+              skipped++;
+              continue;
             }
 
-            // 4. Comparison
-            payload.slug = `${mId}-${syncService.slugify(title)}`;
-            
-            const fieldsToCompare = [
-              'title', 'shortname', 'short_description', 'price', 
-              'currency', 'total_duration_hours', 'level', 'slug', 'enrolled_count'
-            ];
+            // Only write changed fields
+            strapi.log.info(`MoodleSync: Updating [${mId}] ${title} — changed: ${Object.keys(changedFields).join(', ')}`);
+            await strapi.documents('api::course.course').update({
+              documentId: existing.documentId,
+              data: changedFields
+            });
 
-            let hasChanged = false;
-            for (const field of fieldsToCompare) {
-               if (payload.hasOwnProperty(field)) {
-                  // Shallow comparison is sufficient for these primitive fields
-                  if (String(payload[field]) !== String(existing[field] || '')) {
-                     hasChanged = true;
-                     break;
-                  }
-               }
-            }
-
-            // Also check relations if they were not deleted from payload
-            if (payload.course_category || payload.languages) {
-               hasChanged = true;
-            }
-
-            if (hasChanged) {
-              await strapi.documents('api::course.course').update({
-                documentId: existing.documentId,
-                data: payload
-              });
-
-              await strapi.documents('api::course.course').publish({
-                documentId: existing.documentId,
-              });
-              updated++;
-            }
+            await strapi.documents('api::course.course').publish({
+              documentId: existing.documentId,
+            });
+            updated++;
           }
         }
 
@@ -398,6 +370,7 @@ module.exports = ({ strapi }) => {
           }
         }
 
+        strapi.log.info(`MoodleSync: Courses done — Created: ${created}, Updated: ${updated}, Skipped: ${skipped}, Unpublished: ${unpublished}`);
         return { created, updated, unpublished, skipped };
 
       } catch (error) {
