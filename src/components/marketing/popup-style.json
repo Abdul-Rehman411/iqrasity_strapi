@@ -1,0 +1,42 @@
+{
+    "collectionName": "components_marketing_popup_styles",
+    "info": {
+        "displayName": "Popup Style",
+        "icon": "paint-brush"
+    },
+    "options": {},
+    "attributes": {
+        "layout_mode": {
+            "type": "enumeration",
+            "enum": [
+                "Standard",
+                "Hero",
+                "Side-by-Side",
+                "Image Only"
+            ],
+            "default": "Standard",
+            "required": true
+        },
+        "theme_preset": {
+            "type": "enumeration",
+            "enum": [
+                "Light",
+                "Dark",
+                "Brand Primary",
+                "Transparent"
+            ],
+            "default": "Light",
+            "required": true
+        },
+        "overlay_opacity": {
+            "type": "integer",
+            "min": 0,
+            "max": 100,
+            "default": 50
+        },
+        "custom_hex": {
+            "type": "string",
+            "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        }
+    }
+}

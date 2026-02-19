@@ -438,6 +438,97 @@ export interface ElementsVideoItem extends Struct.ComponentSchema {
   };
 }
 
+export interface MarketingPopupContent extends Struct.ComponentSchema {
+  collectionName: 'components_marketing_popup_contents';
+  info: {
+    displayName: 'Popup Content';
+    icon: 'layer-group';
+  };
+  attributes: {
+    body: Schema.Attribute.RichText;
+    cta_label: Schema.Attribute.String;
+    cta_url: Schema.Attribute.String;
+    headline: Schema.Attribute.String & Schema.Attribute.Required;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
+  };
+}
+
+export interface MarketingPopupStyle extends Struct.ComponentSchema {
+  collectionName: 'components_marketing_popup_styles';
+  info: {
+    displayName: 'Popup Style';
+    icon: 'paint-brush';
+  };
+  attributes: {
+    custom_hex: Schema.Attribute.String;
+    layout_mode: Schema.Attribute.Enumeration<
+      ['Standard', 'Hero', 'Side-by-Side', 'Image Only']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Standard'>;
+    overlay_opacity: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<50>;
+    theme_preset: Schema.Attribute.Enumeration<
+      ['Light', 'Dark', 'Brand Primary', 'Transparent']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Light'>;
+  };
+}
+
+export interface MarketingTriggerOnload extends Struct.ComponentSchema {
+  collectionName: 'components_marketing_trigger_onloads';
+  info: {
+    displayName: 'Trigger: On Load';
+    icon: 'bolt';
+  };
+  attributes: {
+    delay: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
+  };
+}
+
+export interface MarketingTriggerScroll extends Struct.ComponentSchema {
+  collectionName: 'components_marketing_trigger_scrolls';
+  info: {
+    displayName: 'Trigger: Scroll';
+    icon: 'arrows-alt-v';
+  };
+  attributes: {
+    depth_percent: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<50>;
+  };
+}
+
+export interface MarketingTriggerTimer extends Struct.ComponentSchema {
+  collectionName: 'components_marketing_trigger_timers';
+  info: {
+    displayName: 'Trigger: Timer';
+    icon: 'clock';
+  };
+  attributes: {
+    seconds: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<5>;
+  };
+}
+
 export interface SectionsAchieveGoals extends Struct.ComponentSchema {
   collectionName: 'components_sections_achieve_goals';
   info: {
@@ -995,6 +1086,11 @@ declare module '@strapi/strapi' {
       'elements.selective-days-schedule': ElementsSelectiveDaysSchedule;
       'elements.student-review': ElementsStudentReview;
       'elements.video-item': ElementsVideoItem;
+      'marketing.popup-content': MarketingPopupContent;
+      'marketing.popup-style': MarketingPopupStyle;
+      'marketing.trigger-onload': MarketingTriggerOnload;
+      'marketing.trigger-scroll': MarketingTriggerScroll;
+      'marketing.trigger-timer': MarketingTriggerTimer;
       'sections.achieve-goals': SectionsAchieveGoals;
       'sections.advantage-grid': SectionsAdvantageGrid;
       'sections.ai-journey': SectionsAiJourney;

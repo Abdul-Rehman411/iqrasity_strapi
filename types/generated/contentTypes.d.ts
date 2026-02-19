@@ -1214,12 +1214,65 @@ export interface ApiLegalPageLegalPage extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMarketingCampaignMarketingCampaign
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'marketing_campaigns';
+  info: {
+    description: 'Library of marketing popup designs';
+    displayName: 'Marketing Campaigns';
+    pluralName: 'marketing-campaigns';
+    singularName: 'marketing-campaign';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Schema.Attribute.Component<'marketing.popup-content', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    frequency: Schema.Attribute.Enumeration<
+      ['Every Page Load', 'Once Per Session', 'Once Ever']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Once Per Session'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::marketing-campaign.marketing-campaign'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    style: Schema.Attribute.Component<'marketing.popup-style', false>;
+    target_pages: Schema.Attribute.Text & Schema.Attribute.DefaultTo<'*'>;
+    trigger_strategy: Schema.Attribute.DynamicZone<
+      [
+        'marketing.trigger-onload',
+        'marketing.trigger-scroll',
+        'marketing.trigger-timer',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 1;
+        },
+        number
+      >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiMarketingPopupMarketingPopup
   extends Struct.SingleTypeSchema {
   collectionName: 'marketing_popups';
   info: {
-    description: 'Manage global marketing popups';
-    displayName: 'Marketing Popup';
+    description: 'Control which popup is active on the site';
+    displayName: 'Marketing Popup (Controller)';
     pluralName: 'marketing-popups';
     singularName: 'marketing-popup';
   };
@@ -1227,51 +1280,21 @@ export interface ApiMarketingPopupMarketingPopup
     draftAndPublish: true;
   };
   attributes: {
-    background_color: Schema.Attribute.Enumeration<
-      ['white', 'black', 'primary', 'accent']
-    > &
-      Schema.Attribute.DefaultTo<'white'>;
-    content: Schema.Attribute.RichText;
+    active_campaign: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::marketing-campaign.marketing-campaign'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    cta_link: Schema.Attribute.String;
-    cta_text: Schema.Attribute.String;
-    delay_seconds: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    end_date: Schema.Attribute.DateTime;
-    frequency: Schema.Attribute.Enumeration<
-      ['every-time', 'once-session', 'once-ever']
-    > &
-      Schema.Attribute.DefaultTo<'once-session'>;
-    image: Schema.Attribute.Media<'images'>;
-    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::marketing-popup.marketing-popup'
     > &
       Schema.Attribute.Private;
-    position: Schema.Attribute.Enumeration<
-      ['center', 'bottom-right', 'top-bar']
-    > &
-      Schema.Attribute.DefaultTo<'center'>;
+    master_switch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     publishedAt: Schema.Attribute.DateTime;
-    scroll_percent: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 100;
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<50>;
-    show_on_pages: Schema.Attribute.Text & Schema.Attribute.DefaultTo<'*'>;
-    start_date: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    trigger_type: Schema.Attribute.Enumeration<
-      ['on-load', 'exit-intent', 'scroll', 'timer']
-    > &
-      Schema.Attribute.DefaultTo<'on-load'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1929,6 +1952,7 @@ declare module '@strapi/strapi' {
       'api::instructor.instructor': ApiInstructorInstructor;
       'api::language.language': ApiLanguageLanguage;
       'api::legal-page.legal-page': ApiLegalPageLegalPage;
+      'api::marketing-campaign.marketing-campaign': ApiMarketingCampaignMarketingCampaign;
       'api::marketing-popup.marketing-popup': ApiMarketingPopupMarketingPopup;
       'api::media-page.media-page': ApiMediaPageMediaPage;
       'api::partner.partner': ApiPartnerPartner;

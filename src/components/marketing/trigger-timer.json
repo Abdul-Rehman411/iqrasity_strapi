@@ -1,0 +1,15 @@
+{
+    "collectionName": "components_marketing_trigger_timers",
+    "info": {
+        "displayName": "Trigger: Timer",
+        "icon": "clock"
+    },
+    "options": {},
+    "attributes": {
+        "seconds": {
+            "type": "integer",
+            "default": 5,
+            "required": true
+        }
+    }
+}

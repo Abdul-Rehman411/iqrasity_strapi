@@ -1,0 +1,31 @@
+{
+    "collectionName": "components_marketing_popup_contents",
+    "info": {
+        "displayName": "Popup Content",
+        "icon": "layer-group"
+    },
+    "options": {},
+    "attributes": {
+        "headline": {
+            "type": "string",
+            "required": true
+        },
+        "body": {
+            "type": "richtext"
+        },
+        "media": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "videos"
+            ]
+        },
+        "cta_label": {
+            "type": "string"
+        },
+        "cta_url": {
+            "type": "string"
+        }
+    }
+}

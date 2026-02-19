@@ -1,0 +1,57 @@
+{
+    "kind": "collectionType",
+    "collectionName": "marketing_campaigns",
+    "info": {
+        "singularName": "marketing-campaign",
+        "pluralName": "marketing-campaigns",
+        "displayName": "Marketing Campaigns",
+        "description": "Library of marketing popup designs"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true,
+            "description": "Internal name (e.g., 'Black Friday Sale')"
+        },
+        "trigger_strategy": {
+            "type": "dynamiczone",
+            "components": [
+                "marketing.trigger-onload",
+                "marketing.trigger-scroll",
+                "marketing.trigger-timer"
+            ],
+            "min": 1,
+            "max": 1,
+            "required": true
+        },
+        "content": {
+            "type": "component",
+            "repeatable": false,
+            "component": "marketing.popup-content"
+        },
+        "style": {
+            "type": "component",
+            "repeatable": false,
+            "component": "marketing.popup-style"
+        },
+        "frequency": {
+            "type": "enumeration",
+            "enum": [
+                "Every Page Load",
+                "Once Per Session",
+                "Once Ever"
+            ],
+            "default": "Once Per Session",
+            "required": true
+        },
+        "target_pages": {
+            "type": "text",
+            "default": "*",
+            "description": "e.g., '/' for home, '/courses' or '*' for all."
+        }
+    }
+}

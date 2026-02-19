@@ -4,95 +4,23 @@
     "info": {
         "singularName": "marketing-popup",
         "pluralName": "marketing-popups",
-        "displayName": "Marketing Popup",
-        "description": "Manage global marketing popups"
+        "displayName": "Marketing Popup (Controller)",
+        "description": "Control which popup is active on the site"
     },
     "options": {
         "draftAndPublish": true
     },
     "pluginOptions": {},
     "attributes": {
-        "title": {
-            "type": "string"
+        "active_campaign": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::marketing-campaign.marketing-campaign"
         },
-        "content": {
-            "type": "richtext"
-        },
-        "image": {
-            "type": "media",
-            "multiple": false,
-            "required": false,
-            "allowedTypes": [
-                "images"
-            ]
-        },
-        "cta_text": {
-            "type": "string"
-        },
-        "cta_link": {
-            "type": "string"
-        },
-        "background_color": {
-            "type": "enumeration",
-            "enum": [
-                "white",
-                "black",
-                "primary",
-                "accent"
-            ],
-            "default": "white"
-        },
-        "position": {
-            "type": "enumeration",
-            "enum": [
-                "center",
-                "bottom-right",
-                "top-bar"
-            ],
-            "default": "center"
-        },
-        "trigger_type": {
-            "type": "enumeration",
-            "enum": [
-                "on-load",
-                "exit-intent",
-                "scroll",
-                "timer"
-            ],
-            "default": "on-load"
-        },
-        "delay_seconds": {
-            "type": "integer",
-            "default": 0
-        },
-        "scroll_percent": {
-            "type": "integer",
-            "default": 50,
-            "min": 0,
-            "max": 100
-        },
-        "frequency": {
-            "type": "enumeration",
-            "enum": [
-                "every-time",
-                "once-session",
-                "once-ever"
-            ],
-            "default": "once-session"
-        },
-        "show_on_pages": {
-            "type": "text",
-            "default": "*"
-        },
-        "is_active": {
+        "master_switch": {
             "type": "boolean",
-            "default": false
-        },
-        "start_date": {
-            "type": "datetime"
-        },
-        "end_date": {
-            "type": "datetime"
+            "default": true,
+            "description": "Turn off to disable popups globally."
         }
     }
 }

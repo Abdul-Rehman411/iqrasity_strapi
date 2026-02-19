@@ -1,0 +1,15 @@
+{
+    "collectionName": "components_marketing_trigger_onloads",
+    "info": {
+        "displayName": "Trigger: On Load",
+        "icon": "bolt"
+    },
+    "options": {},
+    "attributes": {
+        "delay": {
+            "type": "integer",
+            "default": 0,
+            "required": true
+        }
+    }
+}

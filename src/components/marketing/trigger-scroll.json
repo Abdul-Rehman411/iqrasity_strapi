@@ -1,0 +1,17 @@
+{
+    "collectionName": "components_marketing_trigger_scrolls",
+    "info": {
+        "displayName": "Trigger: Scroll",
+        "icon": "arrows-alt-v"
+    },
+    "options": {},
+    "attributes": {
+        "depth_percent": {
+            "type": "integer",
+            "min": 0,
+            "max": 100,
+            "default": 50,
+            "required": true
+        }
+    }
+}
