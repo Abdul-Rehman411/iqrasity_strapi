@@ -80,9 +80,6 @@
     "original_price": {
       "type": "decimal"
     },
-    "discount_deadline_days": {
-      "type": "integer"
-    },
     "duration": {
       "type": "string",
       "default": "3-6 Months"
@@ -204,6 +201,11 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "urgency_banner": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.urgency-banner"
     }
   }
 }

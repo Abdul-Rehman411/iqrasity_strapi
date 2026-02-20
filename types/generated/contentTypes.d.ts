@@ -884,7 +884,6 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'USD'>;
-    discount_deadline_days: Schema.Attribute.Integer;
     duration: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'3-6 Months'>;
     duration_weeks: Schema.Attribute.Integer;
@@ -945,6 +944,10 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    urgency_banner: Schema.Attribute.Component<
+      'elements.urgency-banner',
+      false
+    >;
   };
 }
 

@@ -424,6 +424,32 @@ export interface ElementsStudentReview extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsUrgencyBanner extends Struct.ComponentSchema {
+  collectionName: 'components_elements_urgency_banners';
+  info: {
+    description: 'Scalable urgency banner for course cards';
+    displayName: 'Urgency Banner';
+    icon: 'clock';
+  };
+  attributes: {
+    color_theme: Schema.Attribute.Enumeration<
+      ['red', 'amber', 'blue', 'green']
+    > &
+      Schema.Attribute.DefaultTo<'red'>;
+    deadline: Schema.Attribute.DateTime;
+    mode: Schema.Attribute.Enumeration<
+      ['hidden', 'static_text', 'countdown', 'static_date']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'hidden'>;
+    text: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 60;
+      }> &
+      Schema.Attribute.DefaultTo<''>;
+  };
+}
+
 export interface ElementsVideoItem extends Struct.ComponentSchema {
   collectionName: 'components_elements_video_items';
   info: {
@@ -1085,6 +1111,7 @@ declare module '@strapi/strapi' {
       'elements.range-schedule': ElementsRangeSchedule;
       'elements.selective-days-schedule': ElementsSelectiveDaysSchedule;
       'elements.student-review': ElementsStudentReview;
+      'elements.urgency-banner': ElementsUrgencyBanner;
       'elements.video-item': ElementsVideoItem;
       'marketing.popup-content': MarketingPopupContent;
       'marketing.popup-style': MarketingPopupStyle;

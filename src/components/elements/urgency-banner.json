@@ -1,0 +1,40 @@
+{
+    "collectionName": "components_elements_urgency_banners",
+    "info": {
+        "displayName": "Urgency Banner",
+        "icon": "clock",
+        "description": "Scalable urgency banner for course cards"
+    },
+    "options": {},
+    "attributes": {
+        "mode": {
+            "type": "enumeration",
+            "enum": [
+                "hidden",
+                "static_text",
+                "countdown",
+                "static_date"
+            ],
+            "default": "hidden",
+            "required": true
+        },
+        "text": {
+            "type": "string",
+            "maxLength": 60,
+            "default": ""
+        },
+        "deadline": {
+            "type": "datetime"
+        },
+        "color_theme": {
+            "type": "enumeration",
+            "enum": [
+                "red",
+                "amber",
+                "blue",
+                "green"
+            ],
+            "default": "red"
+        }
+    }
+}
