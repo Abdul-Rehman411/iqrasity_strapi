@@ -1,8 +1,8 @@
 'use strict';
 
-const CUSTOM_API_URL = 'https://iqrasity.org/iq_api.php';
+const CUSTOM_API_URL = 'https://learn.iqrasity.org/iq_api.php';
 const CUSTOM_API_TOKEN = 'iqSyncSec2026Next';
-const MOODLE_URL = 'https://iqrasity.org';
+const MOODLE_URL = 'https://learn.iqrasity.org';
 const MOODLE_TOKEN = 'bfa54fc57e132203b185b9783a958076';
 
 module.exports = ({ strapi }) => {
