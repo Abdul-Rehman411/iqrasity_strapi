@@ -863,9 +863,14 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       }>;
     certificate_price: Schema.Attribute.String;
     certificate_type: Schema.Attribute.Enumeration<
-      ['completion', 'achievement', 'professional', 'none']
-    > &
-      Schema.Attribute.DefaultTo<'completion'>;
+      [
+        'Completion Certificate',
+        'Achievement Certificate',
+        'Professional Certificate',
+        'Participation Certificate',
+        'none',
+      ]
+    >;
     course_category: Schema.Attribute.Relation<
       'manyToOne',
       'api::course-category.course-category'

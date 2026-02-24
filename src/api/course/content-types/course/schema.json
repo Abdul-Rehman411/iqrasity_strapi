@@ -103,11 +103,11 @@
     },
     "certificate_type": {
       "type": "enumeration",
-      "default": "completion",
       "enum": [
-        "completion",
-        "achievement",
-        "professional",
+        "Completion Certificate",
+        "Achievement Certificate",
+        "Professional Certificate",
+        "Participation Certificate",
         "none"
       ]
     },
@@ -199,13 +199,13 @@
     },
     "seo": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "repeatable": false
     },
     "urgency_banner": {
       "type": "component",
-      "repeatable": false,
-      "component": "elements.urgency-banner"
+      "component": "elements.urgency-banner",
+      "repeatable": false
     }
   }
 }
