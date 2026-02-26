@@ -824,6 +824,7 @@ export interface ApiCourseCategoryCourseCategory
     logo: Schema.Attribute.Media<'images'>;
     moodle_id: Schema.Attribute.Integer & Schema.Attribute.Unique;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    other_courses: Schema.Attribute.Component<'sections.learn-next', true>;
     parent_category: Schema.Attribute.Relation<
       'manyToOne',
       'api::course-category.course-category'
@@ -894,6 +895,11 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     duration_weeks: Schema.Attribute.Integer;
     enrolled_count: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'1.2k'>;
+    enrollment_message: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enrollment is currently closed.'>;
+    enrollment_open_date: Schema.Attribute.DateTime;
+    enrollment_status: Schema.Attribute.Enumeration<['open', 'closed']> &
+      Schema.Attribute.DefaultTo<'open'>;
     intro_videos_links: Schema.Attribute.Component<'elements.video-item', true>;
     languages: Schema.Attribute.Relation<
       'manyToMany',

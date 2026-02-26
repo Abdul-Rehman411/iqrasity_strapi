@@ -76,8 +76,13 @@
     },
     "seo": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "other_courses": {
+      "type": "component",
+      "component": "sections.learn-next",
+      "repeatable": true
     }
   }
 }

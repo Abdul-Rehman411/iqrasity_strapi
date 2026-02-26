@@ -206,6 +206,41 @@
       "type": "component",
       "component": "elements.urgency-banner",
       "repeatable": false
+    },
+    "enrollment_status": {
+      "type": "enumeration",
+      "default": "open",
+      "enum": [
+        "open",
+        "closed"
+      ]
+    },
+    "enrollment_message": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "enrollment_status"
+            },
+            "closed"
+          ]
+        }
+      },
+      "default": "Enrollment is currently closed."
+    },
+    "enrollment_open_date": {
+      "type": "datetime",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "enrollment_status"
+            },
+            "closed"
+          ]
+        }
+      }
     }
   }
 }
