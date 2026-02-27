@@ -735,8 +735,8 @@ export interface SectionsInstructor extends Struct.ComponentSchema {
     displayName: 'Instructor';
   };
   attributes: {
-    instructor_profile: Schema.Attribute.Relation<
-      'oneToOne',
+    instructor_profiles: Schema.Attribute.Relation<
+      'oneToMany',
       'api::instructor.instructor'
     >;
   };

@@ -5,9 +5,9 @@
   },
   "options": {},
   "attributes": {
-    "instructor_profile": {
+    "instructor_profiles": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::instructor.instructor"
     }
   },
