@@ -1149,6 +1149,7 @@ export interface ApiInstructorInstructor extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     moodle_user_id: Schema.Attribute.Integer;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    profile_link: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     rating: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{

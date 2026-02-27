@@ -45,6 +45,9 @@
     },
     "moodle_user_id": {
       "type": "integer"
+    },
+    "profile_link": {
+      "type": "string"
     }
   }
 }
