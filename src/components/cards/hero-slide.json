@@ -6,19 +6,45 @@
   },
   "options": {},
   "attributes": {
-    "title": { "type": "string" },
-    "subtitle": { "type": "string" },
-    "description": { "type": "text" },
-    "image": { "type": "media", "multiple": false, "required": false, "allowedTypes": [ "images" ] },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "layout": {
       "type": "enumeration",
-      "enum": ["odoo_standard", "odoo_three_col", "odoo_promo_reverse", "custom_modern_split", "odoo_centered_minimal", "custom_cinematic", "odoo_split_blue_dark"],
-      "default": "odoo_standard"
+      "default": "odoo_standard",
+      "enum": [
+        "odoo_standard",
+        "odoo_three_col",
+        "odoo_promo_reverse",
+        "custom_modern_split",
+        "odoo_centered_minimal",
+        "custom_cinematic",
+        "odoo_split_blue_dark"
+      ]
     },
-    "buttons": { "type": "component", "repeatable": true, "component": "elements.button" },
-    "features": { "type": "component", "repeatable": true, "component": "elements.list-item" }
+    "buttons": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": true
+    },
+    "features": {
+      "type": "component",
+      "component": "elements.list-item",
+      "repeatable": true
+    }
   }
 }
-
-
-

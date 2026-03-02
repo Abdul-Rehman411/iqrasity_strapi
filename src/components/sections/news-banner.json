@@ -7,6 +7,9 @@
   },
   "options": {},
   "attributes": {
+    "visibility": {
+      "type": "boolean"
+    },
     "banner_title": {
       "type": "string",
       "required": true
@@ -24,8 +27,8 @@
     },
     "buttons": {
       "type": "component",
-      "repeatable": true,
-      "component": "elements.button"
+      "component": "elements.button",
+      "repeatable": true
     },
     "news_title": {
       "type": "string",
@@ -33,12 +36,12 @@
     },
     "news_mode": {
       "type": "enumeration",
+      "default": "latest",
       "enum": [
         "latest",
         "manual",
         "category"
-      ],
-      "default": "latest"
+      ]
     },
     "manual_articles": {
       "type": "relation",

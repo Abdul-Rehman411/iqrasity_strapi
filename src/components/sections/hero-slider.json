@@ -6,7 +6,13 @@
   },
   "options": {},
   "attributes": {
-    "slides": { "type": "component", "repeatable": true, "component": "cards.hero-slide" }
+    "visibility": {
+      "type": "boolean"
+    },
+    "slides": {
+      "type": "component",
+      "component": "cards.hero-slide",
+      "repeatable": true
+    }
   }
 }
-

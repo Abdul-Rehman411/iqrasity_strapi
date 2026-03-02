@@ -7,6 +7,9 @@
   },
   "options": {},
   "attributes": {
+    "visibility": {
+      "type": "boolean"
+    },
     "title": {
       "type": "string",
       "default": "What our students say"
@@ -16,8 +19,8 @@
     },
     "items": {
       "type": "component",
-      "repeatable": true,
-      "component": "cards.testimonial"
+      "component": "cards.testimonial",
+      "repeatable": true
     }
   }
 }

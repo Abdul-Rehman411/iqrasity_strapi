@@ -6,7 +6,13 @@
   },
   "options": {},
   "attributes": {
-    "items": { "type": "component", "repeatable": true, "component": "cards.goal-card" }
+    "visibility": {
+      "type": "boolean"
+    },
+    "items": {
+      "type": "component",
+      "component": "cards.goal-card",
+      "repeatable": true
+    }
   }
 }
-

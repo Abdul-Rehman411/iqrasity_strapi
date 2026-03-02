@@ -6,6 +6,9 @@
   },
   "options": {},
   "attributes": {
+    "visibility": {
+      "type": "boolean"
+    },
     "title": {
       "type": "string"
     },

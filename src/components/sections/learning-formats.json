@@ -6,8 +6,16 @@
   },
   "options": {},
   "attributes": {
-    "title": { "type": "string" },
-    "items": { "type": "component", "repeatable": true, "component": "cards.format-card" }
+    "visibility": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "component": "cards.format-card",
+      "repeatable": true
+    }
   }
 }
-

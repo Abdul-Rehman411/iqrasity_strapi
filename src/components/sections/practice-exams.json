@@ -6,10 +6,29 @@
   },
   "options": {},
   "attributes": {
-    "title": { "type": "string" },
-    "highlight": { "type": "string" },
-    "description": { "type": "text" },
-    "image": { "type": "media", "multiple": false, "allowedTypes": [ "images" ] },
-    "button": { "type": "component", "repeatable": false, "component": "elements.button" }
+    "visibility": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    },
+    "highlight": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "button": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": false
+    }
   }
 }

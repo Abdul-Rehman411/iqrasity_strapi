@@ -7,18 +7,21 @@
   },
   "options": {},
   "attributes": {
+    "visibility": {
+      "type": "boolean"
+    },
     "title": {
       "type": "string",
-      "required": true,
-      "default": "Iqrasity Advantage"
+      "default": "Iqrasity Advantage",
+      "required": true
     },
     "description": {
       "type": "text"
     },
     "items": {
       "type": "component",
-      "repeatable": true,
-      "component": "cards.offer-card"
+      "component": "cards.offer-card",
+      "repeatable": true
     }
   }
 }

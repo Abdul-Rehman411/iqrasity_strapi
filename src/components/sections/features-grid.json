@@ -6,9 +6,19 @@
   },
   "options": {},
   "attributes": {
-    "title": { "type": "string" },
-    "subtitle": { "type": "string" },
-    "items": { "type": "component", "repeatable": true, "component": "cards.offer-card" }
+    "visibility": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "component": "cards.offer-card",
+      "repeatable": true
+    }
   }
 }
-

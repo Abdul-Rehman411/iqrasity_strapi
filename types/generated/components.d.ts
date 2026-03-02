@@ -78,7 +78,6 @@ export interface CardsHeroSlide extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'odoo_standard'>;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
-    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -715,6 +714,7 @@ export interface SectionsHeroSlider extends Struct.ComponentSchema {
   };
   attributes: {
     slides: Schema.Attribute.Component<'cards.hero-slide', true>;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 

@@ -6,9 +6,21 @@
   },
   "options": {},
   "attributes": {
-    "title": { "type": "string" },
-    "cta_link": { "type": "component", "repeatable": false, "component": "elements.button" },
-    "items": { "type": "component", "repeatable": true, "component": "cards.career-card" }
+    "visibility": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    },
+    "cta_link": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": false
+    },
+    "items": {
+      "type": "component",
+      "component": "cards.career-card",
+      "repeatable": true
+    }
   }
 }
-

@@ -7,18 +7,21 @@
   },
   "options": {},
   "attributes": {
+    "visibility": {
+      "type": "boolean"
+    },
     "title": {
       "type": "string"
     },
     "row_one": {
       "type": "component",
-      "repeatable": true,
-      "component": "elements.link-chip"
+      "component": "elements.link-chip",
+      "repeatable": true
     },
     "row_two": {
       "type": "component",
-      "repeatable": true,
-      "component": "elements.link-chip"
+      "component": "elements.link-chip",
+      "repeatable": true
     }
   }
 }
