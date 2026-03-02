@@ -102,8 +102,7 @@
       "required": false
     },
     "end_date": {
-      "type": "date",
-      "private": true
+      "type": "date"
     },
     "timezone": {
       "type": "string",

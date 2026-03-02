@@ -297,7 +297,7 @@ export interface ElementsMediaEvent extends Struct.ComponentSchema {
     displayName: 'Media Event';
   };
   attributes: {
-    date_text: Schema.Attribute.String;
+    date: Schema.Attribute.Date;
     description: Schema.Attribute.Text;
     images: Schema.Attribute.Media<'images' | 'videos', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -818,7 +818,7 @@ export interface SectionsLiveSession extends Struct.ComponentSchema {
       'elements.daily-schedule',
       false
     >;
-    end_date: Schema.Attribute.Date & Schema.Attribute.Private;
+    end_date: Schema.Attribute.Date;
     is_visible: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     note: Schema.Attribute.Text;
     range_schedule: Schema.Attribute.Component<

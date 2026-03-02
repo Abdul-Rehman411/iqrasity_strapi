@@ -13,9 +13,6 @@
     "description": {
       "type": "text"
     },
-    "date_text": {
-      "type": "string"
-    },
     "images": {
       "type": "media",
       "multiple": true,
@@ -24,6 +21,9 @@
         "images",
         "videos"
       ]
+    },
+    "date": {
+      "type": "date"
     }
   }
 }
