@@ -50,6 +50,7 @@ module.exports = ({ strapi }) => ({
   },
 
   async updateSettings(ctx) {
+    strapi.log.info(`[🔄 MOODLE-SYNC] UI Request: Update Settings`);
     try {
       const settings = await strapi.plugin('moodle-sync').service('syncService').updateSettings(ctx.request.body);
       ctx.body = settings;

@@ -78,6 +78,7 @@ export interface CardsHeroSlide extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'odoo_standard'>;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -563,6 +564,7 @@ export interface SectionsAchieveGoals extends Struct.ComponentSchema {
   };
   attributes: {
     items: Schema.Attribute.Component<'cards.goal-card', true>;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -579,6 +581,7 @@ export interface SectionsAdvantageGrid extends Struct.ComponentSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Iqrasity Advantage'>;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -593,6 +596,7 @@ export interface SectionsAiJourney extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -634,6 +638,7 @@ export interface SectionsEnterpriseSolutions extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -647,6 +652,7 @@ export interface SectionsExploreCareers extends Struct.ComponentSchema {
     cta_link: Schema.Attribute.Component<'elements.button', false>;
     items: Schema.Attribute.Component<'cards.career-card', true>;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -672,6 +678,7 @@ export interface SectionsFeaturesGrid extends Struct.ComponentSchema {
     items: Schema.Attribute.Component<'cards.offer-card', true>;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -726,6 +733,7 @@ export interface SectionsInstitutionalPrograms extends Struct.ComponentSchema {
     right_items: Schema.Attribute.Component<'elements.list-item', true>;
     right_title: Schema.Attribute.String;
     right_title_link: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -753,6 +761,7 @@ export interface SectionsKeywordScroll extends Struct.ComponentSchema {
     row_one: Schema.Attribute.Component<'elements.link-chip', true>;
     row_two: Schema.Attribute.Component<'elements.link-chip', true>;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -773,6 +782,7 @@ export interface SectionsLearnNext extends Struct.ComponentSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -785,6 +795,7 @@ export interface SectionsLearningFormats extends Struct.ComponentSchema {
   attributes: {
     items: Schema.Attribute.Component<'cards.format-card', true>;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -858,6 +869,7 @@ export interface SectionsMicrosoftSpotlight extends Struct.ComponentSchema {
     subtitle: Schema.Attribute.String;
     subtitle_link: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -885,6 +897,7 @@ export interface SectionsNewsBanner extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'latest'>;
     news_title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Latest News'>;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -945,6 +958,7 @@ export interface SectionsPracticeExams extends Struct.ComponentSchema {
     highlight: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -1005,6 +1019,7 @@ export interface SectionsStatsGrid extends Struct.ComponentSchema {
       >;
     title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Our Credentials'>;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 
@@ -1046,6 +1061,7 @@ export interface SectionsTestimonialSlider extends Struct.ComponentSchema {
     items: Schema.Attribute.Component<'cards.testimonial', true>;
     title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'What our students say'>;
+    visibility: Schema.Attribute.Boolean;
   };
 }
 

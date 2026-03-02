@@ -10,7 +10,9 @@ module.exports = ({ strapi }) => {
   let autoSyncTimer = null;
   let lastSyncTime = 0;
 
-  const log = (msg, type = 'info') => strapi.log[type](`[MoodleSync] ${msg}`);
+  const log = (msg, type = 'info') => {
+    strapi.log[type](`[🔄 MOODLE-SYNC] ${msg}`);
+  };
   
   const formatInterval = (ms) => {
     if (ms >= 86400000) return `${ms / 86400000}h`;
@@ -21,9 +23,16 @@ module.exports = ({ strapi }) => {
 
   const syncService = {
     async initAutoSync() {
+      log('Initialization starting. Loading settings...');
+      
       const settings = await syncService.getSettings();
+      log(`Settings loaded: ${JSON.stringify(settings)}`);
+      
       if (settings.enabled) {
+        log('Auto-sync is enabled. Starting scheduler...');
         syncService.startAutoSync(settings.interval);
+      } else {
+        log('Auto-sync is disabled. Scheduler idle.');
       }
     },
 
@@ -35,34 +44,16 @@ module.exports = ({ strapi }) => {
 
       autoSyncTimer = setInterval(async () => {
          // SAFETY DOUBLE-CHECK: Fetch settings again to ensure we are still enabled
-         // This prevents "Zombie" syncs if the timer wasn't cleared properly
          const currentSettings = await syncService.getSettings();
          if (!currentSettings.enabled) {
-             log('Auto-sync disabled. Stopping timer.', 'warn');
-             clearInterval(autoSyncTimer);
-             autoSyncTimer = null;
-             return;
-         }
-
-         // RATE LIMITING
-         const now = Date.now();
-         if (now - lastSyncTime < 15000) {
-             log('Skipping sync: Rate limit cooldown (15s).', 'warn');
+             log('Auto-sync is disabled in settings. Stopping active timer.', 'warn');
+             syncService.stopAutoSync();
              return;
          }
 
          try {
             log('Automated Sync Triggered', 'info');
-            // Check if already syncing
-            if (isSyncing) {
-                log('Skipping sync: Another sync process is active.', 'warn');
-                return;
-            }
-
-            await syncService.syncCategories();
-            await syncService.syncCourses();
-            lastSyncTime = Date.now();
-            log('Automated Sync Completed Successfully.');
+            await syncService.syncAll();
          } catch (err) {
             log(`Auto Sync Error: ${err.message}`, 'error');
          }
@@ -79,32 +70,43 @@ module.exports = ({ strapi }) => {
 
     async getSettings() {
       const pluginStore = strapi.store({
-        environment: '',
         type: 'plugin',
         name: 'moodle-sync',
-        key: 'settings',
       });
 
-      const settings = await pluginStore.get();
-      // Default settings
-      return settings || { enabled: false, interval: 30000 };
+      const settings = await pluginStore.get({ key: 'settings' });
+      log(`[DB-READ] Raw settings from store: ${JSON.stringify(settings)}`);
+      
+      if (!settings) {
+        log('No settings found in DB. Using defaults.');
+        return { enabled: false, interval: 30000 };
+      }
+
+      // Handle both Boolean and String 'true'/'false' from DB
+      const isEnabled = settings.enabled === true || settings.enabled === 'true' || settings.enabled === 1;
+
+      return {
+        enabled: isEnabled,
+        interval: parseInt(settings.interval) || 30000
+      };
     },
 
     async updateSettings(newSettings) {
-      // Debug: Log what we received
-      log(`Settings update received: ${JSON.stringify(newSettings)}`, 'debug');
+      log(`Settings update received: ${JSON.stringify(newSettings)}`);
       
       const pluginStore = strapi.store({
-        environment: '',
         type: 'plugin',
         name: 'moodle-sync',
-        key: 'settings',
       });
 
       const prevSettings = await syncService.getSettings();
-      const settings = { ...prevSettings, ...newSettings };
+      const settings = {
+        enabled: newSettings.hasOwnProperty('enabled') ? newSettings.enabled : prevSettings.enabled,
+        interval: newSettings.hasOwnProperty('interval') ? newSettings.interval : prevSettings.interval,
+      };
       
-      await pluginStore.set({ value: settings });
+      await pluginStore.set({ key: 'settings', value: settings });
+      log('Settings successfully persisted to database.');
 
       // Log all setting changes
       if (newSettings.hasOwnProperty('enabled')) {
@@ -132,25 +134,30 @@ module.exports = ({ strapi }) => {
 
     async syncAll() {
       if (isSyncing) {
-        throw new Error('A synchronization process is already running.');
+        log('Sync already in progress. Skipping.', 'warn');
+        return;
       }
-      
+
+      // RATE LIMITING
+      const now = Date.now();
+      if (now - lastSyncTime < 15000) {
+        log('Skipping sync: Rate limit cooldown (15s).', 'warn');
+        return;
+      }
+
+      isSyncing = true;
       try {
-        isSyncing = true;
-        const categoriesResult = await syncService.syncCategories();
-        const coursesResult = await syncService.syncCourses();
-        
-        return {
-          categories: categoriesResult,
-          courses: coursesResult
-        };
+        const catResult = await syncService.syncCategories();
+        const courseResult = await syncService.syncCourses();
+        lastSyncTime = Date.now();
+        return { categories: catResult, courses: courseResult };
       } finally {
         isSyncing = false;
       }
     },
 
     async syncCategories() {
-      strapi.log.info('MoodleSync: Starting Categories Synchronization');
+      log('Starting Categories Synchronization');
       
       try {
         // 1. Fetch from Moodle
@@ -160,22 +167,32 @@ module.exports = ({ strapi }) => {
           moodlewsrestformat: 'json'
         });
 
-        const response = await fetch(`${MOODLE_URL}/webservice/rest/server.php?${params}`);
-        const categories = await response.json();
+        log(`Fetching categories from Moodle... (${MOODLE_URL})`);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 15000);
 
+        const response = await fetch(`${MOODLE_URL}/webservice/rest/server.php?${params}`, {
+          headers: { 'User-Agent': 'Strapi/1.0.0' },
+          signal: controller.signal
+        });
+        if (!response.ok) {
+          throw new Error(`Moodle API returned HTTP ${response.status}`);
+        }
+
+        const categories = await response.json();
         if (categories.exception) {
           throw new Error(`Moodle API Error: ${categories.message}`);
         }
 
         const visibleCategories = categories.filter(c => c.visible === 1);
-        strapi.log.info(`MoodleSync: Found ${visibleCategories.length} visible categories.`);
+        log(`Found ${visibleCategories.length} visible categories.`);
 
         // 2. Fetch Existing from Strapi
         const strapiCategories = await strapi.documents('api::course-category.course-category').findMany({
           fields: ['moodle_id', 'name', 'description', 'slug'],
         });
         
-        strapi.log.info(`MoodleSync: Fetched ${strapiCategories.length} existing categories.`);
+        log(`Fetched ${strapiCategories.length} existing categories.`);
 
         const strapiMap = new Map();
         strapiCategories.forEach(c => {
@@ -183,7 +200,7 @@ module.exports = ({ strapi }) => {
         });
 
         const processedMoodleIds = new Set();
-        let created = 0, updated = 0;
+        let created = 0, updated = 0, skipped = 0;
 
         // 3. Sync Loop
         for (const cat of visibleCategories) {
@@ -208,8 +225,20 @@ module.exports = ({ strapi }) => {
             created++;
           } else {
             // CHANGE DETECTION
-            // SAFETY: User request - Do NOT overwrite existing details.
-            // We skip the update logic intentionally.
+            const changedFields = {};
+            if (name !== existing.name) changedFields.name = name;
+            if (description !== existing.description) changedFields.description = description;
+
+            if (Object.keys(changedFields).length > 0) {
+              log(`Updating category [${mId}] ${name} — changed: ${Object.keys(changedFields).join(', ')}`);
+              await strapi.documents('api::course-category.course-category').update({
+                documentId: existing.documentId,
+                data: changedFields,
+              });
+              updated++;
+            } else {
+              skipped++;
+            }
           }
         }
 
@@ -224,27 +253,37 @@ module.exports = ({ strapi }) => {
           }
         }
 
-        return { created, updated, unpublished };
+        return { created, updated, unpublished, skipped };
 
       } catch (error) {
-        strapi.log.error(`MoodleSync Categories Error: ${error.message}`);
+        log(`Categories Error: ${error.message}`, 'error');
+        if (error.cause) log(`Cause: ${error.cause}`, 'error');
         throw error;
       }
     },
 
     async syncCourses() {
-      strapi.log.info('MoodleSync: Starting Courses Synchronization');
+      log('Starting Courses Synchronization');
 
       try {
         // 1. Fetch from Moodle
+        log(`Fetching courses from Moodle... (${CUSTOM_API_URL})`);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 20000);
+
         const response = await fetch(`${CUSTOM_API_URL}?action=courses`, {
-          headers: { 'X-IQ-TOKEN': CUSTOM_API_TOKEN }
+          headers: { 
+            'X-IQ-TOKEN': CUSTOM_API_TOKEN,
+            'User-Agent': 'Strapi/1.0.0'
+          },
+          signal: controller.signal
         });
+        clearTimeout(timeout);
         const json = await response.json();
         
         if (json.status !== 'success') throw new Error(json.message);
         const moodleCourses = json.data || [];
-        strapi.log.info(`MoodleSync: Found ${moodleCourses.length} courses from Moodle.`);
+        log(`Found ${moodleCourses.length} courses from Moodle.`);
 
         // 2. Fetch Data dependencies
         const strapiCourses = await strapi.documents('api::course.course').findMany({
@@ -252,8 +291,8 @@ module.exports = ({ strapi }) => {
             'moodle_course_id', 
             'title', 
             'shortname', 
-            'price', 
-            'slug'
+            'slug',
+            'certificate_type'
           ],
           populate: ['languages', 'course_category']
         });
@@ -286,12 +325,12 @@ module.exports = ({ strapi }) => {
           const catDocId = catMap.get(parseInt(mCourse.category_id));
 
           if (!catDocId) {
-            strapi.log.warn(`MoodleSync: Skipping ${title} - Category ${mCourse.category_id} not found.`);
+            log(`Skipping ${title} - Category ${mCourse.category_id} not found.`, 'warn');
             skipped++;
             continue;
           }
 
-          const price = mCourse.price === 'FREE' ? 0 : parseFloat(mCourse.price) || 0;
+          // const price = mCourse.price === 'FREE' ? 0 : parseFloat(mCourse.price) || 0;
           const short_description = (mCourse.summary || `Learn ${title}`).substring(0, 300);
 
           if (!existing) {
@@ -303,10 +342,11 @@ module.exports = ({ strapi }) => {
               course_category: catDocId,
               short_description,
               enrolled_count: String(mCourse.enrolled_students || 0),
-              price,
-              currency: mCourse.currency_symbol || '$',
+              // price,
+              // currency: mCourse.currency_symbol || '$',
               total_duration_hours: parseInt(mCourse.duration_hours) || null,
               level: (mCourse.level || 'beginner').toLowerCase(),
+              certificate_type: 'none',
               languages: EnglishLang ? [EnglishLang.documentId] : [],
               slug: `${mId}-${syncService.slugify(title)}`,
             };
@@ -324,7 +364,7 @@ module.exports = ({ strapi }) => {
             // Compare primitive fields
             if (title !== existing.title) changedFields.title = title;
             if (mCourse.shortname !== existing.shortname) changedFields.shortname = mCourse.shortname;
-            if (price !== existing.price) changedFields.price = price;
+            // if (price !== existing.price) changedFields.price = price;
 
             const newSlug = `${mId}-${syncService.slugify(title)}`;
             if (newSlug !== existing.slug) changedFields.slug = newSlug;
@@ -346,7 +386,7 @@ module.exports = ({ strapi }) => {
             }
 
             // Only write changed fields
-            strapi.log.info(`MoodleSync: Updating [${mId}] ${title} — changed: ${Object.keys(changedFields).join(', ')}`);
+            log(`Updating [${mId}] ${title} — changed: ${Object.keys(changedFields).join(', ')}`);
             await strapi.documents('api::course.course').update({
               documentId: existing.documentId,
               data: changedFields
@@ -370,11 +410,11 @@ module.exports = ({ strapi }) => {
           }
         }
 
-        strapi.log.info(`MoodleSync: Courses done — Created: ${created}, Updated: ${updated}, Skipped: ${skipped}, Unpublished: ${unpublished}`);
+        log(`Courses done — Created: ${created}, Updated: ${updated}, Skipped: ${skipped}, Unpublished: ${unpublished}`);
         return { created, updated, unpublished, skipped };
 
       } catch (error) {
-        strapi.log.error(`MoodleSync Courses Error: ${error.message}`);
+        log(`Courses Error: ${error.message}`, 'error');
         throw error;
       }
     },
@@ -409,14 +449,6 @@ module.exports = ({ strapi }) => {
         lastSync: lastSyncTime ? new Date(lastSyncTime).toISOString() : 'Never'
       };
     }
-  };
-
-  // Hook into syncAll to update time
-  const originalSyncAll = syncService.syncAll;
-  syncService.syncAll = async function() {
-      const result = await originalSyncAll.apply(this);
-      lastSyncTime = Date.now();
-      return result;
   };
 
   return syncService;

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = ({ strapi }) => {
-  strapi.log.info('MoodleSync: Initializing Plugin Bootstrap');
+  strapi.log.info('[🔄 MOODLE-SYNC] Initializing Plugin Bootstrap');
 
   // Register cron task
   // Note: We use a standard setInterval for simplicity within the plugin 
@@ -15,13 +15,14 @@ module.exports = ({ strapi }) => {
       // These commands often lock the DB or use all connections
       const isTransfer = process.argv.some(arg => arg.includes('transfer') || arg.includes('import') || arg.includes('export'));
       if (isTransfer) {
-        strapi.log.info('MoodleSync: Skipping auto-sync (Transfer/Import detected)');
+        strapi.log.info('[🔄 MOODLE-SYNC] Skipping auto-sync (Transfer/Import detected)');
         return;
       }
 
+      strapi.log.info('[🔄 MOODLE-SYNC] Bootstrap timer finished. Calling initAutoSync()...');
       await strapi.plugin('moodle-sync').service('syncService').initAutoSync();
     } catch (err) {
-      strapi.log.error(`MoodleSync Bootstrap Error: ${err.message}`);
+      strapi.log.error(`[🔄 MOODLE-SYNC] Bootstrap Error: ${err.message}`);
     }
-  }, 5000);
+  }, 15000);
 };
