@@ -189,7 +189,7 @@ module.exports = ({ strapi }) => {
 
         // 2. Fetch Existing from Strapi
         const strapiCategories = await strapi.documents('api::course-category.course-category').findMany({
-          fields: ['moodle_id', 'name', 'description', 'slug'],
+          fields: ['moodle_id', 'name', 'slug'],
         });
         
         log(`Fetched ${strapiCategories.length} existing categories.`);
@@ -209,7 +209,6 @@ module.exports = ({ strapi }) => {
           const existing = strapiMap.get(mId);
 
           const name = syncService.decodeHtml(cat.name);
-          const description = cat.description || '';
 
           if (!existing) {
             // CREATE
@@ -217,17 +216,15 @@ module.exports = ({ strapi }) => {
               data: {
                 name,
                 moodle_id: cat.id,
-                description,
                 slug: syncService.slugify(name),
               },
               status: 'published'
             });
             created++;
           } else {
-            // CHANGE DETECTION
+            // Compare basic fields (Excluding description to allow manual Strapi edits)
             const changedFields = {};
             if (name !== existing.name) changedFields.name = name;
-            if (description !== existing.description) changedFields.description = description;
 
             if (Object.keys(changedFields).length > 0) {
               log(`Updating category [${mId}] ${name} — changed: ${Object.keys(changedFields).join(', ')}`);
