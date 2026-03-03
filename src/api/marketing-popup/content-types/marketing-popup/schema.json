@@ -1,26 +1,25 @@
 {
-    "kind": "singleType",
-    "collectionName": "marketing_popups",
-    "info": {
-        "singularName": "marketing-popup",
-        "pluralName": "marketing-popups",
-        "displayName": "Marketing Popup (Controller)",
-        "description": "Control which popup is active on the site"
+  "kind": "singleType",
+  "collectionName": "marketing_popups",
+  "info": {
+    "singularName": "marketing-popup",
+    "pluralName": "marketing-popups",
+    "displayName": "Marketing Popup (Controller)",
+    "description": "Control which popup is active on the site"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "active_campaigns": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::marketing-campaign.marketing-campaign"
     },
-    "options": {
-        "draftAndPublish": true
-    },
-    "pluginOptions": {},
-    "attributes": {
-        "active_campaign": {
-            "type": "relation",
-            "relation": "oneToOne",
-            "target": "api::marketing-campaign.marketing-campaign"
-        },
-        "master_switch": {
-            "type": "boolean",
-            "default": true,
-            "description": "Turn off to disable popups globally."
-        }
+    "master_switch": {
+      "type": "boolean",
+      "default": true
     }
+  }
 }

@@ -1295,8 +1295,8 @@ export interface ApiMarketingPopupMarketingPopup
     draftAndPublish: true;
   };
   attributes: {
-    active_campaign: Schema.Attribute.Relation<
-      'oneToOne',
+    active_campaigns: Schema.Attribute.Relation<
+      'oneToMany',
       'api::marketing-campaign.marketing-campaign'
     >;
     createdAt: Schema.Attribute.DateTime;
