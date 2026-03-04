@@ -1234,7 +1234,7 @@ export interface ApiMarketingCampaignMarketingCampaign
   collectionName: 'marketing_campaigns';
   info: {
     description: 'Library of marketing popup designs';
-    displayName: 'Marketing Campaigns';
+    displayName: 'Popup Campaigns List';
     pluralName: 'marketing-campaigns';
     singularName: 'marketing-campaign';
   };
@@ -1287,7 +1287,7 @@ export interface ApiMarketingPopupMarketingPopup
   collectionName: 'marketing_popups';
   info: {
     description: 'Control which popup is active on the site';
-    displayName: 'Marketing Popup (Controller)';
+    displayName: 'Popup Dashboard';
     pluralName: 'marketing-popups';
     singularName: 'marketing-popup';
   };

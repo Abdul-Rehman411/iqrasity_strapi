@@ -4,7 +4,7 @@
   "info": {
     "singularName": "marketing-popup",
     "pluralName": "marketing-popups",
-    "displayName": "Marketing Popup (Controller)",
+    "displayName": "Popup Dashboard",
     "description": "Control which popup is active on the site"
   },
   "options": {
