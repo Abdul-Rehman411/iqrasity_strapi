@@ -929,6 +929,15 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     pace: Schema.Attribute.Enumeration<['self_paced', 'instructor_led']> &
       Schema.Attribute.DefaultTo<'self_paced'>;
     price: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    program_type: Schema.Attribute.Enumeration<
+      [
+        'Course',
+        'Certification',
+        'Degree Program',
+        'Non-degree Program',
+        'Exam Preparation',
+      ]
+    >;
     publishedAt: Schema.Attribute.DateTime;
     rating: Schema.Attribute.Decimal &
       Schema.Attribute.SetMinMax<

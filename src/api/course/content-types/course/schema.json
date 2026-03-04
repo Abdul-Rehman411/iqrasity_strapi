@@ -40,6 +40,16 @@
       "target": "api::course-category.course-category",
       "inversedBy": "courses"
     },
+    "program_type": {
+      "type": "enumeration",
+      "enum": [
+        "Course",
+        "Certification",
+        "Degree Program",
+        "Non-degree Program",
+        "Exam Preparation"
+      ]
+    },
     "org_logo": {
       "type": "media",
       "multiple": false,
