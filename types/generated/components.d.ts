@@ -910,6 +910,7 @@ export interface SectionsOutcomes extends Struct.ComponentSchema {
   attributes: {
     items: Schema.Attribute.Component<'elements.list-item', true>;
     outcome_icon: Schema.Attribute.Media<'images'>;
+    outcomes: Schema.Attribute.Text;
   };
 }
 
@@ -922,11 +923,13 @@ export interface SectionsOverview extends Struct.ComponentSchema {
   };
   attributes: {
     course_skills: Schema.Attribute.Text;
+    prerequisite: Schema.Attribute.Text;
     prerequisites: Schema.Attribute.Component<'elements.list-item', true>;
     promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
     what_you_learn: Schema.Attribute.Component<'elements.icon-text-item', true>;
     what_you_learn_icon: Schema.Attribute.Media<'images'>;
+    what_you_will_learn: Schema.Attribute.Text;
     why_iqrasity: Schema.Attribute.Component<'sections.why-iqrasity', false>;
   };
 }
@@ -973,7 +976,7 @@ export interface SectionsPromoBanner extends Struct.ComponentSchema {
     background_image: Schema.Attribute.Media<'images'> &
       Schema.Attribute.Required;
     description: Schema.Attribute.Text;
-    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    heading: Schema.Attribute.String;
     link: Schema.Attribute.String;
   };
 }

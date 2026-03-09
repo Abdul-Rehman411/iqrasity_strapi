@@ -12,6 +12,9 @@
       "component": "elements.icon-text-item",
       "repeatable": true
     },
+    "what_you_will_learn": {
+      "type": "text"
+    },
     "what_you_learn_icon": {
       "type": "media",
       "multiple": false,
@@ -31,6 +34,9 @@
       "type": "component",
       "component": "elements.list-item",
       "repeatable": true
+    },
+    "prerequisite": {
+      "type": "text"
     },
     "why_iqrasity": {
       "type": "component",

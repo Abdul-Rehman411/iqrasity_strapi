@@ -8,8 +8,8 @@
   "attributes": {
     "items": {
       "type": "component",
-      "repeatable": true,
-      "component": "elements.list-item"
+      "component": "elements.list-item",
+      "repeatable": true
     },
     "outcome_icon": {
       "type": "media",
@@ -17,6 +17,9 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "outcomes": {
+      "type": "text"
     }
   },
   "config": {}
