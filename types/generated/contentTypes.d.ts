@@ -949,6 +949,11 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<4.5>;
+    reccomended_course: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::course.course'
+    >;
+    recommended_course_text: Schema.Attribute.String;
     related_courses: Schema.Attribute.Component<'sections.learn-next', true>;
     review_count: Schema.Attribute.String & Schema.Attribute.DefaultTo<'125'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
