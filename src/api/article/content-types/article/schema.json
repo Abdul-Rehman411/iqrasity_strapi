@@ -57,6 +57,9 @@
       "options": {
         "preset": "defaultHtml"
       }
+    },
+    "custom_schema": {
+      "type": "json"
     }
   }
 }
