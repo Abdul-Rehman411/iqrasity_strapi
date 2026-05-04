@@ -91,8 +91,7 @@
       "type": "decimal"
     },
     "duration": {
-      "type": "string",
-      "default": "3-6 Months"
+      "type": "string"
     },
     "pace": {
       "type": "enumeration",
@@ -136,12 +135,10 @@
       "max": 5
     },
     "review_count": {
-      "type": "string",
-      "default": "125"
+      "type": "string"
     },
     "enrolled_count": {
-      "type": "string",
-      "default": "1.2k"
+      "type": "string"
     },
     "duration_weeks": {
       "type": "integer"
@@ -195,17 +192,7 @@
       ]
     },
     "offered_or_sponsored_by": {
-      "type": "string",
-      "conditions": {
-        "visible": {
-          "!=": [
-            {
-              "var": "offered_or_sponsored"
-            },
-            "None"
-          ]
-        }
-      }
+      "type": "string"
     },
     "seo": {
       "type": "component",
@@ -227,30 +214,10 @@
     },
     "enrollment_message": {
       "type": "string",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "enrollment_status"
-            },
-            "closed"
-          ]
-        }
-      },
       "default": "Enrollment is currently closed."
     },
     "enrollment_open_date": {
-      "type": "datetime",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "enrollment_status"
-            },
-            "closed"
-          ]
-        }
-      }
+      "type": "datetime"
     },
     "go_to_course_link": {
       "type": "string"

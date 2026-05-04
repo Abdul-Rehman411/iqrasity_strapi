@@ -891,11 +891,9 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'USD'>;
-    duration: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'3-6 Months'>;
+    duration: Schema.Attribute.String;
     duration_weeks: Schema.Attribute.Integer;
-    enrolled_count: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'1.2k'>;
+    enrolled_count: Schema.Attribute.String;
     enrollment_message: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Enrollment is currently closed.'>;
     enrollment_open_date: Schema.Attribute.DateTime;
@@ -956,7 +954,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     >;
     recommended_course_text: Schema.Attribute.String;
     related_courses: Schema.Attribute.Component<'sections.learn-next', true>;
-    review_count: Schema.Attribute.String & Schema.Attribute.DefaultTo<'125'>;
+    review_count: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     short_description: Schema.Attribute.Text &
       Schema.Attribute.Required &
