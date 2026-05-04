@@ -923,13 +923,30 @@ export interface SectionsOverview extends Struct.ComponentSchema {
   };
   attributes: {
     course_skills: Schema.Attribute.Text;
+    enroll_now: Schema.Attribute.Text;
     prerequisite: Schema.Attribute.Text;
     prerequisites: Schema.Attribute.Component<'elements.list-item', true>;
     promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
+    start_today: Schema.Attribute.Text;
+    what_next: Schema.Attribute.Text;
     what_you_learn: Schema.Attribute.Component<'elements.icon-text-item', true>;
     what_you_learn_icon: Schema.Attribute.Media<'images'>;
     what_you_will_learn: Schema.Attribute.Text;
+    who_is_this_course_for: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    why_choose_this_course: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     why_iqrasity: Schema.Attribute.Component<'sections.why-iqrasity', false>;
   };
 }

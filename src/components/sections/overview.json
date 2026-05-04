@@ -47,6 +47,29 @@
       "type": "component",
       "component": "sections.promo-banner",
       "repeatable": false
+    },
+    "why_choose_this_course": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "who_is_this_course_for": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "start_today": {
+      "type": "text"
+    },
+    "enroll_now": {
+      "type": "text"
+    },
+    "what_next": {
+      "type": "text"
     }
   }
 }
