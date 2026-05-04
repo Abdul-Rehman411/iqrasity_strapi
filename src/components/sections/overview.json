@@ -70,6 +70,12 @@
     },
     "what_next": {
       "type": "text"
+    },
+    "custom_field_title": {
+      "type": "string"
+    },
+    "custom_field_description": {
+      "type": "string"
     }
   }
 }

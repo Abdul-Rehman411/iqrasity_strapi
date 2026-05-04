@@ -923,6 +923,8 @@ export interface SectionsOverview extends Struct.ComponentSchema {
   };
   attributes: {
     course_skills: Schema.Attribute.Text;
+    custom_field_description: Schema.Attribute.String;
+    custom_field_title: Schema.Attribute.String;
     enroll_now: Schema.Attribute.Text;
     prerequisite: Schema.Attribute.Text;
     prerequisites: Schema.Attribute.Component<'elements.list-item', true>;
