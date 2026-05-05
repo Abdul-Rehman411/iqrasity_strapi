@@ -130,7 +130,6 @@
     },
     "rating": {
       "type": "decimal",
-      "default": 4.5,
       "min": 0,
       "max": 5
     },
@@ -213,8 +212,7 @@
       ]
     },
     "enrollment_message": {
-      "type": "string",
-      "default": "Enrollment is currently closed."
+      "type": "string"
     },
     "enrollment_open_date": {
       "type": "datetime"

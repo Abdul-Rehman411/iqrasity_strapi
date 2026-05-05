@@ -922,6 +922,7 @@ export interface SectionsOverview extends Struct.ComponentSchema {
     icon: 'layout';
   };
   attributes: {
+    course_description: Schema.Attribute.Text;
     course_skills: Schema.Attribute.Text;
     custom_field_description: Schema.Attribute.String;
     custom_field_title: Schema.Attribute.String;

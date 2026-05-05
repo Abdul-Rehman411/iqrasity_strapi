@@ -894,8 +894,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     duration: Schema.Attribute.String;
     duration_weeks: Schema.Attribute.Integer;
     enrolled_count: Schema.Attribute.String;
-    enrollment_message: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Enrollment is currently closed.'>;
+    enrollment_message: Schema.Attribute.String;
     enrollment_open_date: Schema.Attribute.DateTime;
     enrollment_status: Schema.Attribute.Enumeration<['open', 'closed']> &
       Schema.Attribute.DefaultTo<'open'>;
@@ -946,8 +945,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
           min: 0;
         },
         number
-      > &
-      Schema.Attribute.DefaultTo<4.5>;
+      >;
     reccomended_course: Schema.Attribute.Relation<
       'oneToOne',
       'api::course.course'

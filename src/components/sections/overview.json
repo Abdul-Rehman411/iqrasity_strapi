@@ -7,6 +7,9 @@
   },
   "options": {},
   "attributes": {
+    "course_description": {
+      "type": "text"
+    },
     "what_you_learn": {
       "type": "component",
       "component": "elements.icon-text-item",
