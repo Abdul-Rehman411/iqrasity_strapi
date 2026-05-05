@@ -68,8 +68,26 @@
     "start_today": {
       "type": "text"
     },
+    "start_today_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
     "enroll_now": {
       "type": "text"
+    },
+    "enroll_now_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "what_next": {
       "type": "text"

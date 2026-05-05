@@ -927,11 +927,15 @@ export interface SectionsOverview extends Struct.ComponentSchema {
     custom_field_description: Schema.Attribute.String;
     custom_field_title: Schema.Attribute.String;
     enroll_now: Schema.Attribute.Text;
+    enroll_now_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     prerequisite: Schema.Attribute.Text;
     prerequisites: Schema.Attribute.Component<'elements.list-item', true>;
     promo_banner: Schema.Attribute.Component<'sections.promo-banner', false>;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
     start_today: Schema.Attribute.Text;
+    start_today_image: Schema.Attribute.Media<'images' | 'files'>;
     what_next: Schema.Attribute.Text;
     what_you_learn: Schema.Attribute.Component<'elements.icon-text-item', true>;
     what_you_learn_icon: Schema.Attribute.Media<'images'>;
