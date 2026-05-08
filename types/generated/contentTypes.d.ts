@@ -891,6 +891,8 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'USD'>;
+    curriculum_visibility: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
     duration: Schema.Attribute.String;
     duration_weeks: Schema.Attribute.Integer;
     enrolled_count: Schema.Attribute.String;

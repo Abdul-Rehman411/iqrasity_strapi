@@ -230,6 +230,10 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::course.course"
+    },
+    "curriculum_visibility": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
