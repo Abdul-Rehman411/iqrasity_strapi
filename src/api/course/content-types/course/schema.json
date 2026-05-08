@@ -217,6 +217,9 @@
     "enrollment_open_date": {
       "type": "datetime"
     },
+    "go_to_course_text": {
+      "type": "string"
+    },
     "go_to_course_link": {
       "type": "string"
     },

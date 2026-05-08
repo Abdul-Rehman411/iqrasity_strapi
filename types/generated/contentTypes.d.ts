@@ -899,6 +899,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     enrollment_status: Schema.Attribute.Enumeration<['open', 'closed']> &
       Schema.Attribute.DefaultTo<'open'>;
     go_to_course_link: Schema.Attribute.String;
+    go_to_course_text: Schema.Attribute.String;
     intro_videos_links: Schema.Attribute.Component<'elements.video-item', true>;
     languages: Schema.Attribute.Relation<
       'manyToMany',
