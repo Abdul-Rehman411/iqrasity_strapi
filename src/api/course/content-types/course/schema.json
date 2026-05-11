@@ -234,6 +234,10 @@
     "curriculum_visibility": {
       "type": "boolean",
       "default": true
+    },
+    "details_to_know_visibility": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
